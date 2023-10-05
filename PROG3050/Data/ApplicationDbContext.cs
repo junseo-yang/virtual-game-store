@@ -202,6 +202,27 @@ namespace PROG3050.Data
                     GameCategoryName = "Others"
                 }
             );
+
+            builder.Entity<Preference>().HasData(
+                new Preference
+                {
+                    PreferenceId = 1,
+                    PromotionalEmail = false,
+                    FavouritePlatformId = 1
+                },
+                new Preference
+                {
+                    PreferenceId = 2,
+                    PromotionalEmail = true,
+                    FavouritePlatformId = 2
+                },
+                new Preference
+                {
+                    PreferenceId = 3,
+                    PromotionalEmail = false,
+                    FavouritePlatformId = 3
+                }
+            );
         }
     }
 }
