@@ -174,6 +174,34 @@ namespace PROG3050.Data
                     FavouritePlatformName = "Others"
                 }
             );
+
+            builder.Entity<GameCategory>().HasData(
+                new GameCategory
+                {
+                    GameCategoryId = 1,
+                    GameCategoryName = "Action"
+                },
+                new GameCategory
+                {
+                    GameCategoryId = 2,
+                    GameCategoryName = "Adventure"
+                },
+                new GameCategory
+                {
+                    GameCategoryId = 3,
+                    GameCategoryName = "FPS"
+                },
+                new GameCategory
+                {
+                    GameCategoryId = 4,
+                    GameCategoryName = "Shooter"
+                },
+                new GameCategory
+                {
+                    GameCategoryId = 5,
+                    GameCategoryName = "Others"
+                }
+            );
         }
     }
 }
