@@ -13,5 +13,7 @@ namespace PROG3050.Models
         [Display(Name = "Favourite Platform Name")]
         public int FavouritePlatformId { get; set; }
         public FavouritePlatform FavouritePlatform { get; set; }
+
+        public IList<PreferenceGameCategory> PreferenceGameCategories { get; set; }
     }
 }

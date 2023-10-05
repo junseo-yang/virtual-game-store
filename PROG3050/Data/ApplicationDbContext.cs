@@ -223,6 +223,47 @@ namespace PROG3050.Data
                     FavouritePlatformId = 3
                 }
             );
+
+            // Configure Many-to-Many relationship between Preference-PreferenceGameCategory-GameCategory
+            builder.Entity<PreferenceGameCategory>()
+                .HasKey(pgc => new { pgc.PreferenceId, pgc.GameCategoryId });
+            builder.Entity<PreferenceGameCategory>()
+                .HasOne(pgc => pgc.Preference)
+                .WithMany(p => p.PreferenceGameCategories)
+                .HasForeignKey(pgc => pgc.PreferenceId);
+            builder.Entity<PreferenceGameCategory>()
+                .HasOne(pgc => pgc.GameCategory)
+                .WithMany(g => g.PreferenceGameCategories)
+                .HasForeignKey(pgc => pgc.GameCategoryId);
+
+
+            builder.Entity<PreferenceGameCategory>().HasData(
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 1,
+                    GameCategoryId = 1
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 1,
+                    GameCategoryId = 2
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 2,
+                    GameCategoryId = 2
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 2,
+                    GameCategoryId = 3
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 3,
+                    GameCategoryId = 1
+                }
+            );
         }
     }
 }
