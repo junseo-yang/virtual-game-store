@@ -151,6 +151,29 @@ namespace PROG3050.Data
                     GenderName = "Others"
                 }
             );
+
+            builder.Entity<FavouritePlatform>().HasData(
+                new FavouritePlatform
+                {
+                    FavouritePlatformId = 1,
+                    FavouritePlatformName = "PC"
+                },
+                new FavouritePlatform
+                {
+                    FavouritePlatformId = 2,
+                    FavouritePlatformName = "Mobile"
+                },
+                new FavouritePlatform
+                {
+                    FavouritePlatformId = 3,
+                    FavouritePlatformName = "Console"
+                },
+                new FavouritePlatform
+                {
+                    FavouritePlatformId = 4,
+                    FavouritePlatformName = "Others"
+                }
+            );
         }
     }
 }
