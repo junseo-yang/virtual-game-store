@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PROG3050.Models;
 
 namespace PROG3050.Data
 {
@@ -42,6 +43,14 @@ namespace PROG3050.Data
             {
                 entity.ToTable("UserTokens");
             });
+
+            builder.Entity<Country>().HasData(
+                new Country
+                {
+                    CountryId = 1,
+                    CountryName = "Canada"
+                }
+            );
         }
     }
 }
