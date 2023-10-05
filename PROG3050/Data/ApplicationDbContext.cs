@@ -133,6 +133,24 @@ namespace PROG3050.Data
                     CountryId = 1
                 }
             );
+
+            builder.Entity<Gender>().HasData(
+                new Gender
+                {
+                    GenderId = 1,
+                    GenderName = "Male"
+                },
+                new Gender
+                {
+                    GenderId = 2,
+                    GenderName = "Female"
+                },
+                new Gender
+                {
+                    GenderId = 3,
+                    GenderName = "Others"
+                }
+            );
         }
     }
 }
