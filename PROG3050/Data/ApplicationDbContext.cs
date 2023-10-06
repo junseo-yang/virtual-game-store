@@ -264,6 +264,45 @@ namespace PROG3050.Data
                     GameCategoryId = 1
                 }
             );
+
+            builder.Entity<MailingAddress>().HasData(
+                new MailingAddress
+                {
+                    MailingAddressId = 1,
+                    Street = "978 ARGYLE ST N",
+                    City = "HALIFAX",
+                    ProvinceId = 7,
+                    PostalCode = "B3J 2B3",
+                    DeliveryInstruction = "At the door"
+                },
+                new MailingAddress
+                {
+                    MailingAddressId = 2,
+                    Unit = "501",
+                    Street = "87 DANFORTH AVE",
+                    City = "TORONTO",
+                    ProvinceId = 9,
+                    PostalCode = "M4K 1M8",
+                    DeliveryInstruction = "At the Post Box"
+                },
+                new MailingAddress
+                {
+                    MailingAddressId = 3,
+                    Street = "4 FIRST AVE S",
+                    City = "BIG VALLEY",
+                    ProvinceId = 1,
+                    PostalCode = "T0L 1K0"
+                },
+                new MailingAddress
+                {
+                    MailingAddressId = 4,
+                    Street = "PO BOX 4600 STN B",
+                    City = "COURTENAY",
+                    ProvinceId = 2,
+                    PostalCode = "V9N 0A7",
+                    DeliveryInstruction = "Ask the security Guard to get in."
+                }
+            );
         }
     }
 }
