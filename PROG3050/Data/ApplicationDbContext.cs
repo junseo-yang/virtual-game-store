@@ -221,6 +221,12 @@ namespace PROG3050.Data
                     PreferenceId = 3,
                     PromotionalEmail = false,
                     FavouritePlatformId = 3
+                },
+                new Preference
+                {
+                    PreferenceId = 4,
+                    PromotionalEmail = false,
+                    FavouritePlatformId = 1
                 }
             );
 
