@@ -304,26 +304,124 @@ namespace PROG3050.Data
                 }
             );
 
+            var superadminRole = new IdentityRole
+            {
+                Name = "SuperAdmin",
+                NormalizedName = "SUPERADMIN"
+            };
+
+            var adminRole = new IdentityRole
+            {
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            };
+
+            var moderatorRole = new IdentityRole
+            {
+                Name = "Moderator",
+                NormalizedName = "MODERATOR"
+            };
+            var basicRole = new IdentityRole
+            {
+                Name = "Basic",
+                NormalizedName = "BASIC"
+            };
+
             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole
+                superadminRole,
+                adminRole,
+                moderatorRole,
+                basicRole
+            );
+
+            // Seed Default Users
+            PasswordHasher<User> ph = new PasswordHasher<User>();
+
+            var superadmin = new User
+            {
+                UserName = "SuperAdmin",
+                NormalizedUserName = "SUPERADMIN",
+                Email = "superadmin@gmail.com",
+                NormalizedEmail = "SUPERADMIN@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 1,
+                GenderId = 3,
+                PreferenceId = 1
+            };
+            
+            superadmin.PasswordHash = ph.HashPassword(superadmin, "Superadmin123!@");
+
+            var admin = new User
+            {
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 2,
+                GenderId = 3,
+                PreferenceId = 2
+            };
+
+            admin.PasswordHash = ph.HashPassword(admin, "Admin123!@");
+
+            var moderator = new User
+            {
+                UserName = "Moderator",
+                NormalizedEmail = "MODERATOR",
+                Email = "moderator@gmail.com",
+                NormalizedUserName = "MODERATOR@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 3,
+                GenderId = 3,
+                PreferenceId = 3
+            };
+
+            moderator.PasswordHash = ph.HashPassword(moderator, "Moderator123!@");
+
+            var basic = new User
+            {
+                UserName = "Basic",
+                NormalizedUserName = "BASIC",
+                Email = "basic@gmail.com",
+                NormalizedEmail = "BASIC@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 4,
+                GenderId = 3,
+                PreferenceId = 4
+            };
+
+            basic.PasswordHash = ph.HashPassword(basic, "Basic123!@");
+
+            builder.Entity<User>().HasData(superadmin);
+            builder.Entity<User>().HasData(admin);
+            builder.Entity<User>().HasData(moderator);
+            builder.Entity<User>().HasData(basic);
+
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
                 {
-                    Name = "SuperAdmin",
-                    NormalizedName = "SUPERADMIN"
+                    UserId = superadmin.Id,
+                    RoleId = superadminRole.Id
                 },
-                new IdentityRole
+                new IdentityUserRole<string>
                 {
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
+                    UserId = admin.Id,
+                    RoleId = adminRole.Id
                 },
-                new IdentityRole
+                new IdentityUserRole<string>
                 {
-                    Name = "Moderator",
-                    NormalizedName = "MODERATOR"
+                    UserId = moderator.Id,
+                    RoleId = moderatorRole.Id
                 },
-                new IdentityRole
+                new IdentityUserRole<string>
                 {
-                    Name = "Basic",
-                    NormalizedName = "BASIC"
+                    UserId = basic.Id,
+                    RoleId = basicRole.Id
                 }
             );
         }
