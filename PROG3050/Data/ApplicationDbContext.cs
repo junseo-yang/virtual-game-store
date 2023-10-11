@@ -203,30 +203,42 @@ namespace PROG3050.Data
                 }
             );
 
+            builder.Entity<Language>().HasData(
+                new Language
+                {
+                    LanguageId = 1,
+                    LanguageName = "English"
+                }
+            );
+
             builder.Entity<Preference>().HasData(
                 new Preference
                 {
                     PreferenceId = 1,
                     PromotionalEmail = false,
-                    FavouritePlatformId = 1
+                    FavouritePlatformId = 1,
+                    LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 2,
                     PromotionalEmail = true,
-                    FavouritePlatformId = 2
+                    FavouritePlatformId = 2,
+                    LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 3,
                     PromotionalEmail = false,
-                    FavouritePlatformId = 3
+                    FavouritePlatformId = 3,
+                    LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 4,
                     PromotionalEmail = false,
-                    FavouritePlatformId = 1
+                    FavouritePlatformId = 1,
+                    LanguageId = 1
                 }
             );
 
@@ -432,6 +444,12 @@ namespace PROG3050.Data
             );
         }
 
-        public DbSet<PROG3050.Models.Gender>? Gender { get; set; }
+        public DbSet<Gender>? Genders { get; set; }
+
+        public DbSet<Country>? Country { get; set; }
+
+        public DbSet<Province>? Province { get; set; }
+
+        public DbSet<Language>? Language { get; set; }
     }
 }

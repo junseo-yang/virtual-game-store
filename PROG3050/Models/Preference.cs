@@ -14,5 +14,9 @@ namespace PROG3050.Models
         public FavouritePlatform FavouritePlatform { get; set; }
 
         public IList<PreferenceGameCategory> PreferenceGameCategories { get; set; }
+
+        [Display(Name = "Language")]
+        public int LanguageId { get; set; } = 1;
+        public Language Language { get; set; }
     }
 }
