@@ -303,6 +303,29 @@ namespace PROG3050.Data
                     DeliveryInstruction = "Ask the security Guard to get in."
                 }
             );
+
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Name = "SuperAdmin",
+                    NormalizedName = "SUPERADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "Moderator",
+                    NormalizedName = "MODERATOR"
+                },
+                new IdentityRole
+                {
+                    Name = "Basic",
+                    NormalizedName = "BASIC"
+                }
+            );
         }
 
         public DbSet<PROG3050.Models.Gender>? Gender { get; set; }
