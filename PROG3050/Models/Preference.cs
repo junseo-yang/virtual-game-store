@@ -9,9 +9,8 @@ namespace PROG3050.Models
 
         public bool PromotionalEmail { get; set; }
 
-        [Required(ErrorMessage = "Please, enter a favourite platform name")]
         [Display(Name = "Favourite Platform Name")]
-        public int FavouritePlatformId { get; set; }
+        public int FavouritePlatformId { get; set; } = 1;
         public FavouritePlatform FavouritePlatform { get; set; }
 
         public IList<PreferenceGameCategory> PreferenceGameCategories { get; set; }
