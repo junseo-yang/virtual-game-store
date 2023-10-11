@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Models;
@@ -304,5 +304,7 @@ namespace PROG3050.Data
                 }
             );
         }
+
+        public DbSet<PROG3050.Models.Gender>? Gender { get; set; }
     }
 }

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PROG3050.Data;
 using PROG3050.Models;
 
 namespace PROG3050.Areas.Identity.Pages.Account.Manage
@@ -17,13 +20,16 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         /// <summary>
@@ -52,6 +58,15 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -59,18 +74,28 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Gender")]
+            public int GenderId { get; set; }
+            public Gender Gender { get; set; }
         }
 
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
+            var gender = user.GenderId;
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
+                GenderId = gender
             };
         }
 
@@ -83,6 +108,9 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "GenderName");
+            
             return Page();
         }
 
@@ -111,6 +139,25 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            // Update FirstName, LastName, and Gender
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
+            var genderId = user.GenderId;
+            if (Input.FirstName != firstName)
+            {
+                user.FirstName = Input.FirstName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.LastName != lastName)
+            {
+                user.LastName = Input.LastName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.GenderId != genderId)
+            {
+                user.GenderId = Input.GenderId;
+                await _userManager.UpdateAsync(user);
+            }
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
