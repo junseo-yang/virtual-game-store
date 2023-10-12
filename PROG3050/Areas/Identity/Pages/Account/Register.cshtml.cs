@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NuGet.Common;
+using Owl.reCAPTCHA;
+using Owl.reCAPTCHA.v2;
 using PROG3050.Data;
 using PROG3050.Models;
 
@@ -34,6 +37,7 @@ namespace PROG3050.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
+        private readonly IreCAPTCHASiteVerifyV2 _siteVerify;
 
         public RegisterModel(
             UserManager<User> userManager,
@@ -41,7 +45,8 @@ namespace PROG3050.Areas.Identity.Pages.Account
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IreCAPTCHASiteVerifyV2 siteVerifyV2)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -50,6 +55,7 @@ namespace PROG3050.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _siteVerify= siteVerifyV2;
         }
 
         /// <summary>
@@ -118,11 +124,21 @@ namespace PROG3050.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, string token = "")
         {
+            var response = await _siteVerify.Verify(new reCAPTCHASiteVerifyRequest
+            {
+                Response = token,
+                RemoteIp = HttpContext.Connection.RemoteIpAddress.ToString()
+            });
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+
+            if (!response.Success)
+                ModelState.AddModelError(string.Empty, "Are you bot??");
+
+            if (ModelState.IsValid && response.Success)
             {
                 var user = CreateUser();
 
@@ -157,6 +173,7 @@ namespace PROG3050.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
