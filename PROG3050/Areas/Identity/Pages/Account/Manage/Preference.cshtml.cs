@@ -58,9 +58,11 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            [Display(Name = "Favourite Platform")]
-            public int FavouritePlatformId { get; set; }
-            public FavouritePlatform FavouritePlatform { get; set; }
+            public List<SelectListItem> DropFavouritePlatforms { get; set; }
+
+            [Required(ErrorMessage = "Choose at least 1 favourite platform.")]
+            [Display(Name = "Favourite Platforms")]
+            public int[] FavouritePlatformIds { get; set; }
 
             [Display(Name = "Language")]
             public int LanguageId { get; set; }
@@ -69,11 +71,16 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(User user)
         {
-            var preference = _context.Preference.Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
+            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
+
+            List<int> favouritePlatformIds = new List<int>();
+            preference.PreferenceFavouritePlatforms.ToList().ForEach(r => favouritePlatformIds.Add(r.FavouritePlatformId));
+
 
             Input = new InputModel
             {
-                FavouritePlatformId = preference.FavouritePlatformId,
+                DropFavouritePlatforms = _context.FavouritePlatform.Select(fp => new SelectListItem { Text = fp.FavouritePlatformName, Value = fp.FavouritePlatformId.ToString() }).ToList(),
+                FavouritePlatformIds = favouritePlatformIds.ToArray(),
                 LanguageId = preference.LanguageId
             };
         }
@@ -109,13 +116,30 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             }
 
             // Update FavouritePlatform and Language
-            var preference = _context.Preference.Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
-            if (Input.FavouritePlatformId != preference.FavouritePlatformId)
+            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
+
+            // first find PreferenceFavouritePlatforms list and then remove all from db that belongs to preference
+            List<PreferenceFavouritePlatform> preferenceFavouritePlatforms = new List<PreferenceFavouritePlatform>();
+            
+            preference.PreferenceFavouritePlatforms.ToList().ForEach(r => preferenceFavouritePlatforms.Add(r));
+            _context.RemoveRange(preferenceFavouritePlatforms);
+
+            // Update PreferenceFavouritePlatforms
+            preferenceFavouritePlatforms = new List<PreferenceFavouritePlatform>();
+
+            foreach (var favouritePlatform in Input.FavouritePlatformIds)
             {
-                preference.FavouritePlatformId = Input.FavouritePlatformId;
-                _context.Update(preference);
-                _context.SaveChanges();
+                preferenceFavouritePlatforms.Add(
+                    new PreferenceFavouritePlatform
+                    {
+                        PreferenceId = preference.PreferenceId,
+                        FavouritePlatformId = favouritePlatform
+                    }
+                );
             }
+            preference.PreferenceFavouritePlatforms = preferenceFavouritePlatforms;
+            _context.SaveChanges();
+
             if (Input.LanguageId != preference.LanguageId)
             {
                 preference.LanguageId = Input.LanguageId;

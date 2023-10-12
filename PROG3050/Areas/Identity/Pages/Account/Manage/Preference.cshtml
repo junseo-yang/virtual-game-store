@@ -11,10 +11,10 @@
     <div class="col-md-6">
         <form id="preference-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <select asp-for="Input.FavouritePlatformId" class="form-control" asp-items="ViewBag.FavouritePlatformId"></select>
-                <label asp-for="Input.FavouritePlatformId" class="form-label"></label>
-                <span asp-validation-for="Input.FavouritePlatformId" class="text-danger"></span>
+            <div>
+                <label asp-for="Input.FavouritePlatformIds" class="form-label"></label>
+                @Html.ListBoxFor(model => model.Input.FavouritePlatformIds, new MultiSelectList(Model.Input.DropFavouritePlatforms, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "favourite_platforms_dropdown"} )
+                <span asp-validation-for="Input.FavouritePlatformIds" class="text-danger"></span>
             </div>
             <div class="form-floating">
                 <select asp-for="Input.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
@@ -28,4 +28,9 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    @* <script>
+        $(document).ready(function () {
+            $('#favourite_platforms_dropdown').multiselect();
+        });
+    </script> *@
 }
