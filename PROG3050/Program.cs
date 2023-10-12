@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Owl.reCAPTCHA;
 using PROG3050.Data;
 using PROG3050.Models;
 
@@ -9,6 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddreCAPTCHAV2(option =>
+{
+    option.SiteSecret = "6LcE-JQoAAAAAMvEJBHJbArjkZ0MEPaPuufkEs0h";
+    option.SiteKey = "6LcE-JQoAAAAAJqxgVJkZw-o0VLZ6atMVuj1XzVF";
+});
+
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
