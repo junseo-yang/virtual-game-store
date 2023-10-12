@@ -215,25 +215,21 @@ namespace PROG3050.Data
                 new Preference
                 {
                     PreferenceId = 1,
-                    FavouritePlatformId = 1,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 2,
-                    FavouritePlatformId = 2,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 3,
-                    FavouritePlatformId = 3,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 4,
-                    FavouritePlatformId = 1,
                     LanguageId = 1
                 }
             );
@@ -438,6 +434,52 @@ namespace PROG3050.Data
                     RoleId = basicRole.Id
                 }
             );
+
+            // Configure Many-to-Many relationship between Preference-PreferenceFavouritePlatform-FavouritePlatform
+            builder.Entity<PreferenceFavouritePlatform>()
+                .HasKey(pfp => new { pfp.PreferenceId, pfp.FavouritePlatformId });
+            builder.Entity<PreferenceFavouritePlatform>()
+                .HasOne(pfp => pfp.Preference)
+                .WithMany(p => p.PreferenceFavouritePlatforms)
+                .HasForeignKey(pfp => pfp.PreferenceId);
+            builder.Entity<PreferenceFavouritePlatform>()
+                .HasOne(pfp => pfp.FavouritePlatform)
+                .WithMany(fp => fp.PreferenceFavouritePlatforms)
+                .HasForeignKey(pfp => pfp.FavouritePlatformId);
+
+
+            builder.Entity<PreferenceFavouritePlatform>().HasData(
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 1,
+                    FavouritePlatformId = 1
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 1,
+                    FavouritePlatformId = 2
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 2,
+                    FavouritePlatformId = 2
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 2,
+                    FavouritePlatformId = 3
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 3,
+                    FavouritePlatformId = 1
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 4,
+                    FavouritePlatformId = 1
+                }
+            );
         }
 
         public DbSet<Gender>? Genders { get; set; }
@@ -451,5 +493,9 @@ namespace PROG3050.Data
         public DbSet<Preference>? Preference { get; set; }
 
         public DbSet<FavouritePlatform>? FavouritePlatform { get; set; }
+
+        public DbSet<PreferenceGameCategory>? PreferenceGameCategory { get; set; }
+
+        public DbSet<PreferenceFavouritePlatform>? PreferenceFavouritePlatform { get; set; }
     }
 }

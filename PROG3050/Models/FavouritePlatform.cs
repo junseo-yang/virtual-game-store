@@ -9,5 +9,7 @@ namespace PROG3050.Models
         [Required(ErrorMessage = "Please, enter a favourite platform name")]
         [Display(Name = "Favourite Platform Name")]
         public string FavouritePlatformName { get; set; }
+
+        public IList<PreferenceFavouritePlatform> PreferenceFavouritePlatforms { get; set; } 
     }
 }

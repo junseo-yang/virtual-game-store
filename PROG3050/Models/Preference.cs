@@ -7,11 +7,9 @@ namespace PROG3050.Models
     {
         public int PreferenceId { get; set; }
 
-        [Display(Name = "Favourite Platform Name")]
-        public int FavouritePlatformId { get; set; } = 1;
-        public FavouritePlatform FavouritePlatform { get; set; }
-
         public IList<PreferenceGameCategory> PreferenceGameCategories { get; set; }
+
+        public IList<PreferenceFavouritePlatform> PreferenceFavouritePlatforms { get; set; }
 
         [Display(Name = "Language")]
         public int LanguageId { get; set; } = 1;
