@@ -447,5 +447,9 @@ namespace PROG3050.Data
         public DbSet<Province>? Province { get; set; }
 
         public DbSet<Language>? Language { get; set; }
+
+        public DbSet<Preference>? Preference { get; set; }
+
+        public DbSet<FavouritePlatform>? FavouritePlatform { get; set; }
     }
 }

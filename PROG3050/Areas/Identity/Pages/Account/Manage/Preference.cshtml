@@ -1,0 +1,31 @@
+﻿@page
+@model PreferenceModel
+@{
+    ViewData["Title"] = "Preference";
+    ViewData["ActivePage"] = ManageNavPages.Preference;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="preference-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <select asp-for="Input.FavouritePlatformId" class="form-control" asp-items="ViewBag.FavouritePlatformId"></select>
+                <label asp-for="Input.FavouritePlatformId" class="form-label"></label>
+                <span asp-validation-for="Input.FavouritePlatformId" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Input.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+                <label asp-for="Input.LanguageId" class="form-label"></label>
+                <span asp-validation-for="Input.LanguageId" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
