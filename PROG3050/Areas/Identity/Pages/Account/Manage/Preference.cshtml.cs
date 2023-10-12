@@ -64,6 +64,12 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Favourite Platforms")]
             public int[] FavouritePlatformIds { get; set; }
 
+            public List<SelectListItem> DropGameCategories { get; set; }
+
+            [Required(ErrorMessage = "Choose at least 1 game category.")]
+            [Display(Name = "Game Categories")]
+            public int[] GameCategoryIds { get; set; }
+
             [Display(Name = "Language")]
             public int LanguageId { get; set; }
             public Language Language { get; set; }
@@ -71,16 +77,20 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(User user)
         {
-            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
+            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Include(p => p.PreferenceGameCategories).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
 
             List<int> favouritePlatformIds = new List<int>();
             preference.PreferenceFavouritePlatforms.ToList().ForEach(r => favouritePlatformIds.Add(r.FavouritePlatformId));
 
+            List<int> gameCategoryIds = new List<int>();
+            preference.PreferenceGameCategories.ToList().ForEach(r => gameCategoryIds.Add(r.GameCategoryId));
 
             Input = new InputModel
             {
                 DropFavouritePlatforms = _context.FavouritePlatform.Select(fp => new SelectListItem { Text = fp.FavouritePlatformName, Value = fp.FavouritePlatformId.ToString() }).ToList(),
                 FavouritePlatformIds = favouritePlatformIds.ToArray(),
+                DropGameCategories = _context.GameCategory.Select(gc => new SelectListItem { Text = gc.GameCategoryName, Value = gc.GameCategoryId.ToString() }).ToList(),
+                GameCategoryIds = gameCategoryIds.ToArray(),
                 LanguageId = preference.LanguageId
             };
         }
@@ -96,6 +106,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             await LoadAsync(user);
 
             ViewData["FavouritePlatformId"] = new SelectList(_context.FavouritePlatform, "FavouritePlatformId", "FavouritePlatformName");
+            ViewData["GameCategoryId"] = new SelectList(_context.GameCategory, "GameCategoryId", "GameCategoryName");
             ViewData["LanguageId"] = new SelectList(_context.Language, "LanguageId", "LanguageName");
 
             return Page();
@@ -116,11 +127,10 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             }
 
             // Update FavouritePlatform and Language
-            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
+            var preference = _context.Preference.Include(p => p.PreferenceFavouritePlatforms).Include(p => p.PreferenceGameCategories).Where(p => p.PreferenceId == user.PreferenceId).FirstOrDefault();
 
             // first find PreferenceFavouritePlatforms list and then remove all from db that belongs to preference
             List<PreferenceFavouritePlatform> preferenceFavouritePlatforms = new List<PreferenceFavouritePlatform>();
-            
             preference.PreferenceFavouritePlatforms.ToList().ForEach(r => preferenceFavouritePlatforms.Add(r));
             _context.RemoveRange(preferenceFavouritePlatforms);
 
@@ -138,6 +148,27 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 );
             }
             preference.PreferenceFavouritePlatforms = preferenceFavouritePlatforms;
+            _context.SaveChanges();
+
+            // first find PreferenceGameCategories list and then remove all from db that belongs to preference
+            List<PreferenceGameCategory> preferenceGameCategories = new List<PreferenceGameCategory>();
+            preference.PreferenceGameCategories.ToList().ForEach(r => preferenceGameCategories.Add(r));
+            _context.RemoveRange(preferenceGameCategories);
+
+            // Update PreferenceGameCategory
+            preferenceGameCategories = new List<PreferenceGameCategory>();
+
+            foreach (var gameCategory in Input.GameCategoryIds)
+            {
+                preferenceGameCategories.Add(
+                    new PreferenceGameCategory
+                    {
+                        PreferenceId = preference.PreferenceId,
+                        GameCategoryId = gameCategory
+                    }
+                );
+            }
+            preference.PreferenceGameCategories = preferenceGameCategories;
             _context.SaveChanges();
 
             if (Input.LanguageId != preference.LanguageId)

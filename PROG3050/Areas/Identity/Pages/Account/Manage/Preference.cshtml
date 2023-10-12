@@ -16,6 +16,11 @@
                 @Html.ListBoxFor(model => model.Input.FavouritePlatformIds, new MultiSelectList(Model.Input.DropFavouritePlatforms, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "favourite_platforms_dropdown"} )
                 <span asp-validation-for="Input.FavouritePlatformIds" class="text-danger"></span>
             </div>
+            <div>
+                <label asp-for="Input.GameCategoryIds" class="form-label"></label>
+                @Html.ListBoxFor(model => model.Input.GameCategoryIds, new MultiSelectList(Model.Input.DropGameCategories, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "game_categories_dropdown"} )
+                <span asp-validation-for="Input.GameCategoryIds" class="text-danger"></span>
+            </div>
             <div class="form-floating">
                 <select asp-for="Input.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
                 <label asp-for="Input.LanguageId" class="form-label"></label>

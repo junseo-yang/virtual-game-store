@@ -500,5 +500,6 @@ namespace PROG3050.Data
 
         public DbSet<MailingAddress>? MailingAddress { get; set; }
 
+        public DbSet<GameCategory>? GameCategory { get; set; }
     }
 }
