@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -68,8 +69,10 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             public string? City { get; set; }
 
             [Display(Name = "Province")]
-            public int ProvinceId { get; set; } = 1;
-            public Province? Province { get; set; }
+            public string? Province { get; set; }
+
+            [Display(Name = "Country")]
+            public string? Country { get; set; }
 
             [RegularExpression(@"[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] [0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]",
                 ErrorMessage = "Postal Code should be in the format of 'A1A 1A1'")]
@@ -89,7 +92,8 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 Unit = mailingAddress.Unit,
                 Street = mailingAddress.Street,
                 City = mailingAddress.City,
-                ProvinceId = mailingAddress.ProvinceId,
+                Province = mailingAddress.Province,
+                Country = mailingAddress.Country,
                 PostalCode = mailingAddress.PostalCode,
                 DeliveryInstruction = mailingAddress.DeliveryInstruction
             };
@@ -104,8 +108,6 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
-
-            ViewData["ProvinceId"] = new SelectList(_context.Province, "ProvinceId", "ProvinceName");
 
             return Page();
         }
@@ -145,9 +147,15 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 _context.Update(mailingAddress);
                 _context.SaveChanges();
             }
-            if (Input.ProvinceId != mailingAddress.ProvinceId)
+            if (Input.Province != mailingAddress.Province)
             {
-                mailingAddress.ProvinceId = Input.ProvinceId;
+                mailingAddress.Province = Input.Province;
+                _context.Update(mailingAddress);
+                _context.SaveChanges();
+            }
+            if (Input.Country != mailingAddress.Country)
+            {
+                mailingAddress.Country = Input.Country;
                 _context.Update(mailingAddress);
                 _context.SaveChanges();
             }
