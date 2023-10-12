@@ -497,5 +497,8 @@ namespace PROG3050.Data
         public DbSet<PreferenceGameCategory>? PreferenceGameCategory { get; set; }
 
         public DbSet<PreferenceFavouritePlatform>? PreferenceFavouritePlatform { get; set; }
+
+        public DbSet<MailingAddress>? MailingAddress { get; set; }
+
     }
 }

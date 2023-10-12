@@ -7,7 +7,6 @@ namespace PROG3050.Models
         public int MailingAddressId { get; set; }
 
         [Display(Name = "Unit")]
-
         public string? Unit { get; set; }
 
         [Display(Name = "Street")]
