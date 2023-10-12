@@ -78,6 +78,15 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Gender")]
             public int GenderId { get; set; }
             public Gender Gender { get; set; }
+
+            // TODO: Date Validation future
+            [DataType(DataType.Date)]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+            [Display(Name = "Date of Birth")]
+            public DateTime? DateOfBirth { get; set; }
+            
+            [Display(Name = "Promotional Email")]
+            public bool IsPromotionalEmail { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -87,6 +96,8 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             var firstName = user.FirstName;
             var lastName = user.LastName;
             var gender = user.GenderId;
+            var dateOfBirth = user.DateOfBirth;
+            var isPromotionalEmail = user.IsPromotionalEmail;
 
             Username = userName;
 
@@ -95,7 +106,9 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 FirstName = firstName,
                 LastName = lastName,
-                GenderId = gender
+                GenderId = gender,
+                DateOfBirth = dateOfBirth,
+                IsPromotionalEmail = isPromotionalEmail
             };
         }
 
@@ -143,6 +156,9 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             var firstName = user.FirstName;
             var lastName = user.LastName;
             var genderId = user.GenderId;
+            var dateOfBirth = user.DateOfBirth;
+            var isPromotionalEmail = user.IsPromotionalEmail;
+
             if (Input.FirstName != firstName)
             {
                 user.FirstName = Input.FirstName;
@@ -158,6 +174,17 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 user.GenderId = Input.GenderId;
                 await _userManager.UpdateAsync(user);
             }
+            if (Input.DateOfBirth != dateOfBirth)
+            {
+                user.DateOfBirth = Input.DateOfBirth;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.IsPromotionalEmail != isPromotionalEmail)
+            {
+                user.IsPromotionalEmail = Input.IsPromotionalEmail;
+                await _userManager.UpdateAsync(user);
+            }
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

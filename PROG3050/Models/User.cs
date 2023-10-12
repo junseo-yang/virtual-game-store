@@ -28,7 +28,10 @@ namespace PROG3050.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Date of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+
+        [Display(Name = "Promotional Email")]
+        public bool IsPromotionalEmail { get; set; }
 
         [CreditCard]
         public string? CreditCard { get; set; }

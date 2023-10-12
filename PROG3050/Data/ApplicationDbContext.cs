@@ -215,28 +215,24 @@ namespace PROG3050.Data
                 new Preference
                 {
                     PreferenceId = 1,
-                    PromotionalEmail = false,
                     FavouritePlatformId = 1,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 2,
-                    PromotionalEmail = true,
                     FavouritePlatformId = 2,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 3,
-                    PromotionalEmail = false,
                     FavouritePlatformId = 3,
                     LanguageId = 1
                 },
                 new Preference
                 {
                     PreferenceId = 4,
-                    PromotionalEmail = false,
                     FavouritePlatformId = 1,
                     LanguageId = 1
                 }
