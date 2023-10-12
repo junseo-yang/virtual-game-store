@@ -87,6 +87,10 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             
             [Display(Name = "Promotional Email")]
             public bool IsPromotionalEmail { get; set; }
+
+
+            [Display(Name = "Is Address Same?")]
+            public bool IsAddressSame { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -98,6 +102,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             var gender = user.GenderId;
             var dateOfBirth = user.DateOfBirth;
             var isPromotionalEmail = user.IsPromotionalEmail;
+            var isAddressSame = user.IsAddressSame;
 
             Username = userName;
 
@@ -108,7 +113,8 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 LastName = lastName,
                 GenderId = gender,
                 DateOfBirth = dateOfBirth,
-                IsPromotionalEmail = isPromotionalEmail
+                IsPromotionalEmail = isPromotionalEmail,
+                IsAddressSame = isAddressSame
             };
         }
 
@@ -158,6 +164,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             var genderId = user.GenderId;
             var dateOfBirth = user.DateOfBirth;
             var isPromotionalEmail = user.IsPromotionalEmail;
+            var isAddressSame = user.IsAddressSame;
 
             if (Input.FirstName != firstName)
             {
@@ -182,6 +189,11 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             if (Input.IsPromotionalEmail != isPromotionalEmail)
             {
                 user.IsPromotionalEmail = Input.IsPromotionalEmail;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.IsAddressSame != isAddressSame)
+            {
+                user.IsAddressSame = Input.IsAddressSame;
                 await _userManager.UpdateAsync(user);
             }
 
