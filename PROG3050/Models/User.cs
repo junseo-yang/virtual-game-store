@@ -39,5 +39,11 @@ namespace PROG3050.Models
         [Display(Name = "Preference")]
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; }
+
+        // Many to Many Relationship Configuration
+        public IList<Review> Reviews { get; set; }
+
+        public IList<EventUser> EventUsers { get; set; }
+
     }
 }

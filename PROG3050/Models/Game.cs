@@ -28,6 +28,10 @@ namespace PROG3050.Models
 
         [Display(Name = "Game Category")]
         public int GameCategoryId { get; set; }
-        public GameCategory GameCategory { get; set; }
+        public GameCategory? GameCategory { get; set; }
+
+        // Many to Many Relationship Configuration
+        public IList<Review>? Reviews { get; set; }
+        public IList<OrderGame>? OrderGames { get; set; }
     }
 }

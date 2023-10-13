@@ -433,6 +433,241 @@ namespace PROG3050.Data
                     GameCategoryId = 2
                 }
             );
+
+            // Configure Many-to-Many relationship between User-Review-Game
+            builder.Entity<Review>()
+                .HasKey(r => r.ReviewId);
+            builder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.UserId);
+            builder.Entity<Review>()
+                .HasOne(r => r.Game)
+                .WithMany(g => g.Reviews)
+                .HasForeignKey(r => r.GameId);
+
+            builder.Entity<Review>().HasData(
+                new Review
+                {
+                    ReviewId = 1,
+                    Title = "The Best Game!",
+                    Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                    Rating = 5,
+                    Status = "Pending",
+                    UserId = basic.Id,
+                    GameId = 1,
+                },
+                new Review
+                {
+                    ReviewId = 2,
+                    Title = "Good Game",
+                    Description = "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.",
+                    Rating = 4,
+                    Status = "Processed",
+                    UserId = admin.Id,
+                    GameId = 2,
+                },
+                new Review
+                {
+                    ReviewId = 3,
+                    Title = "Bad Game!",
+                    Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                    Rating = 2,
+                    Status = "Pending",
+                    UserId = moderator.Id,
+                    GameId = 3,
+                },
+                new Review
+                {
+                    ReviewId = 4,
+                    Title = "Bad Game!",
+                    Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                    Rating = 2,
+                    Status = "Pending",
+                    UserId = moderator.Id,
+                    GameId = 2,
+                }
+            );
+
+            builder.Entity<ShippingAddress>().HasData(
+                new ShippingAddress
+                {
+                    ShippingAddressId = 1,
+                    Street = "978 ARGYLE ST N",
+                    City = "HALIFAX",
+                    Province = "NU",
+                    Country = "Canada",
+                    PostalCode = "B3J 2B3",
+                    DeliveryInstruction = "At the door"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 2,
+                    Unit = "501",
+                    Street = "87 DANFORTH AVE",
+                    City = "TORONTO",
+                    Province = "ON",
+                    Country = "Canada",
+                    PostalCode = "M4K 1M8",
+                    DeliveryInstruction = "At the Post Box"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 3,
+                    Street = "4 FIRST AVE S",
+                    City = "BIG VALLEY",
+                    Province = "AB",
+                    Country = "Canada",
+                    PostalCode = "T0L 1K0"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 4,
+                    Street = "PO BOX 4600 STN B",
+                    City = "COURTENAY",
+                    Province = "BC",
+                    Country = "Canada",
+                    PostalCode = "V9N 0A7",
+                    DeliveryInstruction = "Ask the security Guard to get in."
+                }
+            );
+
+            builder.Entity<Order>().HasData(
+                new Order
+                {
+                    OrderId = 1,
+                    UserId = basic.Id,
+                    Status = "Processed",
+                    OrderDate = DateTime.Parse("2012-09-21"),
+                    ShippingAddressId = 4
+                },
+                new Order
+                {
+                    OrderId = 2,
+                    UserId = admin.Id,
+                    Status = "Processed",
+                    OrderDate = DateTime.Parse("2020-10-21"),
+                    ShippingAddressId = 2
+                },
+                new Order
+                {
+                    OrderId = 3,
+                    UserId = moderator.Id,
+                    Status = "Pending",
+                    OrderDate = DateTime.Parse("2022-02-19"),
+                    ShippingAddressId = 3
+                }
+            );
+
+            // Configure Many-to-Many relationship between User-Review-Game
+            builder.Entity<OrderGame>()
+                .HasKey(og => og.OrderGameId);
+            builder.Entity<OrderGame>()
+                .HasOne(og => og.Order)
+                .WithMany(o => o.OrderGames)
+                .HasForeignKey(og => og.OrderId);
+            builder.Entity<OrderGame>()
+                .HasOne(og => og.Game)
+                .WithMany(g => g.OrderGames)
+                .HasForeignKey(og => og.GameId);
+
+            builder.Entity<OrderGame>().HasData(
+                new OrderGame
+                {
+                    OrderGameId = 1,
+                    OrderId = 1,
+                    GameId = 1,
+                    Quantity = 1
+                }
+                ,
+                new OrderGame
+                {
+                    OrderGameId = 2,
+                    OrderId = 1,
+                    GameId = 2,
+                    Quantity = 2
+                },
+                new OrderGame
+                {
+                    OrderGameId = 3,
+                    OrderId = 2,
+                    GameId = 2,
+                    Quantity = 1
+                },
+                new OrderGame
+                {
+                    OrderGameId = 4,
+                    OrderId = 2,
+                    GameId = 3,
+                    Quantity = 3
+                },
+                new OrderGame
+                {
+                    OrderGameId = 5,
+                    OrderId = 3,
+                    GameId = 3,
+                    Quantity = 1
+                }
+            );
+
+            builder.Entity<Event>().HasData(
+                new Event
+                {
+                    EventId = 1,
+                    Title = "2023 Annual Event",
+                    Description = "Welcome Newcomers! Enjoy the party!",
+                    StartDateTime = DateTime.Parse("2023-11-11"),
+                    EndDateTime = DateTime.Parse("2023-11-13")
+                },
+                new Event
+                {
+                    EventId = 2,
+                    Title = "2023 GameCon",
+                    Description = "Welcome Game Developers! Enjoy the party!",
+                    StartDateTime = DateTime.Parse("2023-12-13"),
+                    EndDateTime = DateTime.Parse("2023-12-14")
+                }
+            );
+
+            // Configure Many-to-Many relationship between Preference-PreferenceFavouritePlatform-FavouritePlatform
+            builder.Entity<EventUser>()
+                .HasKey(eu => new { eu.EventId, eu.UserId });
+            builder.Entity<EventUser>()
+                .HasOne(eu => eu.Event)
+                .WithMany(e => e.EventUsers)
+                .HasForeignKey(eu => eu.EventId);
+            builder.Entity<EventUser>()
+                .HasOne(eu => eu.User)
+                .WithMany(u => u.EventUsers)
+                .HasForeignKey(eu=> eu.UserId);
+
+            builder.Entity<EventUser>().HasData(
+                new EventUser
+                {
+                    EventId = 1,
+                    UserId = basic.Id
+                },
+                new EventUser
+                {
+                    EventId = 2,
+                    UserId = basic.Id
+                },
+                new EventUser
+                {
+                    EventId = 1,
+                    UserId = moderator.Id
+                },
+                new EventUser
+                {
+                    EventId = 1,
+                    UserId = admin.Id
+                },
+                new EventUser
+                {
+                    EventId = 2,
+                    UserId = admin.Id
+                }
+            );
         }
 
         public DbSet<Gender>? Genders { get; set; }
@@ -452,5 +687,19 @@ namespace PROG3050.Data
         public DbSet<GameCategory>? GameCategory { get; set; }
 
         public DbSet<Game>? Game { get; set; }
+
+        public DbSet<Review>? Review { get; set; }
+
+        public DbSet<ShippingAddress>? ShippingAddress { get; set; }
+
+        public DbSet<Order>? Order { get; set; }
+
+        public DbSet<OrderGame>? OrderGame { get; set; }
+
+        public DbSet<Event>? Event { get; set; }
+
+        public DbSet<EventUser>? EventUser { get; set; }
+
+        public DbSet<Report>? Report { get; set; }
     }
 }
