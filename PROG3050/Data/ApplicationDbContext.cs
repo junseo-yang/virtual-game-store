@@ -394,6 +394,45 @@ namespace PROG3050.Data
                     FavouritePlatformId = 1
                 }
             );
+
+            builder.Entity<Game>().HasData(
+                new Game
+                {
+                    GameId = 1,
+                    Title = "Counter-Strike 2",
+                    Description = "For over two decades, Counter-Strike has offered an elite competitive " +
+                                    "experience, one shaped by millions of players from across the globe. " +
+                                    "And now the next chapter in the CS story is about to begin. This is " +
+                                    "Counter-Strike 2.",
+                    Price = 0,
+                    PublishDate = DateTime.Parse("2012-08-21"),
+                    GameCategoryId = 3
+                },
+                new Game
+                {
+                    GameId = 2,
+                    Title = "Star Trek: Infinite",
+                    Description = "Star Trek: Infinite is a grand strategy experience that lets you play " +
+                                    "your own Star Trek story as the leader of one of four major factions " +
+                                    "in the galaxy. Follow the specially crafted story or blaze your own trail " +
+                                    "in the first Star Trek grand strategy game.",
+                    Price = 39.99,
+                    PublishDate = DateTime.Parse("2023-10-12"),
+                    GameCategoryId = 1
+                },
+                new Game
+                {
+                    GameId = 3,
+                    Title = "Cities: Skylines II",
+                    Description = "Raise a city from the ground up and transform it into a thriving metropolis " +
+                                    "with the most realistic city builder ever. Push your creativity and " +
+                                    "problem-solving to build on a scale you've never experienced. With deep " +
+                                    "simulation and a living economy, this is world-building without limits.",
+                    Price = 59.99,
+                    PublishDate = DateTime.Parse("2023-10-12"),
+                    GameCategoryId = 2
+                }
+            );
         }
 
         public DbSet<Gender>? Genders { get; set; }
@@ -411,5 +450,7 @@ namespace PROG3050.Data
         public DbSet<MailingAddress>? MailingAddress { get; set; }
 
         public DbSet<GameCategory>? GameCategory { get; set; }
+
+        public DbSet<Game>? Game { get; set; }
     }
 }
