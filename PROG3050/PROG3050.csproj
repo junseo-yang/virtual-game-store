@@ -18,4 +18,10 @@
     <PackageReference Include="Owl.reCAPTCHA" Version="0.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Images\event1.jpg" />
+    <None Include="wwwroot\Images\fc24.jpg" />
+    <None Include="wwwroot\Images\godofwar.jpg" />
+  </ItemGroup>
+
 </Project>
