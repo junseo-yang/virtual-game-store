@@ -24,7 +24,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.MaxFailedAccessAttempts = 3;
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+        options.User.RequireUniqueEmail = true;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
@@ -32,6 +32,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 
+// Add Gmail SMTP service
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
