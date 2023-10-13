@@ -26,7 +26,7 @@ namespace PROG3050.Models
 
         // TODO: Date Validation future
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Date of Birth")]
         public DateTime? DateOfBirth { get; set; }
 
