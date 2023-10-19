@@ -12,14 +12,14 @@ using PROG3050.Data;
 namespace PROG3050.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231012165516_CreatePreferenceFavouritePlatformSchema")]
-    partial class CreatePreferenceFavouritePlatformSchema
+    [Migration("20231019214809_UpdateSchema")]
+    partial class UpdateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.21")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -53,29 +53,29 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f806b3a2-933b-43e5-87f7-f015988dbebe",
-                            ConcurrencyStamp = "b4d1cc66-e23e-46ba-8a8a-de4eb367a760",
+                            Id = "f80cf2ae-f5b3-422e-8225-6a760b3bd6df",
+                            ConcurrencyStamp = "86557d82-7438-4805-b51b-4fa239fc49fa",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "4e73d15d-a0a7-4a42-a974-0f3202a92e0f",
-                            ConcurrencyStamp = "9ebbaad3-32ca-4b27-a15d-fa7a236a0881",
+                            Id = "c1a9e393-125c-4548-9489-21b9808a61df",
+                            ConcurrencyStamp = "1d5b0745-4f2d-4f15-a1bc-16b329100f0d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7845e505-01a7-4a1d-bf3a-0d4ce9017c4b",
-                            ConcurrencyStamp = "dd5cb95a-d289-4fd3-87e5-c28a2d89baa9",
+                            Id = "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6",
+                            ConcurrencyStamp = "d3d85868-8423-4a10-8550-59f26987f7fa",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "1bb281d5-9ce0-4e67-bd4e-967e44c8c068",
-                            ConcurrencyStamp = "19f3e159-15ac-4272-8251-6e07a63c3d27",
+                            Id = "9e7b981b-da47-4597-a17a-ae4df723981d",
+                            ConcurrencyStamp = "85e4cfe0-bf4a-4e51-8947-66917e23a990",
                             Name = "Basic",
                             NormalizedName = "BASIC"
                         });
@@ -222,23 +222,23 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "272d49b0-3428-431c-995d-41da8d49063c",
-                            RoleId = "f806b3a2-933b-43e5-87f7-f015988dbebe"
+                            UserId = "e03c8494-17d9-413f-b484-36dc8054f0e0",
+                            RoleId = "f80cf2ae-f5b3-422e-8225-6a760b3bd6df"
                         },
                         new
                         {
-                            UserId = "57e65a64-91b9-4812-a8c6-23db3911deaa",
-                            RoleId = "4e73d15d-a0a7-4a42-a974-0f3202a92e0f"
+                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64",
+                            RoleId = "c1a9e393-125c-4548-9489-21b9808a61df"
                         },
                         new
                         {
-                            UserId = "ce5a4d1f-9173-4158-8210-22f2f6be9c56",
-                            RoleId = "7845e505-01a7-4a1d-bf3a-0d4ce9017c4b"
+                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532",
+                            RoleId = "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6"
                         },
                         new
                         {
-                            UserId = "ae83a109-b456-4545-ab4e-fd1fbb53828c",
-                            RoleId = "1bb281d5-9ce0-4e67-bd4e-967e44c8c068"
+                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397",
+                            RoleId = "9e7b981b-da47-4597-a17a-ae4df723981d"
                         });
                 });
 
@@ -282,6 +282,98 @@ namespace PROG3050.Data.Migrations
                         {
                             CountryId = 1,
                             CountryName = "Canada"
+                        },
+                        new
+                        {
+                            CountryId = 2,
+                            CountryName = "US"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Event", b =>
+                {
+                    b.Property<int>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EventId");
+
+                    b.ToTable("Event");
+
+                    b.HasData(
+                        new
+                        {
+                            EventId = 1,
+                            Description = "Welcome Newcomers! Enjoy the party!",
+                            EndDateTime = new DateTime(2023, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDateTime = new DateTime(2023, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "2023 Annual Event"
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            Description = "Welcome Game Developers! Enjoy the party!",
+                            EndDateTime = new DateTime(2023, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDateTime = new DateTime(2023, 12, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "2023 GameCon"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.EventUser", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EventId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EventUser");
+
+                    b.HasData(
+                        new
+                        {
+                            EventId = 1,
+                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                        },
+                        new
+                        {
+                            EventId = 1,
+                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                        },
+                        new
+                        {
+                            EventId = 1,
+                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
                         });
                 });
 
@@ -321,6 +413,67 @@ namespace PROG3050.Data.Migrations
                         {
                             FavouritePlatformId = 4,
                             FavouritePlatformName = "Others"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Game", b =>
+                {
+                    b.Property<int>("GameId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GameId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GameCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GameId");
+
+                    b.HasIndex("GameCategoryId");
+
+                    b.ToTable("Game");
+
+                    b.HasData(
+                        new
+                        {
+                            GameId = 1,
+                            Description = "For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS story is about to begin. This is Counter-Strike 2.",
+                            GameCategoryId = 3,
+                            Price = 0.0,
+                            PublishDate = new DateTime(2012, 8, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Counter-Strike 2"
+                        },
+                        new
+                        {
+                            GameId = 2,
+                            Description = "Star Trek: Infinite is a grand strategy experience that lets you play your own Star Trek story as the leader of one of four major factions in the galaxy. Follow the specially crafted story or blaze your own trail in the first Star Trek grand strategy game.",
+                            GameCategoryId = 1,
+                            Price = 39.990000000000002,
+                            PublishDate = new DateTime(2023, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Star Trek: Infinite"
+                        },
+                        new
+                        {
+                            GameId = 3,
+                            Description = "Raise a city from the ground up and transform it into a thriving metropolis with the most realistic city builder ever. Push your creativity and problem-solving to build on a scale you've never experienced. With deep simulation and a living economy, this is world-building without limits.",
+                            GameCategoryId = 2,
+                            Price = 59.990000000000002,
+                            PublishDate = new DateTime(2023, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Cities: Skylines II"
                         });
                 });
 
@@ -494,6 +647,126 @@ namespace PROG3050.Data.Migrations
                             PostalCode = "V9N 0A7",
                             ProvinceId = 2,
                             Street = "PO BOX 4600 STN B"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ShippingAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("ShippingAddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Order");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1,
+                            OrderDate = new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ShippingAddressId = 4,
+                            Status = "Processed",
+                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                        },
+                        new
+                        {
+                            OrderId = 2,
+                            OrderDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ShippingAddressId = 2,
+                            Status = "Processed",
+                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                        },
+                        new
+                        {
+                            OrderId = 3,
+                            OrderDate = new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ShippingAddressId = 3,
+                            Status = "Pending",
+                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.OrderGame", b =>
+                {
+                    b.Property<int>("OrderGameId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderGameId"), 1L, 1);
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderGameId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderGame");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderGameId = 1,
+                            GameId = 1,
+                            OrderId = 1,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            OrderGameId = 2,
+                            GameId = 2,
+                            OrderId = 1,
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            OrderGameId = 3,
+                            GameId = 2,
+                            OrderId = 2,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            OrderGameId = 4,
+                            GameId = 3,
+                            OrderId = 2,
+                            Quantity = 3
+                        },
+                        new
+                        {
+                            OrderGameId = 5,
+                            GameId = 3,
+                            OrderId = 3,
+                            Quantity = 1
                         });
                 });
 
@@ -728,6 +1001,191 @@ namespace PROG3050.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PROG3050.Models.Report", b =>
+                {
+                    b.Property<int>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"), 1L, 1);
+
+                    b.Property<byte[]>("Content")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReportId");
+
+                    b.ToTable("Report");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Review");
+
+                    b.HasData(
+                        new
+                        {
+                            ReviewId = 1,
+                            Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                            GameId = 1,
+                            Rating = 5.0,
+                            Status = "Pending",
+                            Title = "The Best Game!",
+                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                        },
+                        new
+                        {
+                            ReviewId = 2,
+                            Description = "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.",
+                            GameId = 2,
+                            Rating = 4.0,
+                            Status = "Processed",
+                            Title = "Good Game",
+                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                        },
+                        new
+                        {
+                            ReviewId = 3,
+                            Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                            GameId = 3,
+                            Rating = 2.0,
+                            Status = "Pending",
+                            Title = "Bad Game!",
+                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                        },
+                        new
+                        {
+                            ReviewId = 4,
+                            Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                            GameId = 2,
+                            Rating = 2.0,
+                            Status = "Pending",
+                            Title = "Bad Game!",
+                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.ShippingAddress", b =>
+                {
+                    b.Property<int>("ShippingAddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShippingAddressId"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryInstruction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShippingAddressId");
+
+                    b.ToTable("ShippingAddress");
+
+                    b.HasData(
+                        new
+                        {
+                            ShippingAddressId = 1,
+                            City = "HALIFAX",
+                            Country = "Canada",
+                            DeliveryInstruction = "At the door",
+                            PostalCode = "B3J 2B3",
+                            Province = "NU",
+                            Street = "978 ARGYLE ST N"
+                        },
+                        new
+                        {
+                            ShippingAddressId = 2,
+                            City = "TORONTO",
+                            Country = "Canada",
+                            DeliveryInstruction = "At the Post Box",
+                            PostalCode = "M4K 1M8",
+                            Province = "ON",
+                            Street = "87 DANFORTH AVE",
+                            Unit = "501"
+                        },
+                        new
+                        {
+                            ShippingAddressId = 3,
+                            City = "BIG VALLEY",
+                            Country = "Canada",
+                            PostalCode = "T0L 1K0",
+                            Province = "AB",
+                            Street = "4 FIRST AVE S"
+                        },
+                        new
+                        {
+                            ShippingAddressId = 4,
+                            City = "COURTENAY",
+                            Country = "Canada",
+                            DeliveryInstruction = "Ask the security Guard to get in.",
+                            PostalCode = "V9N 0A7",
+                            Province = "BC",
+                            Street = "PO BOX 4600 STN B"
+                        });
+                });
+
             modelBuilder.Entity("PROG3050.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -828,9 +1286,9 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "272d49b0-3428-431c-995d-41da8d49063c",
+                            Id = "e03c8494-17d9-413f-b484-36dc8054f0e0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "01b9180f-8ea2-4118-b10a-8a1a01ef9f52",
+                            ConcurrencyStamp = "b5fc16db-6df0-4c99-a664-b14b0235247e",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             GenderId = 3,
@@ -840,18 +1298,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 1,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPLnU73KaWL6Z75awgTg3wFiTt77B0zVZW0Z8VO/UL3Nxvhipa1XqAZpsbZ99WPA0Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELBk2e6swexqfCS65M+PNu0G0UUYrZZnOHCJj0FmEa9M0m91kTW03qrNoVnxpFU5fQ==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 1,
-                            SecurityStamp = "14d1a896-a534-4cff-8fb7-b406c18ba953",
+                            SecurityStamp = "a5cf4025-35db-423a-9219-f1aa5da4ab1a",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         },
                         new
                         {
-                            Id = "57e65a64-91b9-4812-a8c6-23db3911deaa",
+                            Id = "4c22c984-e9df-4f81-a46c-11851ac4bf64",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c091bd73-6660-4f9f-a45b-bcdba4bd19f1",
+                            ConcurrencyStamp = "168be87d-538d-413f-bfb1-b09353dfd18e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             GenderId = 3,
@@ -861,18 +1319,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 2,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOKtlr13LFpRADBwcXcTqPpVjgwJjeKPLYviOEEncMv+FNVVjv/D51e4q9WbiUdcTA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELKC6bNnpdUriR1GS7AeLLs9pUX+IetcNRPbgTGgceh5oeiknD2tlOOr7mcLdsAXWg==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 2,
-                            SecurityStamp = "1afd7aac-3093-4470-ad2b-e6132b499ae3",
+                            SecurityStamp = "22147c4a-aae8-4c74-9fc2-f36756d8ee85",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = "ce5a4d1f-9173-4158-8210-22f2f6be9c56",
+                            Id = "101de009-6ad9-4d24-a495-67bb602d0532",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6644f646-7b45-4bdb-87ce-a2712d2dbd99",
+                            ConcurrencyStamp = "1085ab21-0cec-465d-b1f5-99c0ecbaa615",
                             Email = "moderator@gmail.com",
                             EmailConfirmed = true,
                             GenderId = 3,
@@ -882,18 +1340,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 3,
                             NormalizedEmail = "MODERATOR",
                             NormalizedUserName = "MODERATOR@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENpusdG/EMC2Dl0bmmZ2BgOpP0uZFC4dlPl5qUUwiPk1Fu05MlCAihASwikqJgie6A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGt2ldxsN6en5Mj39Ug3pEyHHStUKAXVYmO21LsvIbrQYFDnw34DKD8sRU1jKuJ9Ig==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 3,
-                            SecurityStamp = "22945467-baba-49f7-a7f3-5fef885c091d",
+                            SecurityStamp = "f6cceded-1ea2-4a61-90fe-5b11dae784e7",
                             TwoFactorEnabled = false,
                             UserName = "Moderator"
                         },
                         new
                         {
-                            Id = "ae83a109-b456-4545-ab4e-fd1fbb53828c",
+                            Id = "e40efa73-04a9-4e42-8f09-ab45b8676397",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "553fd713-4675-438e-bab3-8ca92645b2a6",
+                            ConcurrencyStamp = "245b5b63-c6b6-4212-8578-ad6b0f962641",
                             Email = "basic@gmail.com",
                             EmailConfirmed = true,
                             GenderId = 3,
@@ -903,10 +1361,10 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 4,
                             NormalizedEmail = "BASIC@GMAIL.COM",
                             NormalizedUserName = "BASIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEB19LOhSRbzJ8QdnTAbMrMp49y/PtI8lMxlMf49DqYeeuFVuJcQ0p2FPBlUYjJp6dA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECkpmgPfszc9WZjjEcp13SmDJLJa2VR3yNP74J0/GnhIpJW+CEFBMJ75I4Xydv0x1g==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 4,
-                            SecurityStamp = "310d916e-ce6a-40fd-8f4e-106d75685dde",
+                            SecurityStamp = "2cef32a7-66dd-4d53-8cca-ad91d1ad9845",
                             TwoFactorEnabled = false,
                             UserName = "Basic"
                         });
@@ -963,6 +1421,36 @@ namespace PROG3050.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PROG3050.Models.EventUser", b =>
+                {
+                    b.HasOne("PROG3050.Models.Event", "Event")
+                        .WithMany("EventUsers")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROG3050.Models.User", "User")
+                        .WithMany("EventUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Game", b =>
+                {
+                    b.HasOne("PROG3050.Models.GameCategory", "GameCategory")
+                        .WithMany()
+                        .HasForeignKey("GameCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GameCategory");
+                });
+
             modelBuilder.Entity("PROG3050.Models.MailingAddress", b =>
                 {
                     b.HasOne("PROG3050.Models.Province", "Province")
@@ -972,6 +1460,44 @@ namespace PROG3050.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Province");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Order", b =>
+                {
+                    b.HasOne("PROG3050.Models.ShippingAddress", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("ShippingAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROG3050.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShippingAddress");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.OrderGame", b =>
+                {
+                    b.HasOne("PROG3050.Models.Game", "Game")
+                        .WithMany("OrderGames")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROG3050.Models.Order", "Order")
+                        .WithMany("OrderGames")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("PROG3050.Models.Preference", b =>
@@ -1034,6 +1560,25 @@ namespace PROG3050.Data.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("PROG3050.Models.Review", b =>
+                {
+                    b.HasOne("PROG3050.Models.Game", "Game")
+                        .WithMany("Reviews")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROG3050.Models.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PROG3050.Models.User", b =>
                 {
                     b.HasOne("PROG3050.Models.Gender", "Gender")
@@ -1061,9 +1606,21 @@ namespace PROG3050.Data.Migrations
                     b.Navigation("Preference");
                 });
 
+            modelBuilder.Entity("PROG3050.Models.Event", b =>
+                {
+                    b.Navigation("EventUsers");
+                });
+
             modelBuilder.Entity("PROG3050.Models.FavouritePlatform", b =>
                 {
                     b.Navigation("PreferenceFavouritePlatforms");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.Game", b =>
+                {
+                    b.Navigation("OrderGames");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("PROG3050.Models.GameCategory", b =>
@@ -1071,11 +1628,23 @@ namespace PROG3050.Data.Migrations
                     b.Navigation("PreferenceGameCategories");
                 });
 
+            modelBuilder.Entity("PROG3050.Models.Order", b =>
+                {
+                    b.Navigation("OrderGames");
+                });
+
             modelBuilder.Entity("PROG3050.Models.Preference", b =>
                 {
                     b.Navigation("PreferenceFavouritePlatforms");
 
                     b.Navigation("PreferenceGameCategories");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.User", b =>
+                {
+                    b.Navigation("EventUsers");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }
