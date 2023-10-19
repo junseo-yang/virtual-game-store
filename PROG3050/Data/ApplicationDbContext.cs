@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Models;
+using System.Diagnostics.Metrics;
 
 namespace PROG3050.Data
 {
@@ -59,6 +60,101 @@ namespace PROG3050.Data
                 {
                     GenderId = 3,
                     GenderName = "Others"
+                }
+            );
+
+            builder.Entity<Country>().HasData(
+                new Country
+                {
+                    CountryId = 1,
+                    CountryName = "Canada"
+                },
+                new Country
+                {
+                    CountryId = 2,
+                    CountryName = "US"
+                }
+            );
+
+
+            builder.Entity<Province>().HasData(
+                new Province
+                {
+                    ProvinceId = 1,
+                    ProvinceName = "AB",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 2,
+                    ProvinceName = "BC",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 3,
+                    ProvinceName = "MB",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 4,
+                    ProvinceName = "NB",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 5,
+                    ProvinceName = "NL",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 6,
+                    ProvinceName = "NT",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 7,
+                    ProvinceName = "NS",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 8,
+                    ProvinceName = "NU",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 9,
+                    ProvinceName = "ON",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 10,
+                    ProvinceName = "PE",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 11,
+                    ProvinceName = "QC",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 12,
+                    ProvinceName = "SK",
+                    CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 13,
+                    ProvinceName = "YT",
+                    CountryId = 1
                 }
             );
 
@@ -191,8 +287,7 @@ namespace PROG3050.Data
                     MailingAddressId = 1,
                     Street = "978 ARGYLE ST N",
                     City = "HALIFAX",
-                    Province = "NU",
-                    Country = "Canada",
+                    ProvinceId = 7,
                     PostalCode = "B3J 2B3",
                     DeliveryInstruction = "At the door"
                 },
@@ -202,8 +297,7 @@ namespace PROG3050.Data
                     Unit = "501",
                     Street = "87 DANFORTH AVE",
                     City = "TORONTO",
-                    Province = "ON",
-                    Country = "Canada",
+                    ProvinceId = 9,
                     PostalCode = "M4K 1M8",
                     DeliveryInstruction = "At the Post Box"
                 },
@@ -212,8 +306,7 @@ namespace PROG3050.Data
                     MailingAddressId = 3,
                     Street = "4 FIRST AVE S",
                     City = "BIG VALLEY",
-                    Province = "AB",
-                    Country = "Canada",
+                    ProvinceId = 1,
                     PostalCode = "T0L 1K0"
                 },
                 new MailingAddress
@@ -221,8 +314,7 @@ namespace PROG3050.Data
                     MailingAddressId = 4,
                     Street = "PO BOX 4600 STN B",
                     City = "COURTENAY",
-                    Province = "BC",
-                    Country = "Canada",
+                    ProvinceId = 2,
                     PostalCode = "V9N 0A7",
                     DeliveryInstruction = "Ask the security Guard to get in."
                 }
@@ -671,6 +763,10 @@ namespace PROG3050.Data
         }
 
         public DbSet<Gender>? Genders { get; set; }
+
+        public DbSet<Country>? Country { get; set; }
+
+        public DbSet<Province>? Province { get; set; }
 
         public DbSet<Language>? Language { get; set; }
 
