@@ -14,11 +14,7 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
-    height: 100%;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
+  margin-bottom: 60px;
 }
 
 .main-green-button {
@@ -31,24 +27,6 @@ body {
     color: #426B1F !important;
 }
 
-.main {
-    width: 80%;
-    margin: 0 auto; /* Center the content */
-    padding: 20px; /* Optional padding */
-}
-
-.main h1 {
-   font-size: 400%;
-   font-family: 'Newsreadr', serif;
-   margin-top: 90px;
-   margin-bottom: 90px;
-}
-
-.main button {
-    width: 200px;
-    margin-bottom: 70px;
-}
-
 .main-image {
     width : 400px;
     height : 500px;
@@ -59,7 +37,8 @@ body {
     text-align: left;
 }
 
-.main-container img {;
+.main-container img {
+    float: left;
     max-width: 100%;
     margin-right: 100px;
 }
@@ -67,6 +46,6 @@ body {
 .main-block {
     float: left;
     width: 400px;
-    height: 1200px;
+    height: 500px;
     margin-right: 100px;
 }
