@@ -357,6 +357,8 @@ namespace PROG3050.Data
             {
                 UserName = "SuperAdmin",
                 NormalizedUserName = "SUPERADMIN",
+                FirstName = "Tyrone",
+                LastName = "Mcgee",
                 Email = "superadmin@gmail.com",
                 NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                 EmailConfirmed = true,
@@ -372,6 +374,8 @@ namespace PROG3050.Data
             {
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
+                FirstName = "William",
+                LastName = "Potter",
                 Email = "admin@gmail.com",
                 NormalizedEmail = "ADMIN@GMAIL.COM",
                 EmailConfirmed = true,
@@ -386,7 +390,8 @@ namespace PROG3050.Data
             var moderator = new User
             {
                 UserName = "Moderator",
-                NormalizedEmail = "MODERATOR",
+                FirstName = "Francis",
+                LastName = "Ramos",
                 Email = "moderator@gmail.com",
                 NormalizedUserName = "MODERATOR@GMAIL.COM",
                 EmailConfirmed = true,
@@ -402,6 +407,8 @@ namespace PROG3050.Data
             {
                 UserName = "Member",
                 NormalizedUserName = "MEMBER",
+                FirstName = "Ernest",
+                LastName = "Mcknight",
                 Email = "member@gmail.com",
                 NormalizedEmail = "MEMBER@GMAIL.COM",
                 EmailConfirmed = true,
