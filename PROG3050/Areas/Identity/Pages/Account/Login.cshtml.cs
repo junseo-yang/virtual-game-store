@@ -143,6 +143,12 @@ namespace PROG3050.Areas.Identity.Pages.Account
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
+                if (result.IsNotAllowed)
+                {
+                    _logger.LogWarning("User account has not allowed.");
+                    ModelState.AddModelError(string.Empty, "User account has not allowed. Check your email.");
+                    return Page();
+                }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
