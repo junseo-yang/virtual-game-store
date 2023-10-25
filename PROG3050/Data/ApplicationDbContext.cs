@@ -390,10 +390,11 @@ namespace PROG3050.Data
             var moderator = new User
             {
                 UserName = "Moderator",
+                NormalizedUserName = "MODERATOR",
                 FirstName = "Francis",
                 LastName = "Ramos",
                 Email = "moderator@gmail.com",
-                NormalizedUserName = "MODERATOR@GMAIL.COM",
+                NormalizedEmail = "MODERATOR@GMAIL.COM",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 3,
