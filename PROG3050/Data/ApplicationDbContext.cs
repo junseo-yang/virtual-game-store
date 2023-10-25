@@ -760,6 +760,51 @@ namespace PROG3050.Data
                     UserId = admin.Id
                 }
             );
+
+            builder.Entity<FriendFamily>()
+                .HasKey(ff => new { ff.RequesterUserId, ff.ReceiverUserId });
+            builder.Entity<FriendFamily>()
+                .HasOne(ff => ff.RequesterUser)
+                .WithMany(u => u.FriendFamilyRequester)
+                .HasForeignKey(ff => ff.RequesterUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            builder.Entity<FriendFamily>()
+                .HasOne(ff => ff.ReceiverUser)
+                .WithMany(u => u.FriendFamilyReceiver)
+                .HasForeignKey(ff => ff.ReceiverUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+
+            builder.Entity<FriendFamily>().HasData(
+                new FriendFamily
+                {
+                    RequesterUserId = admin.Id,
+                    ReceiverUserId = member.Id,
+                    Description = "Friend",
+                    Status = "Processed"
+                },
+                new FriendFamily
+                {
+                    RequesterUserId = moderator.Id,
+                    ReceiverUserId = member.Id,
+                    Description = "Family",
+                    Status = "Processed"
+                },
+                new FriendFamily
+                {
+                    RequesterUserId = member.Id,
+                    ReceiverUserId = superadmin.Id,
+                    Description = "Friend",
+                    Status = "Pending"
+                },
+                new FriendFamily
+                {
+                    RequesterUserId = moderator.Id,
+                    ReceiverUserId = superadmin.Id,
+                    Description = "Family",
+                    Status = "Pending"
+                }
+            );
         }
 
         public DbSet<Gender>? Genders { get; set; }
@@ -797,5 +842,9 @@ namespace PROG3050.Data
         public DbSet<EventUser>? EventUser { get; set; }
 
         public DbSet<Report>? Report { get; set; }
+
+        public DbSet<FriendFamily>? FriendFamily { get; set; }
+
+        public DbSet<User>? User { get; set; }
     }
 }

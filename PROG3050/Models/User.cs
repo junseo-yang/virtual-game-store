@@ -45,5 +45,8 @@ namespace PROG3050.Models
 
         public IList<EventUser> EventUsers { get; set; }
 
+        public IList<FriendFamily> FriendFamilyRequester { get; set; }
+
+        public IList<FriendFamily> FriendFamilyReceiver { get; set; }
     }
 }
