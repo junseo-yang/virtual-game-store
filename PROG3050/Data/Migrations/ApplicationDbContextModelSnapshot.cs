@@ -51,31 +51,31 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f80cf2ae-f5b3-422e-8225-6a760b3bd6df",
-                            ConcurrencyStamp = "86557d82-7438-4805-b51b-4fa239fc49fa",
+                            Id = "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1",
+                            ConcurrencyStamp = "e606225b-f130-4102-ace9-95b7bc486d5b",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "c1a9e393-125c-4548-9489-21b9808a61df",
-                            ConcurrencyStamp = "1d5b0745-4f2d-4f15-a1bc-16b329100f0d",
+                            Id = "75ecc89e-873a-45de-90ff-a73b51a4c2a8",
+                            ConcurrencyStamp = "9bbd1a0b-cdae-4c12-b981-af546fa78c8a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6",
-                            ConcurrencyStamp = "d3d85868-8423-4a10-8550-59f26987f7fa",
+                            Id = "dd546f62-4c4f-4cdd-9390-865df97b5ec3",
+                            ConcurrencyStamp = "28e255ad-36ca-42fa-a3e5-dec246915f2f",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "9e7b981b-da47-4597-a17a-ae4df723981d",
-                            ConcurrencyStamp = "85e4cfe0-bf4a-4e51-8947-66917e23a990",
-                            Name = "Basic",
-                            NormalizedName = "BASIC"
+                            Id = "21348ed6-36c9-49d6-beb8-8e4f949357e7",
+                            ConcurrencyStamp = "dd23ffb4-eb86-4704-a802-53b2c2aa8262",
+                            Name = "Member",
+                            NormalizedName = "MEMBER"
                         });
                 });
 
@@ -220,23 +220,23 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "e03c8494-17d9-413f-b484-36dc8054f0e0",
-                            RoleId = "f80cf2ae-f5b3-422e-8225-6a760b3bd6df"
+                            UserId = "37305b8f-9a85-43f8-afe4-3da45857cb50",
+                            RoleId = "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1"
                         },
                         new
                         {
-                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64",
-                            RoleId = "c1a9e393-125c-4548-9489-21b9808a61df"
+                            UserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589",
+                            RoleId = "75ecc89e-873a-45de-90ff-a73b51a4c2a8"
                         },
                         new
                         {
-                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532",
-                            RoleId = "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6"
+                            UserId = "3038707d-5c89-4566-aae8-68afa5b6c936",
+                            RoleId = "dd546f62-4c4f-4cdd-9390-865df97b5ec3"
                         },
                         new
                         {
-                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397",
-                            RoleId = "9e7b981b-da47-4597-a17a-ae4df723981d"
+                            UserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169",
+                            RoleId = "21348ed6-36c9-49d6-beb8-8e4f949357e7"
                         });
                 });
 
@@ -351,27 +351,27 @@ namespace PROG3050.Data.Migrations
                         new
                         {
                             EventId = 1,
-                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                            UserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169"
                         },
                         new
                         {
                             EventId = 2,
-                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                            UserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169"
                         },
                         new
                         {
                             EventId = 1,
-                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                            UserId = "3038707d-5c89-4566-aae8-68afa5b6c936"
                         },
                         new
                         {
                             EventId = 1,
-                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                            UserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589"
                         },
                         new
                         {
                             EventId = 2,
-                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                            UserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589"
                         });
                 });
 
@@ -411,6 +411,59 @@ namespace PROG3050.Data.Migrations
                         {
                             FavouritePlatformId = 4,
                             FavouritePlatformName = "Others"
+                        });
+                });
+
+            modelBuilder.Entity("PROG3050.Models.FriendFamily", b =>
+                {
+                    b.Property<string>("RequesterUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReceiverUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RequesterUserId", "ReceiverUserId");
+
+                    b.HasIndex("ReceiverUserId");
+
+                    b.ToTable("FriendFamily");
+
+                    b.HasData(
+                        new
+                        {
+                            RequesterUserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589",
+                            ReceiverUserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169",
+                            Description = "Friend",
+                            Status = "Processed"
+                        },
+                        new
+                        {
+                            RequesterUserId = "3038707d-5c89-4566-aae8-68afa5b6c936",
+                            ReceiverUserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169",
+                            Description = "Family",
+                            Status = "Processed"
+                        },
+                        new
+                        {
+                            RequesterUserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169",
+                            ReceiverUserId = "37305b8f-9a85-43f8-afe4-3da45857cb50",
+                            Description = "Friend",
+                            Status = "Pending"
+                        },
+                        new
+                        {
+                            RequesterUserId = "3038707d-5c89-4566-aae8-68afa5b6c936",
+                            ReceiverUserId = "37305b8f-9a85-43f8-afe4-3da45857cb50",
+                            Description = "Family",
+                            Status = "Pending"
                         });
                 });
 
@@ -685,7 +738,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 4,
                             Status = "Processed",
-                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                            UserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169"
                         },
                         new
                         {
@@ -693,7 +746,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 2,
                             Status = "Processed",
-                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                            UserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589"
                         },
                         new
                         {
@@ -701,7 +754,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 3,
                             Status = "Pending",
-                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                            UserId = "3038707d-5c89-4566-aae8-68afa5b6c936"
                         });
                 });
 
@@ -1069,7 +1122,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 5.0,
                             Status = "Pending",
                             Title = "The Best Game!",
-                            UserId = "e40efa73-04a9-4e42-8f09-ab45b8676397"
+                            UserId = "581a87b8-68e2-48f2-b93e-ca0783fe9169"
                         },
                         new
                         {
@@ -1079,7 +1132,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 4.0,
                             Status = "Processed",
                             Title = "Good Game",
-                            UserId = "4c22c984-e9df-4f81-a46c-11851ac4bf64"
+                            UserId = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589"
                         },
                         new
                         {
@@ -1089,7 +1142,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 2.0,
                             Status = "Pending",
                             Title = "Bad Game!",
-                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                            UserId = "3038707d-5c89-4566-aae8-68afa5b6c936"
                         },
                         new
                         {
@@ -1099,7 +1152,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 2.0,
                             Status = "Pending",
                             Title = "Bad Game!",
-                            UserId = "101de009-6ad9-4d24-a495-67bb602d0532"
+                            UserId = "3038707d-5c89-4566-aae8-68afa5b6c936"
                         });
                 });
 
@@ -1284,87 +1337,95 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e03c8494-17d9-413f-b484-36dc8054f0e0",
+                            Id = "37305b8f-9a85-43f8-afe4-3da45857cb50",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5fc16db-6df0-4c99-a664-b14b0235247e",
+                            ConcurrencyStamp = "7e46ca5b-ff07-4002-aba9-64b6225a2728",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "Tyrone",
                             GenderId = 3,
                             IsAddressSame = false,
                             IsPromotionalEmail = false,
+                            LastName = "Mcgee",
                             LockoutEnabled = false,
                             MailingAddressId = 1,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAELBk2e6swexqfCS65M+PNu0G0UUYrZZnOHCJj0FmEa9M0m91kTW03qrNoVnxpFU5fQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEoRs153mxQr398zVvxTRXJSHoQoMxAox9+ILT6KwEUOShC+VKQmNmY3akymo4sGuw==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 1,
-                            SecurityStamp = "a5cf4025-35db-423a-9219-f1aa5da4ab1a",
+                            SecurityStamp = "91ab92e1-a669-49e7-95ff-229ef43e8a97",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         },
                         new
                         {
-                            Id = "4c22c984-e9df-4f81-a46c-11851ac4bf64",
+                            Id = "bbe3061d-d3ce-46b1-88b1-a0d8a7569589",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "168be87d-538d-413f-bfb1-b09353dfd18e",
+                            ConcurrencyStamp = "360e5218-8656-4005-beb9-ca4d03d88588",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "William",
                             GenderId = 3,
                             IsAddressSame = false,
                             IsPromotionalEmail = false,
+                            LastName = "Potter",
                             LockoutEnabled = false,
                             MailingAddressId = 2,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAELKC6bNnpdUriR1GS7AeLLs9pUX+IetcNRPbgTGgceh5oeiknD2tlOOr7mcLdsAXWg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJizWQjc3f8b3/icEFQYbCQiX67xk1Pk7lPHDTQNl7+efXHE6H0dDWmLtVZ0T8XZOw==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 2,
-                            SecurityStamp = "22147c4a-aae8-4c74-9fc2-f36756d8ee85",
+                            SecurityStamp = "cbe094d2-3aaf-4743-bcee-e7b97b1018cf",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = "101de009-6ad9-4d24-a495-67bb602d0532",
+                            Id = "3038707d-5c89-4566-aae8-68afa5b6c936",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1085ab21-0cec-465d-b1f5-99c0ecbaa615",
+                            ConcurrencyStamp = "51ecdc5b-fd37-403c-90a8-fd2931f7b44c",
                             Email = "moderator@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "Francis",
                             GenderId = 3,
                             IsAddressSame = false,
                             IsPromotionalEmail = false,
+                            LastName = "Ramos",
                             LockoutEnabled = false,
                             MailingAddressId = 3,
-                            NormalizedEmail = "MODERATOR",
-                            NormalizedUserName = "MODERATOR@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGt2ldxsN6en5Mj39Ug3pEyHHStUKAXVYmO21LsvIbrQYFDnw34DKD8sRU1jKuJ9Ig==",
+                            NormalizedEmail = "MODERATOR@GMAIL.COM",
+                            NormalizedUserName = "MODERATOR",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAaZq47pDcnwRa93Zm8clvBYyY/TnKjLn1KEqzb73XZg8GFZDkLWGKENyfVb6p1SaQ==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 3,
-                            SecurityStamp = "f6cceded-1ea2-4a61-90fe-5b11dae784e7",
+                            SecurityStamp = "7a19b818-b0fa-4855-9fda-f5dceb7cfe09",
                             TwoFactorEnabled = false,
                             UserName = "Moderator"
                         },
                         new
                         {
-                            Id = "e40efa73-04a9-4e42-8f09-ab45b8676397",
+                            Id = "581a87b8-68e2-48f2-b93e-ca0783fe9169",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "245b5b63-c6b6-4212-8578-ad6b0f962641",
-                            Email = "basic@gmail.com",
+                            ConcurrencyStamp = "66d2282b-0790-4b49-a98e-cf652274b188",
+                            Email = "member@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "Ernest",
                             GenderId = 3,
                             IsAddressSame = false,
                             IsPromotionalEmail = false,
+                            LastName = "Mcknight",
                             LockoutEnabled = false,
                             MailingAddressId = 4,
-                            NormalizedEmail = "BASIC@GMAIL.COM",
-                            NormalizedUserName = "BASIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAECkpmgPfszc9WZjjEcp13SmDJLJa2VR3yNP74J0/GnhIpJW+CEFBMJ75I4Xydv0x1g==",
+                            NormalizedEmail = "MEMBER@GMAIL.COM",
+                            NormalizedUserName = "MEMBER",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJYPnPShGBy8ORJe6DR0GTENblRTY7kW4u1NPcAUBNQPEvuBtmMvrmYxwJmcRYPARw==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 4,
-                            SecurityStamp = "2cef32a7-66dd-4d53-8cca-ad91d1ad9845",
+                            SecurityStamp = "801f7190-6348-4249-a98c-fc716402605f",
                             TwoFactorEnabled = false,
-                            UserName = "Basic"
+                            UserName = "Member"
                         });
                 });
 
@@ -1436,6 +1497,23 @@ namespace PROG3050.Data.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PROG3050.Models.FriendFamily", b =>
+                {
+                    b.HasOne("PROG3050.Models.User", "ReceiverUser")
+                        .WithMany("FriendFamilyReceiver")
+                        .HasForeignKey("ReceiverUserId")
+                        .IsRequired();
+
+                    b.HasOne("PROG3050.Models.User", "RequesterUser")
+                        .WithMany("FriendFamilyRequester")
+                        .HasForeignKey("RequesterUserId")
+                        .IsRequired();
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("RequesterUser");
                 });
 
             modelBuilder.Entity("PROG3050.Models.Game", b =>
@@ -1641,6 +1719,10 @@ namespace PROG3050.Data.Migrations
             modelBuilder.Entity("PROG3050.Models.User", b =>
                 {
                     b.Navigation("EventUsers");
+
+                    b.Navigation("FriendFamilyReceiver");
+
+                    b.Navigation("FriendFamilyRequester");
 
                     b.Navigation("Reviews");
                 });

@@ -16,7 +16,7 @@ namespace PROG3050.Models
         public string? City { get; set; }
 
         [Display(Name = "Province")]
-        public int ProvinceId { get; set; }
+        public int ProvinceId { get; set; } = 1;
         public Province? Province { get; set; }
 
         [RegularExpression(@"[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] [0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]",

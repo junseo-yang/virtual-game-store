@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PROG3050.Data.Migrations
 {
-    public partial class UpdateSchema : Migration
+    public partial class UpdateScehma : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -435,6 +435,30 @@ namespace PROG3050.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FriendFamily",
+                columns: table => new
+                {
+                    RequesterUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReceiverUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendFamily", x => new { x.RequesterUserId, x.ReceiverUserId });
+                    table.ForeignKey(
+                        name: "FK_FriendFamily_AspNetUsers_ReceiverUserId",
+                        column: x => x.ReceiverUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FriendFamily_AspNetUsers_RequesterUserId",
+                        column: x => x.RequesterUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -580,10 +604,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6", "d3d85868-8423-4a10-8550-59f26987f7fa", "Moderator", "MODERATOR" },
-                    { "9e7b981b-da47-4597-a17a-ae4df723981d", "85e4cfe0-bf4a-4e51-8947-66917e23a990", "Basic", "BASIC" },
-                    { "c1a9e393-125c-4548-9489-21b9808a61df", "1d5b0745-4f2d-4f15-a1bc-16b329100f0d", "Admin", "ADMIN" },
-                    { "f80cf2ae-f5b3-422e-8225-6a760b3bd6df", "86557d82-7438-4805-b51b-4fa239fc49fa", "SuperAdmin", "SUPERADMIN" }
+                    { "21348ed6-36c9-49d6-beb8-8e4f949357e7", "dd23ffb4-eb86-4704-a802-53b2c2aa8262", "Member", "MEMBER" },
+                    { "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1", "e606225b-f130-4102-ace9-95b7bc486d5b", "SuperAdmin", "SUPERADMIN" },
+                    { "75ecc89e-873a-45de-90ff-a73b51a4c2a8", "9bbd1a0b-cdae-4c12-b981-af546fa78c8a", "Admin", "ADMIN" },
+                    { "dd546f62-4c4f-4cdd-9390-865df97b5ec3", "28e255ad-36ca-42fa-a3e5-dec246915f2f", "Moderator", "MODERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -679,10 +703,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreditCard", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "GenderId", "IsAddressSame", "IsPromotionalEmail", "LastName", "LockoutEnabled", "LockoutEnd", "MailingAddressId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PreferenceId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "101de009-6ad9-4d24-a495-67bb602d0532", 0, "1085ab21-0cec-465d-b1f5-99c0ecbaa615", null, null, "moderator@gmail.com", true, null, 3, false, false, null, false, null, 3, "MODERATOR", "MODERATOR@GMAIL.COM", "AQAAAAEAACcQAAAAEGt2ldxsN6en5Mj39Ug3pEyHHStUKAXVYmO21LsvIbrQYFDnw34DKD8sRU1jKuJ9Ig==", null, true, 3, "f6cceded-1ea2-4a61-90fe-5b11dae784e7", false, "Moderator" },
-                    { "4c22c984-e9df-4f81-a46c-11851ac4bf64", 0, "168be87d-538d-413f-bfb1-b09353dfd18e", null, null, "admin@gmail.com", true, null, 3, false, false, null, false, null, 2, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAELKC6bNnpdUriR1GS7AeLLs9pUX+IetcNRPbgTGgceh5oeiknD2tlOOr7mcLdsAXWg==", null, true, 2, "22147c4a-aae8-4c74-9fc2-f36756d8ee85", false, "Admin" },
-                    { "e03c8494-17d9-413f-b484-36dc8054f0e0", 0, "b5fc16db-6df0-4c99-a664-b14b0235247e", null, null, "superadmin@gmail.com", true, null, 3, false, false, null, false, null, 1, "SUPERADMIN@GMAIL.COM", "SUPERADMIN", "AQAAAAEAACcQAAAAELBk2e6swexqfCS65M+PNu0G0UUYrZZnOHCJj0FmEa9M0m91kTW03qrNoVnxpFU5fQ==", null, true, 1, "a5cf4025-35db-423a-9219-f1aa5da4ab1a", false, "SuperAdmin" },
-                    { "e40efa73-04a9-4e42-8f09-ab45b8676397", 0, "245b5b63-c6b6-4212-8578-ad6b0f962641", null, null, "basic@gmail.com", true, null, 3, false, false, null, false, null, 4, "BASIC@GMAIL.COM", "BASIC", "AQAAAAEAACcQAAAAECkpmgPfszc9WZjjEcp13SmDJLJa2VR3yNP74J0/GnhIpJW+CEFBMJ75I4Xydv0x1g==", null, true, 4, "2cef32a7-66dd-4d53-8cca-ad91d1ad9845", false, "Basic" }
+                    { "3038707d-5c89-4566-aae8-68afa5b6c936", 0, "51ecdc5b-fd37-403c-90a8-fd2931f7b44c", null, null, "moderator@gmail.com", true, "Francis", 3, false, false, "Ramos", false, null, 3, "MODERATOR@GMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEAaZq47pDcnwRa93Zm8clvBYyY/TnKjLn1KEqzb73XZg8GFZDkLWGKENyfVb6p1SaQ==", null, true, 3, "7a19b818-b0fa-4855-9fda-f5dceb7cfe09", false, "Moderator" },
+                    { "37305b8f-9a85-43f8-afe4-3da45857cb50", 0, "7e46ca5b-ff07-4002-aba9-64b6225a2728", null, null, "superadmin@gmail.com", true, "Tyrone", 3, false, false, "Mcgee", false, null, 1, "SUPERADMIN@GMAIL.COM", "SUPERADMIN", "AQAAAAEAACcQAAAAEEoRs153mxQr398zVvxTRXJSHoQoMxAox9+ILT6KwEUOShC+VKQmNmY3akymo4sGuw==", null, true, 1, "91ab92e1-a669-49e7-95ff-229ef43e8a97", false, "SuperAdmin" },
+                    { "581a87b8-68e2-48f2-b93e-ca0783fe9169", 0, "66d2282b-0790-4b49-a98e-cf652274b188", null, null, "member@gmail.com", true, "Ernest", 3, false, false, "Mcknight", false, null, 4, "MEMBER@GMAIL.COM", "MEMBER", "AQAAAAEAACcQAAAAEJYPnPShGBy8ORJe6DR0GTENblRTY7kW4u1NPcAUBNQPEvuBtmMvrmYxwJmcRYPARw==", null, true, 4, "801f7190-6348-4249-a98c-fc716402605f", false, "Member" },
+                    { "bbe3061d-d3ce-46b1-88b1-a0d8a7569589", 0, "360e5218-8656-4005-beb9-ca4d03d88588", null, null, "admin@gmail.com", true, "William", 3, false, false, "Potter", false, null, 2, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJizWQjc3f8b3/icEFQYbCQiX67xk1Pk7lPHDTQNl7+efXHE6H0dDWmLtVZ0T8XZOw==", null, true, 2, "cbe094d2-3aaf-4743-bcee-e7b97b1018cf", false, "Admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -690,11 +714,22 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "EventId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "101de009-6ad9-4d24-a495-67bb602d0532" },
-                    { 1, "4c22c984-e9df-4f81-a46c-11851ac4bf64" },
-                    { 1, "e40efa73-04a9-4e42-8f09-ab45b8676397" },
-                    { 2, "4c22c984-e9df-4f81-a46c-11851ac4bf64" },
-                    { 2, "e40efa73-04a9-4e42-8f09-ab45b8676397" }
+                    { 1, "3038707d-5c89-4566-aae8-68afa5b6c936" },
+                    { 1, "581a87b8-68e2-48f2-b93e-ca0783fe9169" },
+                    { 1, "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" },
+                    { 2, "581a87b8-68e2-48f2-b93e-ca0783fe9169" },
+                    { 2, "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FriendFamily",
+                columns: new[] { "ReceiverUserId", "RequesterUserId", "Description", "Status" },
+                values: new object[,]
+                {
+                    { "37305b8f-9a85-43f8-afe4-3da45857cb50", "3038707d-5c89-4566-aae8-68afa5b6c936", "Family", "Pending" },
+                    { "581a87b8-68e2-48f2-b93e-ca0783fe9169", "3038707d-5c89-4566-aae8-68afa5b6c936", "Family", "Processed" },
+                    { "37305b8f-9a85-43f8-afe4-3da45857cb50", "581a87b8-68e2-48f2-b93e-ca0783fe9169", "Friend", "Pending" },
+                    { "581a87b8-68e2-48f2-b93e-ca0783fe9169", "bbe3061d-d3ce-46b1-88b1-a0d8a7569589", "Friend", "Processed" }
                 });
 
             migrationBuilder.InsertData(
@@ -702,9 +737,9 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "OrderId", "OrderDate", "ShippingAddressId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Processed", "e40efa73-04a9-4e42-8f09-ab45b8676397" },
-                    { 2, new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Processed", "4c22c984-e9df-4f81-a46c-11851ac4bf64" },
-                    { 3, new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pending", "101de009-6ad9-4d24-a495-67bb602d0532" }
+                    { 1, new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Processed", "581a87b8-68e2-48f2-b93e-ca0783fe9169" },
+                    { 2, new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Processed", "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" },
+                    { 3, new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pending", "3038707d-5c89-4566-aae8-68afa5b6c936" }
                 });
 
             migrationBuilder.InsertData(
@@ -712,10 +747,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "ReviewId", "Description", "GameId", "Rating", "Status", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 1, 5.0, "Pending", "The Best Game!", "e40efa73-04a9-4e42-8f09-ab45b8676397" },
-                    { 2, "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.", 2, 4.0, "Processed", "Good Game", "4c22c984-e9df-4f81-a46c-11851ac4bf64" },
-                    { 3, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 3, 2.0, "Pending", "Bad Game!", "101de009-6ad9-4d24-a495-67bb602d0532" },
-                    { 4, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 2, 2.0, "Pending", "Bad Game!", "101de009-6ad9-4d24-a495-67bb602d0532" }
+                    { 1, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 1, 5.0, "Pending", "The Best Game!", "581a87b8-68e2-48f2-b93e-ca0783fe9169" },
+                    { 2, "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.", 2, 4.0, "Processed", "Good Game", "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" },
+                    { 3, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 3, 2.0, "Pending", "Bad Game!", "3038707d-5c89-4566-aae8-68afa5b6c936" },
+                    { 4, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 2, 2.0, "Pending", "Bad Game!", "3038707d-5c89-4566-aae8-68afa5b6c936" }
                 });
 
             migrationBuilder.InsertData(
@@ -723,10 +758,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6", "101de009-6ad9-4d24-a495-67bb602d0532" },
-                    { "c1a9e393-125c-4548-9489-21b9808a61df", "4c22c984-e9df-4f81-a46c-11851ac4bf64" },
-                    { "f80cf2ae-f5b3-422e-8225-6a760b3bd6df", "e03c8494-17d9-413f-b484-36dc8054f0e0" },
-                    { "9e7b981b-da47-4597-a17a-ae4df723981d", "e40efa73-04a9-4e42-8f09-ab45b8676397" }
+                    { "dd546f62-4c4f-4cdd-9390-865df97b5ec3", "3038707d-5c89-4566-aae8-68afa5b6c936" },
+                    { "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1", "37305b8f-9a85-43f8-afe4-3da45857cb50" },
+                    { "21348ed6-36c9-49d6-beb8-8e4f949357e7", "581a87b8-68e2-48f2-b93e-ca0783fe9169" },
+                    { "75ecc89e-873a-45de-90ff-a73b51a4c2a8", "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" }
                 });
 
             migrationBuilder.InsertData(
@@ -772,6 +807,11 @@ namespace PROG3050.Data.Migrations
                 name: "IX_EventUser_UserId",
                 table: "EventUser",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendFamily_ReceiverUserId",
+                table: "FriendFamily",
+                column: "ReceiverUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Game_GameCategoryId",
@@ -888,6 +928,9 @@ namespace PROG3050.Data.Migrations
                 name: "EventUser");
 
             migrationBuilder.DropTable(
+                name: "FriendFamily");
+
+            migrationBuilder.DropTable(
                 name: "OrderGame");
 
             migrationBuilder.DropTable(
@@ -944,42 +987,42 @@ namespace PROG3050.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6", "101de009-6ad9-4d24-a495-67bb602d0532" });
+                keyValues: new object[] { "dd546f62-4c4f-4cdd-9390-865df97b5ec3", "3038707d-5c89-4566-aae8-68afa5b6c936" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "c1a9e393-125c-4548-9489-21b9808a61df", "4c22c984-e9df-4f81-a46c-11851ac4bf64" });
+                keyValues: new object[] { "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1", "37305b8f-9a85-43f8-afe4-3da45857cb50" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "f80cf2ae-f5b3-422e-8225-6a760b3bd6df", "e03c8494-17d9-413f-b484-36dc8054f0e0" });
+                keyValues: new object[] { "21348ed6-36c9-49d6-beb8-8e4f949357e7", "581a87b8-68e2-48f2-b93e-ca0783fe9169" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "9e7b981b-da47-4597-a17a-ae4df723981d", "e40efa73-04a9-4e42-8f09-ab45b8676397" });
+                keyValues: new object[] { "75ecc89e-873a-45de-90ff-a73b51a4c2a8", "bbe3061d-d3ce-46b1-88b1-a0d8a7569589" });
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "0475ff1a-69d1-458a-b0a4-3a0a651ae0a6");
+                keyValue: "21348ed6-36c9-49d6-beb8-8e4f949357e7");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "9e7b981b-da47-4597-a17a-ae4df723981d");
+                keyValue: "60a8cf36-bb9e-48ab-9d5a-59843a9b25c1");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "c1a9e393-125c-4548-9489-21b9808a61df");
+                keyValue: "75ecc89e-873a-45de-90ff-a73b51a4c2a8");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "f80cf2ae-f5b3-422e-8225-6a760b3bd6df");
+                keyValue: "dd546f62-4c4f-4cdd-9390-865df97b5ec3");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
