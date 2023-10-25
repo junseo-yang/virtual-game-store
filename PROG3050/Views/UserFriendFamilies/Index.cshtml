@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PROG3050.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                Request
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                <form method="post" asp-action="Request">
+                    <input type="hidden" name="receiverUserId" value="@item.Id" />
+                    <input type="submit" value="Friend Request" class="btn btn-primary" name="description" />
+                    <input type="submit" value="Family Request" class="btn btn-primary" name="description" />
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

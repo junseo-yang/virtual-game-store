@@ -25,6 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UserFriendFamilies" asp-action="Index">Users</a>
+                        </li>
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                         {
                             <div class="dropdown">
@@ -58,6 +61,14 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData.Keys.Contains("StatusMessage"))
+            {
+                var statusMessageClass = TempData["StatusMessageClass"];
+                <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    @TempData["StatusMessage"]
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
