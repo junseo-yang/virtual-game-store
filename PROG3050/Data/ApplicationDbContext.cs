@@ -337,17 +337,17 @@ namespace PROG3050.Data
                 Name = "Moderator",
                 NormalizedName = "MODERATOR"
             };
-            var basicRole = new IdentityRole
+            var memberRole = new IdentityRole
             {
-                Name = "Basic",
-                NormalizedName = "BASIC"
+                Name = "Member",
+                NormalizedName = "MEMBER"
             };
 
             builder.Entity<IdentityRole>().HasData(
                 superadminRole,
                 adminRole,
                 moderatorRole,
-                basicRole
+                memberRole
             );
 
             // Seed Default Users
@@ -398,12 +398,12 @@ namespace PROG3050.Data
 
             moderator.PasswordHash = ph.HashPassword(moderator, "Moderator123!@");
 
-            var basic = new User
+            var member = new User
             {
-                UserName = "Basic",
-                NormalizedUserName = "BASIC",
-                Email = "basic@gmail.com",
-                NormalizedEmail = "BASIC@GMAIL.COM",
+                UserName = "Member",
+                NormalizedUserName = "MEMBER",
+                Email = "member@gmail.com",
+                NormalizedEmail = "MEMBER@GMAIL.COM",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 4,
@@ -411,12 +411,12 @@ namespace PROG3050.Data
                 PreferenceId = 4
             };
 
-            basic.PasswordHash = ph.HashPassword(basic, "Basic123!@");
+            member.PasswordHash = ph.HashPassword(member, "Member123!@");
 
             builder.Entity<User>().HasData(superadmin);
             builder.Entity<User>().HasData(admin);
             builder.Entity<User>().HasData(moderator);
-            builder.Entity<User>().HasData(basic);
+            builder.Entity<User>().HasData(member);
 
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
@@ -436,8 +436,8 @@ namespace PROG3050.Data
                 },
                 new IdentityUserRole<string>
                 {
-                    UserId = basic.Id,
-                    RoleId = basicRole.Id
+                    UserId = member.Id,
+                    RoleId = memberRole.Id
                 }
             );
 
@@ -546,7 +546,7 @@ namespace PROG3050.Data
                     Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
                     Rating = 5,
                     Status = "Pending",
-                    UserId = basic.Id,
+                    UserId = member.Id,
                     GameId = 1,
                 },
                 new Review
@@ -628,7 +628,7 @@ namespace PROG3050.Data
                 new Order
                 {
                     OrderId = 1,
-                    UserId = basic.Id,
+                    UserId = member.Id,
                     Status = "Processed",
                     OrderDate = DateTime.Parse("2012-09-21"),
                     ShippingAddressId = 4
@@ -737,12 +737,12 @@ namespace PROG3050.Data
                 new EventUser
                 {
                     EventId = 1,
-                    UserId = basic.Id
+                    UserId = member.Id
                 },
                 new EventUser
                 {
                     EventId = 2,
-                    UserId = basic.Id
+                    UserId = member.Id
                 },
                 new EventUser
                 {
