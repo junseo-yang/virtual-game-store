@@ -1,0 +1,67 @@
+﻿@model IEnumerable<PROG3050.Models.FriendFamily>
+
+@{
+    ViewData["Title"] = "Friend/Family";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Friend/Family</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RequesterUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiverUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequesterUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiverUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <form method="post" asp-action="Request">
+                    <input type="hidden" name="requesterUserId" value="@item.RequesterUserId" />
+                    <input type="hidden" name="receiverUserId" value="@item.ReceiverUserId" />
+                    @if (item.Status == "Pending") 
+                    {
+                        if (item.RequesterUserId == ViewBag.CurrentUserId) 
+                        {
+                            <input type="submit" value="Cancel" class="btn btn-warning" name="description" />
+                        }
+                        else {
+                            <input type="submit" value="Accept" class="btn btn-primary" name="description" />
+                            <input type="submit" value="Reject" class="btn btn-danger" name="description" />
+                        }
+                    }
+                    else
+                    {
+                        <input type="submit" value="Delete" class="btn btn-danger" name="description" />
+                    }
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
