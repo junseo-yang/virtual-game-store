@@ -11,6 +11,7 @@ using PROG3050.Models;
 
 namespace PROG3050.Controllers
 {
+    [Authorize]
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;
