@@ -214,6 +214,21 @@ namespace PROG3050.Data
                 {
                     LanguageId = 1,
                     LanguageName = "English"
+                },
+                new Language
+                {
+                    LanguageId = 2,
+                    LanguageName = "French"
+                },
+                new Language
+                {
+                    LanguageId = 3,
+                    LanguageName = "Spanish"
+                },
+                new Language
+                {
+                    LanguageId = 4,
+                    LanguageName = "Korean"
                 }
             );
 
@@ -226,16 +241,26 @@ namespace PROG3050.Data
                 new Preference
                 {
                     PreferenceId = 2,
-                    LanguageId = 1
+                    LanguageId = 2
                 },
                 new Preference
                 {
                     PreferenceId = 3,
-                    LanguageId = 1
+                    LanguageId = 3
                 },
                 new Preference
                 {
                     PreferenceId = 4,
+                    LanguageId = 4
+                },
+                new Preference
+                {
+                    PreferenceId = 5,
+                    LanguageId = 1
+                },
+                new Preference
+                {
+                    PreferenceId = 6,
                     LanguageId = 1
                 }
             );
@@ -278,6 +303,21 @@ namespace PROG3050.Data
                 {
                     PreferenceId = 3,
                     GameCategoryId = 1
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 4,
+                    GameCategoryId = 1
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 5,
+                    GameCategoryId = 1
+                },
+                new PreferenceGameCategory
+                {
+                    PreferenceId = 6,
+                    GameCategoryId = 1
                 }
             );
 
@@ -317,6 +357,16 @@ namespace PROG3050.Data
                     ProvinceId = 2,
                     PostalCode = "V9N 0A7",
                     DeliveryInstruction = "Ask the security Guard to get in."
+                },
+                new MailingAddress
+                {
+                    MailingAddressId = 5,
+                    ProvinceId = 1
+                },
+                new MailingAddress
+                {
+                    MailingAddressId = 6,
+                    ProvinceId = 2
                 }
             );
 
@@ -421,10 +471,46 @@ namespace PROG3050.Data
 
             member.PasswordHash = ph.HashPassword(member, "Member123!@");
 
+            var tester1 = new User
+            {
+                UserName = "Tester1",
+                NormalizedUserName = "TESTER1",
+                FirstName = "Test1FirstName",
+                LastName = "Test1LastName",
+                Email = "tester1@gmail.com",
+                NormalizedEmail = "TESTER1@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 5,
+                GenderId = 3,
+                PreferenceId = 5
+            };
+
+            tester1.PasswordHash = ph.HashPassword(tester1, "Tester1!@");
+
+            var tester2 = new User
+            {
+                UserName = "Tester2",
+                NormalizedUserName = "TESTER2",
+                FirstName = "Test2FirstName",
+                LastName = "Test2LastName",
+                Email = "tester2@gmail.com",
+                NormalizedEmail = "TESTER2@GMAIL.COM",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                MailingAddressId = 6,
+                GenderId = 3,
+                PreferenceId = 6
+            };
+
+            tester2.PasswordHash = ph.HashPassword(tester2, "Tester2!@");
+
             builder.Entity<User>().HasData(superadmin);
             builder.Entity<User>().HasData(admin);
             builder.Entity<User>().HasData(moderator);
             builder.Entity<User>().HasData(member);
+            builder.Entity<User>().HasData(tester1);
+            builder.Entity<User>().HasData(tester2);
 
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
@@ -445,6 +531,16 @@ namespace PROG3050.Data
                 new IdentityUserRole<string>
                 {
                     UserId = member.Id,
+                    RoleId = memberRole.Id
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = tester1.Id,
+                    RoleId = memberRole.Id
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = tester2.Id,
                     RoleId = memberRole.Id
                 }
             );
@@ -491,6 +587,16 @@ namespace PROG3050.Data
                 new PreferenceFavouritePlatform
                 {
                     PreferenceId = 4,
+                    FavouritePlatformId = 1
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 5,
+                    FavouritePlatformId = 1
+                },
+                new PreferenceFavouritePlatform
+                {
+                    PreferenceId = 6,
                     FavouritePlatformId = 1
                 }
             );
