@@ -59,6 +59,18 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+
+            [Display(Name = "First Name")]
+            public string? FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string? LastName { get; set; }
+
+            [Display(Name = "Phone Number")]
+            [Phone]
+            [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Phone number should be in the format of '999-999-9999'")]
+            public string? PhoneNumber { get; set; }
+
             [Display(Name = "Unit")]
             public string? Unit { get; set; }
 
@@ -67,7 +79,6 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "City")]
             public string? City { get; set; }
-
 
             [Display(Name = "Province")]
             public int ProvinceId { get; set; }
@@ -90,6 +101,9 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = mailingAddress.FirstName,
+                LastName = mailingAddress.LastName,
+                PhoneNumber = mailingAddress.PhoneNumber,
                 Unit = mailingAddress.Unit,
                 Street = mailingAddress.Street,
                 City = mailingAddress.City,
@@ -131,6 +145,24 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             // Update Unit, Street, City, ProvinceId, PostalCode, DeliveryInstruction
             var mailingAddress = _context.MailingAddress.Where(m => m.MailingAddressId == user.MailingAddressId).FirstOrDefault();
 
+            if (Input.FirstName != mailingAddress.FirstName)
+            {
+                mailingAddress.FirstName = Input.FirstName;
+                _context.Update(mailingAddress);
+                _context.SaveChanges();
+            }
+            if (Input.LastName != mailingAddress.LastName)
+            {
+                mailingAddress.LastName = Input.LastName;
+                _context.Update(mailingAddress);
+                _context.SaveChanges();
+            }
+            if (Input.PhoneNumber != mailingAddress.PhoneNumber)
+            {
+                mailingAddress.PhoneNumber = Input.PhoneNumber;
+                _context.Update(mailingAddress);
+                _context.SaveChanges();
+            }
             if (Input.Unit != mailingAddress.Unit)
             {
                 mailingAddress.Unit = Input.Unit;

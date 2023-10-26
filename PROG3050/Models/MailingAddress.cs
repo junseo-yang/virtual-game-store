@@ -6,6 +6,17 @@ namespace PROG3050.Models
     {
         public int MailingAddressId { get; set; }
 
+        [Display(Name = "First Name")]
+        public string? FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string? LastName { get; set; }
+
+        [Display(Name = "Phone Number")]
+        [Phone]
+        [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Phone number should be in the format of '999-999-9999'")]
+        public string? PhoneNumber { get; set; }
+
         [Display(Name = "Unit")]
         public string? Unit { get; set; }
 

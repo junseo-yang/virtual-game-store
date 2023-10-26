@@ -72,6 +72,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
+            [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Phone number should be in the format of '999-999-9999'")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 

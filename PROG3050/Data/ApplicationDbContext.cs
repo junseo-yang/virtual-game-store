@@ -324,6 +324,9 @@ namespace PROG3050.Data
             builder.Entity<MailingAddress>().HasData(
                 new MailingAddress
                 {
+                    FirstName = "Tyrone",
+                    LastName = "Mcgee",
+                    PhoneNumber = "+15008040911",
                     MailingAddressId = 1,
                     Street = "978 ARGYLE ST N",
                     City = "HALIFAX",
