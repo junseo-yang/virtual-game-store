@@ -61,12 +61,12 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @if (TempData.Keys.Contains("StatusMessage"))
+            @if (TempData.Keys.Contains("GlobalStatusMessage"))
             {
-                var statusMessageClass = TempData["StatusMessageClass"];
+                var statusMessageClass = TempData["GlobalStatusMessageClass"];
                 <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    @TempData["StatusMessage"]
+                    @TempData["GlobalStatusMessage"]
                 </div>
             }
             @RenderBody()

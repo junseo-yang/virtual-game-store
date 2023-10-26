@@ -64,13 +64,13 @@ namespace PROG3050.Controllers
                 
                 await _context.SaveChangesAsync();
 
-                TempData["StatusMessage"] = $"{description} has been performed successfully.";
-                TempData["StatusMessageClass"] = "success";
+                TempData["GlobalStatusMessage"] = $"{description} has been performed successfully.";
+                TempData["GlobalStatusMessageClass"] = "success";
             }
             catch (Exception ex)
             {
-                TempData["StatusMessage"] = $"Something went wrong while performing {description} .";
-                TempData["StatusMessageClass"] = "danger";
+                TempData["GlobalStatusMessage"] = $"Something went wrong while performing {description} .";
+                TempData["GlobalStatusMessageClass"] = "danger";
             }
 
             return RedirectToAction(nameof(Index));

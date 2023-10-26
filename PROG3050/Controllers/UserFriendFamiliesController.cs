@@ -67,13 +67,13 @@ namespace PROG3050.Controllers
                 _context.Add(friendFamily);
                 await _context.SaveChangesAsync();
 
-                TempData["StatusMessage"] = $"{description} has been sent successfully.";
-                TempData["StatusMessageClass"] = "success";
+                TempData["GlobalStatusMessage"] = $"{description} has been sent successfully.";
+                TempData["GlobalStatusMessageClass"] = "success";
             }
             catch (Exception ex)
             {
-                TempData["StatusMessage"] = $"Something went wrong while sending {description} .";
-                TempData["StatusMessageClass"] = "danger";
+                TempData["GlobalStatusMessage"] = $"Something went wrong while sending {description} .";
+                TempData["GlobalStatusMessageClass"] = "danger";
             }
 
             return RedirectToAction(nameof(Index));
