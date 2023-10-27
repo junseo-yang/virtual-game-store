@@ -155,6 +155,324 @@ namespace PROG3050.Data
                     ProvinceId = 13,
                     ProvinceName = "YT",
                     CountryId = 1
+                },
+                new Province
+                {
+                    ProvinceId = 14,
+                    ProvinceName = "AL",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 15,
+                    ProvinceName = "AK",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 16,
+                    ProvinceName = "AZ",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 17,
+                    ProvinceName = "AR",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 18,
+                    ProvinceName = "CA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 19,
+                    ProvinceName = "CO",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 20,
+                    ProvinceName = "CT",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 21,
+                    ProvinceName = "DE",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 22,
+                    ProvinceName = "DC",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 23,
+                    ProvinceName = "FL",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 24,
+                    ProvinceName = "GA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 25,
+                    ProvinceName = "HI",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 26,
+                    ProvinceName = "ID",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 27,
+                    ProvinceName = "IL",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 28,
+                    ProvinceName = "IN",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 29,
+                    ProvinceName = "IA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 30,
+                    ProvinceName = "KS",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 31,
+                    ProvinceName = "KY",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 32,
+                    ProvinceName = "LA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 33,
+                    ProvinceName = "ME",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 34,
+                    ProvinceName = "MD",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 35,
+                    ProvinceName = "MA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 37,
+                    ProvinceName = "MI",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 38,
+                    ProvinceName = "MN",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 39,
+                    ProvinceName = "MS",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 40,
+                    ProvinceName = "MO",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 41,
+                    ProvinceName = "MT",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 42,
+                    ProvinceName = "NE",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 43,
+                    ProvinceName = "NV",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 44,
+                    ProvinceName = "NH",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 45,
+                    ProvinceName = "NJ",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 46,
+                    ProvinceName = "NM",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 47,
+                    ProvinceName = "NY",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 48,
+                    ProvinceName = "NC",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 49,
+                    ProvinceName = "NY",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 50,
+                    ProvinceName = "NC",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 51,
+                    ProvinceName = "ND",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 52,
+                    ProvinceName = "OH",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 53,
+                    ProvinceName = "OK",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 54,
+                    ProvinceName = "OR",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 55,
+                    ProvinceName = "PA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 56,
+                    ProvinceName = "RI",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 57,
+                    ProvinceName = "SC",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 58,
+                    ProvinceName = "SD",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 59,
+                    ProvinceName = "TN",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 60,
+                    ProvinceName = "TX",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 61,
+                    ProvinceName = "UT",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 62,
+                    ProvinceName = "VT",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 63,
+                    ProvinceName = "VA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 64,
+                    ProvinceName = "WA",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 65,
+                    ProvinceName = "WV",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 66,
+                    ProvinceName = "WI",
+                    CountryId = 2
+                },
+                new Province
+                {
+                    ProvinceId = 67,
+                    ProvinceName = "WY",
+                    CountryId = 2
                 }
             );
 
@@ -326,7 +644,6 @@ namespace PROG3050.Data
                 {
                     FirstName = "Tyrone",
                     LastName = "Mcgee",
-                    PhoneNumber = "+15008040911",
                     MailingAddressId = 1,
                     Street = "978 ARGYLE ST N",
                     City = "HALIFAX",

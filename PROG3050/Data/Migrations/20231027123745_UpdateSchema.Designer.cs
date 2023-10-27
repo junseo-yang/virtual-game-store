@@ -12,7 +12,7 @@ using PROG3050.Data;
 namespace PROG3050.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231026210430_UpdateSchema")]
+    [Migration("20231027123745_UpdateSchema")]
     partial class UpdateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,29 +53,29 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2a39f081-8f7b-488d-b3e6-a56970f2d44a",
-                            ConcurrencyStamp = "7f521345-59f2-4213-abd1-2313f35020f0",
+                            Id = "3cfce0d1-714f-4f52-ad96-16782affd069",
+                            ConcurrencyStamp = "cecad61a-e785-4228-98a3-4c7394a8b930",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = "c1a97a43-5a5c-4f9a-9d2d-95eca89ed47f",
-                            ConcurrencyStamp = "c21574b3-c1ad-428b-8499-b950b3f6a5ce",
+                            Id = "c4257024-d328-4d01-b855-722f4c6ff739",
+                            ConcurrencyStamp = "42b5a9d1-ad6c-4426-ac77-95e115cb3475",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0615df17-79fb-4054-9f7e-77ee21b16b09",
-                            ConcurrencyStamp = "6c073ee2-c357-40ad-bc0f-4712c9a2c399",
+                            Id = "19bdd31b-193c-4bab-9574-0ec2f0cd4a5b",
+                            ConcurrencyStamp = "0aa3e018-32d6-410e-a3a4-f6da13a0d561",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "0e814cc3-b703-49c7-a366-94296560a108",
-                            ConcurrencyStamp = "ce35693a-68b1-4399-96bf-21c27caaf274",
+                            Id = "aec7798a-0bf9-4171-b15b-b14745abf0a9",
+                            ConcurrencyStamp = "e46e8307-4a7c-44e3-a197-9d8357189a36",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         });
@@ -222,33 +222,33 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "a047c066-0a44-441a-b77b-fe0b2a681ada",
-                            RoleId = "2a39f081-8f7b-488d-b3e6-a56970f2d44a"
+                            UserId = "f79ac472-469f-4716-97fa-a8210c8806f6",
+                            RoleId = "3cfce0d1-714f-4f52-ad96-16782affd069"
                         },
                         new
                         {
-                            UserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0",
-                            RoleId = "c1a97a43-5a5c-4f9a-9d2d-95eca89ed47f"
+                            UserId = "01670fc7-3597-4daa-924d-582410dc4fbd",
+                            RoleId = "c4257024-d328-4d01-b855-722f4c6ff739"
                         },
                         new
                         {
-                            UserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0",
-                            RoleId = "0615df17-79fb-4054-9f7e-77ee21b16b09"
+                            UserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e",
+                            RoleId = "19bdd31b-193c-4bab-9574-0ec2f0cd4a5b"
                         },
                         new
                         {
-                            UserId = "353308f7-af90-4aa4-ba55-337f949e4e89",
-                            RoleId = "0e814cc3-b703-49c7-a366-94296560a108"
+                            UserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90",
+                            RoleId = "aec7798a-0bf9-4171-b15b-b14745abf0a9"
                         },
                         new
                         {
-                            UserId = "3e1729d0-6ab3-4d24-adff-d61f1098003d",
-                            RoleId = "0e814cc3-b703-49c7-a366-94296560a108"
+                            UserId = "c0a0e2b5-2d05-437b-a441-9436d17b420c",
+                            RoleId = "aec7798a-0bf9-4171-b15b-b14745abf0a9"
                         },
                         new
                         {
-                            UserId = "6ad978d1-80a9-4f9f-9921-599162449a12",
-                            RoleId = "0e814cc3-b703-49c7-a366-94296560a108"
+                            UserId = "bebeb3d1-24fc-4a31-83e8-90ff76a942cf",
+                            RoleId = "aec7798a-0bf9-4171-b15b-b14745abf0a9"
                         });
                 });
 
@@ -363,27 +363,27 @@ namespace PROG3050.Data.Migrations
                         new
                         {
                             EventId = 1,
-                            UserId = "353308f7-af90-4aa4-ba55-337f949e4e89"
+                            UserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90"
                         },
                         new
                         {
                             EventId = 2,
-                            UserId = "353308f7-af90-4aa4-ba55-337f949e4e89"
+                            UserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90"
                         },
                         new
                         {
                             EventId = 1,
-                            UserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0"
+                            UserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e"
                         },
                         new
                         {
                             EventId = 1,
-                            UserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0"
+                            UserId = "01670fc7-3597-4daa-924d-582410dc4fbd"
                         },
                         new
                         {
                             EventId = 2,
-                            UserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0"
+                            UserId = "01670fc7-3597-4daa-924d-582410dc4fbd"
                         });
                 });
 
@@ -451,29 +451,29 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            RequesterUserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0",
-                            ReceiverUserId = "353308f7-af90-4aa4-ba55-337f949e4e89",
+                            RequesterUserId = "01670fc7-3597-4daa-924d-582410dc4fbd",
+                            ReceiverUserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90",
                             Description = "Friend",
                             Status = "Processed"
                         },
                         new
                         {
-                            RequesterUserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0",
-                            ReceiverUserId = "353308f7-af90-4aa4-ba55-337f949e4e89",
+                            RequesterUserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e",
+                            ReceiverUserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90",
                             Description = "Family",
                             Status = "Processed"
                         },
                         new
                         {
-                            RequesterUserId = "353308f7-af90-4aa4-ba55-337f949e4e89",
-                            ReceiverUserId = "a047c066-0a44-441a-b77b-fe0b2a681ada",
+                            RequesterUserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90",
+                            ReceiverUserId = "f79ac472-469f-4716-97fa-a8210c8806f6",
                             Description = "Friend",
                             Status = "Pending"
                         },
                         new
                         {
-                            RequesterUserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0",
-                            ReceiverUserId = "a047c066-0a44-441a-b77b-fe0b2a681ada",
+                            RequesterUserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e",
+                            ReceiverUserId = "f79ac472-469f-4716-97fa-a8210c8806f6",
                             Description = "Family",
                             Status = "Pending"
                         });
@@ -706,7 +706,6 @@ namespace PROG3050.Data.Migrations
                             DeliveryInstruction = "At the door",
                             FirstName = "Tyrone",
                             LastName = "Mcgee",
-                            PhoneNumber = "+15008040911",
                             PostalCode = "B3J 2B3",
                             ProvinceId = 7,
                             Street = "978 ARGYLE ST N"
@@ -787,7 +786,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 4,
                             Status = "Processed",
-                            UserId = "353308f7-af90-4aa4-ba55-337f949e4e89"
+                            UserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90"
                         },
                         new
                         {
@@ -795,7 +794,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 2,
                             Status = "Processed",
-                            UserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0"
+                            UserId = "01670fc7-3597-4daa-924d-582410dc4fbd"
                         },
                         new
                         {
@@ -803,7 +802,7 @@ namespace PROG3050.Data.Migrations
                             OrderDate = new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShippingAddressId = 3,
                             Status = "Pending",
-                            UserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0"
+                            UserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e"
                         });
                 });
 
@@ -1133,6 +1132,324 @@ namespace PROG3050.Data.Migrations
                             ProvinceId = 13,
                             CountryId = 1,
                             ProvinceName = "YT"
+                        },
+                        new
+                        {
+                            ProvinceId = 14,
+                            CountryId = 2,
+                            ProvinceName = "AL"
+                        },
+                        new
+                        {
+                            ProvinceId = 15,
+                            CountryId = 2,
+                            ProvinceName = "AK"
+                        },
+                        new
+                        {
+                            ProvinceId = 16,
+                            CountryId = 2,
+                            ProvinceName = "AZ"
+                        },
+                        new
+                        {
+                            ProvinceId = 17,
+                            CountryId = 2,
+                            ProvinceName = "AR"
+                        },
+                        new
+                        {
+                            ProvinceId = 18,
+                            CountryId = 2,
+                            ProvinceName = "CA"
+                        },
+                        new
+                        {
+                            ProvinceId = 19,
+                            CountryId = 2,
+                            ProvinceName = "CO"
+                        },
+                        new
+                        {
+                            ProvinceId = 20,
+                            CountryId = 2,
+                            ProvinceName = "CT"
+                        },
+                        new
+                        {
+                            ProvinceId = 21,
+                            CountryId = 2,
+                            ProvinceName = "DE"
+                        },
+                        new
+                        {
+                            ProvinceId = 22,
+                            CountryId = 2,
+                            ProvinceName = "DC"
+                        },
+                        new
+                        {
+                            ProvinceId = 23,
+                            CountryId = 2,
+                            ProvinceName = "FL"
+                        },
+                        new
+                        {
+                            ProvinceId = 24,
+                            CountryId = 2,
+                            ProvinceName = "GA"
+                        },
+                        new
+                        {
+                            ProvinceId = 25,
+                            CountryId = 2,
+                            ProvinceName = "HI"
+                        },
+                        new
+                        {
+                            ProvinceId = 26,
+                            CountryId = 2,
+                            ProvinceName = "ID"
+                        },
+                        new
+                        {
+                            ProvinceId = 27,
+                            CountryId = 2,
+                            ProvinceName = "IL"
+                        },
+                        new
+                        {
+                            ProvinceId = 28,
+                            CountryId = 2,
+                            ProvinceName = "IN"
+                        },
+                        new
+                        {
+                            ProvinceId = 29,
+                            CountryId = 2,
+                            ProvinceName = "IA"
+                        },
+                        new
+                        {
+                            ProvinceId = 30,
+                            CountryId = 2,
+                            ProvinceName = "KS"
+                        },
+                        new
+                        {
+                            ProvinceId = 31,
+                            CountryId = 2,
+                            ProvinceName = "KY"
+                        },
+                        new
+                        {
+                            ProvinceId = 32,
+                            CountryId = 2,
+                            ProvinceName = "LA"
+                        },
+                        new
+                        {
+                            ProvinceId = 33,
+                            CountryId = 2,
+                            ProvinceName = "ME"
+                        },
+                        new
+                        {
+                            ProvinceId = 34,
+                            CountryId = 2,
+                            ProvinceName = "MD"
+                        },
+                        new
+                        {
+                            ProvinceId = 35,
+                            CountryId = 2,
+                            ProvinceName = "MA"
+                        },
+                        new
+                        {
+                            ProvinceId = 37,
+                            CountryId = 2,
+                            ProvinceName = "MI"
+                        },
+                        new
+                        {
+                            ProvinceId = 38,
+                            CountryId = 2,
+                            ProvinceName = "MN"
+                        },
+                        new
+                        {
+                            ProvinceId = 39,
+                            CountryId = 2,
+                            ProvinceName = "MS"
+                        },
+                        new
+                        {
+                            ProvinceId = 40,
+                            CountryId = 2,
+                            ProvinceName = "MO"
+                        },
+                        new
+                        {
+                            ProvinceId = 41,
+                            CountryId = 2,
+                            ProvinceName = "MT"
+                        },
+                        new
+                        {
+                            ProvinceId = 42,
+                            CountryId = 2,
+                            ProvinceName = "NE"
+                        },
+                        new
+                        {
+                            ProvinceId = 43,
+                            CountryId = 2,
+                            ProvinceName = "NV"
+                        },
+                        new
+                        {
+                            ProvinceId = 44,
+                            CountryId = 2,
+                            ProvinceName = "NH"
+                        },
+                        new
+                        {
+                            ProvinceId = 45,
+                            CountryId = 2,
+                            ProvinceName = "NJ"
+                        },
+                        new
+                        {
+                            ProvinceId = 46,
+                            CountryId = 2,
+                            ProvinceName = "NM"
+                        },
+                        new
+                        {
+                            ProvinceId = 47,
+                            CountryId = 2,
+                            ProvinceName = "NY"
+                        },
+                        new
+                        {
+                            ProvinceId = 48,
+                            CountryId = 2,
+                            ProvinceName = "NC"
+                        },
+                        new
+                        {
+                            ProvinceId = 49,
+                            CountryId = 2,
+                            ProvinceName = "NY"
+                        },
+                        new
+                        {
+                            ProvinceId = 50,
+                            CountryId = 2,
+                            ProvinceName = "NC"
+                        },
+                        new
+                        {
+                            ProvinceId = 51,
+                            CountryId = 2,
+                            ProvinceName = "ND"
+                        },
+                        new
+                        {
+                            ProvinceId = 52,
+                            CountryId = 2,
+                            ProvinceName = "OH"
+                        },
+                        new
+                        {
+                            ProvinceId = 53,
+                            CountryId = 2,
+                            ProvinceName = "OK"
+                        },
+                        new
+                        {
+                            ProvinceId = 54,
+                            CountryId = 2,
+                            ProvinceName = "OR"
+                        },
+                        new
+                        {
+                            ProvinceId = 55,
+                            CountryId = 2,
+                            ProvinceName = "PA"
+                        },
+                        new
+                        {
+                            ProvinceId = 56,
+                            CountryId = 2,
+                            ProvinceName = "RI"
+                        },
+                        new
+                        {
+                            ProvinceId = 57,
+                            CountryId = 2,
+                            ProvinceName = "SC"
+                        },
+                        new
+                        {
+                            ProvinceId = 58,
+                            CountryId = 2,
+                            ProvinceName = "SD"
+                        },
+                        new
+                        {
+                            ProvinceId = 59,
+                            CountryId = 2,
+                            ProvinceName = "TN"
+                        },
+                        new
+                        {
+                            ProvinceId = 60,
+                            CountryId = 2,
+                            ProvinceName = "TX"
+                        },
+                        new
+                        {
+                            ProvinceId = 61,
+                            CountryId = 2,
+                            ProvinceName = "UT"
+                        },
+                        new
+                        {
+                            ProvinceId = 62,
+                            CountryId = 2,
+                            ProvinceName = "VT"
+                        },
+                        new
+                        {
+                            ProvinceId = 63,
+                            CountryId = 2,
+                            ProvinceName = "VA"
+                        },
+                        new
+                        {
+                            ProvinceId = 64,
+                            CountryId = 2,
+                            ProvinceName = "WA"
+                        },
+                        new
+                        {
+                            ProvinceId = 65,
+                            CountryId = 2,
+                            ProvinceName = "WV"
+                        },
+                        new
+                        {
+                            ProvinceId = 66,
+                            CountryId = 2,
+                            ProvinceName = "WI"
+                        },
+                        new
+                        {
+                            ProvinceId = 67,
+                            CountryId = 2,
+                            ProvinceName = "WY"
                         });
                 });
 
@@ -1206,7 +1523,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 5.0,
                             Status = "Pending",
                             Title = "The Best Game!",
-                            UserId = "353308f7-af90-4aa4-ba55-337f949e4e89"
+                            UserId = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90"
                         },
                         new
                         {
@@ -1216,7 +1533,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 4.0,
                             Status = "Processed",
                             Title = "Good Game",
-                            UserId = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0"
+                            UserId = "01670fc7-3597-4daa-924d-582410dc4fbd"
                         },
                         new
                         {
@@ -1226,7 +1543,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 2.0,
                             Status = "Pending",
                             Title = "Bad Game!",
-                            UserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0"
+                            UserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e"
                         },
                         new
                         {
@@ -1236,7 +1553,7 @@ namespace PROG3050.Data.Migrations
                             Rating = 2.0,
                             Status = "Pending",
                             Title = "Bad Game!",
-                            UserId = "cd782a07-c5c9-4183-b085-bf956eb2eca0"
+                            UserId = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e"
                         });
                 });
 
@@ -1421,9 +1738,9 @@ namespace PROG3050.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a047c066-0a44-441a-b77b-fe0b2a681ada",
+                            Id = "f79ac472-469f-4716-97fa-a8210c8806f6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3cf87c8-f695-4dad-91b7-198b6d48dbd9",
+                            ConcurrencyStamp = "4ec00049-0f59-448c-ae0f-74dd1d0c5f85",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Tyrone",
@@ -1435,18 +1752,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 1,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJRlUfeACAQhWYdVs01yNM6sWWcuZ3lBHMpAHRAJdbPQ34EqWQl/MeX5DEOBiE3GMQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBPXiQnRhhipu6JNNC1HnAziHzma5pvlTmkyqw9cNWOjuDN7pOlnZ8iYoK1mWU49Eg==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 1,
-                            SecurityStamp = "ba5090c2-991f-49dc-bc89-09512a438cb6",
+                            SecurityStamp = "ec788bc9-d562-45e0-bd01-1e4aa7e3968b",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         },
                         new
                         {
-                            Id = "3d5a4bf4-e5a7-4acb-8da5-277e4f4a61d0",
+                            Id = "01670fc7-3597-4daa-924d-582410dc4fbd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43f3f6bc-d358-4e90-8d49-c3f13c95ac00",
+                            ConcurrencyStamp = "977d7c93-d318-4a27-9ada-0c2b5ea29b4e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "William",
@@ -1458,18 +1775,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 2,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAnM+hobQgEGQpfsLUn13v7a2fLwsxXbSa5SZJNBIivjTF8K1pIjbvd2/66FjfvcSg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEXi1JRo8c9ROU2JSNNWRutYFrUjA7pH/xl8VJDWwiHy7fcA5Efe2DwwLIwzc5IBhw==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 2,
-                            SecurityStamp = "5b344b2b-6b20-4acd-a8f3-b61b3dee1b92",
+                            SecurityStamp = "748b72fa-389e-4f8f-9d69-fec63e3c38f3",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = "cd782a07-c5c9-4183-b085-bf956eb2eca0",
+                            Id = "c87c0f11-3f78-4c04-a8a9-42f274d1b34e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7f7977ad-e525-4eb8-8b12-1ce63bbfb265",
+                            ConcurrencyStamp = "6bd128f8-1ab5-4da9-abc7-9272fdaafaa4",
                             Email = "moderator@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Francis",
@@ -1481,18 +1798,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 3,
                             NormalizedEmail = "MODERATOR@GMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPLuuVclzgnMssaNuOxMorCW2hTRzzXQrperJE767Zak01ifjDszZg/gmTC0k6W8Ew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDi0+2C7ZO+q2236wnpSl5T+2KOFH4ynll4KiW2oUjEitgywrsuKzlJo4VhUkEUprQ==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 3,
-                            SecurityStamp = "762697e2-e0f3-4f81-8e6b-5c76d2cd8f73",
+                            SecurityStamp = "27c0d74d-01ab-4f8f-bf16-8ca21560cec1",
                             TwoFactorEnabled = false,
                             UserName = "Moderator"
                         },
                         new
                         {
-                            Id = "353308f7-af90-4aa4-ba55-337f949e4e89",
+                            Id = "a9a5b791-b1ef-4360-8c4c-cee3376d0f90",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e2769ff-29cf-42ad-a2c7-1ca1a4c4710d",
+                            ConcurrencyStamp = "fb117f7d-17ad-4b9e-a571-ec73afff73d5",
                             Email = "member@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ernest",
@@ -1504,18 +1821,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 4,
                             NormalizedEmail = "MEMBER@GMAIL.COM",
                             NormalizedUserName = "MEMBER",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKaSNUjH4TfvopjSJP2HB1XSb0n3EzXL808im92sfs5ukR1qbvvlgGsvh+fXP5zEg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBNJVwkkrHNd1h/0JYhIiVNO1xUtImOiM3pWYkQumVt4aicZxNWJnvSlU+lmJ5MjXw==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 4,
-                            SecurityStamp = "f86c0e79-6b19-41e4-b236-6c9f263b26aa",
+                            SecurityStamp = "a5f7d72d-8a94-4575-a66d-c1199a42bb3e",
                             TwoFactorEnabled = false,
                             UserName = "Member"
                         },
                         new
                         {
-                            Id = "3e1729d0-6ab3-4d24-adff-d61f1098003d",
+                            Id = "c0a0e2b5-2d05-437b-a441-9436d17b420c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45ce0664-64a0-48df-af1b-aef9bbff0fe1",
+                            ConcurrencyStamp = "2bfafa23-dbe8-49e9-9e1c-dc8efc7e270d",
                             Email = "tester1@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Test1FirstName",
@@ -1527,18 +1844,18 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 5,
                             NormalizedEmail = "TESTER1@GMAIL.COM",
                             NormalizedUserName = "TESTER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEECcHG5nm0Ia/w83pISfMP0l5SR6jDDd+6xFBA4+ufTRra4Ui4S6A9R5t+JynAfq1w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED3HgKO6DbQCU64Sj8mgPpYR8CmHIkBm/GvteKj1LhegYxHt01dM6Uor8haTmzbsmQ==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 5,
-                            SecurityStamp = "07e1e3a8-0e1e-4208-beea-0041a4750207",
+                            SecurityStamp = "f9a69396-28b4-4560-b657-062f70202669",
                             TwoFactorEnabled = false,
                             UserName = "Tester1"
                         },
                         new
                         {
-                            Id = "6ad978d1-80a9-4f9f-9921-599162449a12",
+                            Id = "bebeb3d1-24fc-4a31-83e8-90ff76a942cf",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "56a1cdc0-48e7-4ff2-8198-a6f25fbfab6b",
+                            ConcurrencyStamp = "cb9bfac6-68f9-464c-97e2-c9c2ef639ffe",
                             Email = "tester2@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Test2FirstName",
@@ -1550,10 +1867,10 @@ namespace PROG3050.Data.Migrations
                             MailingAddressId = 6,
                             NormalizedEmail = "TESTER2@GMAIL.COM",
                             NormalizedUserName = "TESTER2",
-                            PasswordHash = "AQAAAAEAACcQAAAAEItcSuApYzzZLi8G1RW1jRAkqM6Z5yW/j1i+pK2bqFx6Fnq9i72jVdeVKkpMDaBjHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEERw5yRlPQ09jt0WiZ2qGgpBHrZUvjxeO2DLMykt+yQo1mtv/Nx06CKJqmh5mfhGCA==",
                             PhoneNumberConfirmed = true,
                             PreferenceId = 6,
-                            SecurityStamp = "59f4e88e-c4e0-4bd8-a248-717cebe3d2d2",
+                            SecurityStamp = "792c423f-ca9e-49df-b0f5-7a6ff3352553",
                             TwoFactorEnabled = false,
                             UserName = "Tester2"
                         });
