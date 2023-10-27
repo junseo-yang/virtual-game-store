@@ -80,6 +80,11 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             [Display(Name = "City")]
             public string? City { get; set; }
 
+            [Display(Name = "Country")]
+            public int CountryId { get; set; }
+            public Country Country { get; set; }
+
+
             [Display(Name = "Province")]
             public int ProvinceId { get; set; }
             public Province Province { get; set; }
@@ -97,7 +102,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(User user)
         {
-            var mailingAddress = _context.MailingAddress.Where(m => m.MailingAddressId == user.MailingAddressId).FirstOrDefault();
+            var mailingAddress = _context.MailingAddress.Include(m => m.Province.Country).Where(m => m.MailingAddressId == user.MailingAddressId).FirstOrDefault();
 
             Input = new InputModel
             {
@@ -107,6 +112,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
                 Unit = mailingAddress.Unit,
                 Street = mailingAddress.Street,
                 City = mailingAddress.City,
+                CountryId = mailingAddress.Province.CountryId,
                 ProvinceId = mailingAddress.ProvinceId,
                 PostalCode = mailingAddress.PostalCode,
                 DeliveryInstruction = mailingAddress.DeliveryInstruction
@@ -123,7 +129,8 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
 
             await LoadAsync(user);
 
-            ViewData["ProvinceId"] = new SelectList(_context.Province, "ProvinceId", "ProvinceName");
+            ViewData["CountryId"] = new SelectList(_context.Country, "CountryId", "CountryName");
+            ViewData["ProvinceId"] = new SelectList(_context.Province.Where(p => p.CountryId == user.MailingAddress.Province.CountryId), "ProvinceId", "ProvinceName");
 
             return Page();
         }
