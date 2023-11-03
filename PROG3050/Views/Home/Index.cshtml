@@ -1,10 +1,18 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center main">
     <h1>Welcome to the CVGS Insider Club</h1>
-    <button class="btn-sm main-green-button navbar-btn"><a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a></button>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <button class="btn-sm main-green-button navbar-btn"><a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a></button>
+    }
     <div class="main-container">
         <div class="main-block">
             <img class="main-image" src="~/Images/main.jpg" />
