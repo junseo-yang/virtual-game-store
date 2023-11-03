@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PROG3050.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace PROG3050.Models
@@ -28,6 +29,7 @@ namespace PROG3050.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Date of Birth")]
+        [ValidationDateOfBirth(ErrorMessage = "Date of Birth is out of range.")]
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Promotional Email")]

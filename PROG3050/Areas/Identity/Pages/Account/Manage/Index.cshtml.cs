@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Data;
 using PROG3050.Models;
+using PROG3050.Validations;
 
 namespace PROG3050.Areas.Identity.Pages.Account.Manage
 {
@@ -84,6 +85,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Date)]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
             [Display(Name = "Date of Birth")]
+            [ValidationDateOfBirth(ErrorMessage = "Date of Birth is out of range.")]
             public DateTime? DateOfBirth { get; set; }
             
             [Display(Name = "Promotional Email")]
@@ -137,6 +139,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "GenderName");
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
