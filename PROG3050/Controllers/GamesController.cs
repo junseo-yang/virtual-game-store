@@ -76,7 +76,7 @@ namespace PROG3050.Controllers
                 vm.ErrorMessage = ex.Message;
             }
 
-            return View("Index");
+            return View("Index", vm);
         }
 
         // GET: Games/Details/5
