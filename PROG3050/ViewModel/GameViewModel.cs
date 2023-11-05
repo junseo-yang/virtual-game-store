@@ -2,7 +2,7 @@
 
 namespace PROG3050.ViewModel
 {
-    public class HomeViewModel
+    public class GameViewModel
     {
         public IEnumerable<Game> Games { get; set; }
 

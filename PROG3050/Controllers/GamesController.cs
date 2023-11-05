@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Data;
 using PROG3050.Models;
+using PROG3050.ViewModel;
 
 namespace PROG3050.Controllers
 {
@@ -24,8 +25,58 @@ namespace PROG3050.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Game.Include(g => g.GameCategory);
-            return View(await applicationDbContext.ToListAsync());
+            GameViewModel vm = new GameViewModel();
+
+            try
+            {
+                var games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
+                vm.Games = games;
+            }
+            catch (Exception ex)
+            {
+                vm.ErrorMessage = ex.Message; 
+            }
+
+            return View(vm);
+        }
+
+        /// <summary>
+        /// Search for the entered game title in the DB.
+        /// If there are no games in the DB, an error message is displayed.
+        /// If user do a search without entering a game title, it will show a list of all games with an error message.
+        /// </summary>
+        /// <param name="vmFromBody"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Search(GameViewModel vmFromBody)
+        {
+            GameViewModel vm = new GameViewModel();
+
+            try
+            {
+                List<Game> games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
+                string title = vmFromBody.Title;
+
+                if (vmFromBody != null && string.IsNullOrEmpty(vmFromBody.Title))
+                {
+                    vm.ErrorMessage = "Please enter a game title";
+                    vm.Games = games;
+                }
+                else
+                {
+                    var searchedGames = games?.Where(x => x.Title.ToLower().Contains(title.ToLower() ?? string.Empty));
+                    vm.Games = searchedGames;
+                    if (!searchedGames.Any())
+                        vm.ErrorMessage = $"The game you searched for is not in the database. Entered Title: {vmFromBody.Title}";
+                }
+            }
+            catch (Exception ex)
+            {
+                vm.ErrorMessage = ex.Message;
+            }
+
+            return View("Index");
         }
 
         // GET: Games/Details/5
