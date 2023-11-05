@@ -2,7 +2,7 @@
 
 namespace PROG3050.Models
 {
-    public class Event
+    public class Event : IValidatableObject
     {
         public int EventId { get; set; }
 
@@ -23,5 +23,13 @@ namespace PROG3050.Models
         public DateTime EndDateTime { get; set; }
 
         public IList<EventUser>? EventUsers { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (StartDateTime > EndDateTime)
+            {
+                yield return new ValidationResult("Start Date Time cannot be after End Date Time.");
+            }
+        }
     }
 }
