@@ -1,6 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 
 
 chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
@@ -48,6 +49,7 @@ Act
 """
 # Tester2 clicks Delete button
 driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[5]/form/input[3]").click()
+Alert(driver).accept()
 
 """
 Assert
@@ -64,3 +66,12 @@ assert not_found
 """
 Clean up
 """
+# Clean up in case there was an error
+try:
+    element = driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[4]")
+    not_found = False
+except:
+    not_found = True
+
+if not_found is False:
+    driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[5]/form/input[3]").click()
