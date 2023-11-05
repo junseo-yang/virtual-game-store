@@ -20,8 +20,8 @@
     <div>
         <div>
             <form asp-controller="Games" asp-action="Search" class="input-group mb-3">
-                <input class="form-control" placeholder="Search Game Title" asp-for="Title">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                <input id="input-search" class="form-control" placeholder="Search Game Title" asp-for="Title">
+                <button id="search-submit" class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
             </form>
         </div>
         @if (Model != null)
