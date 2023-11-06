@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PROG3050.Data;
 using PROG3050.Models;
 using System.Diagnostics;
 
@@ -12,11 +15,12 @@ namespace PROG3050.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        
+        public async Task<IActionResult> Index()
         {
             return View();
         }
+
 
         public IActionResult Privacy()
         {
