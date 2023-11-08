@@ -95,7 +95,34 @@ namespace PROG3050.Controllers
                 return NotFound();
             }
 
-            return View(game);
+            // Retrieve recommended games with same category as the current game as well, ordered by newest release
+            bool sameCategory = true;
+            var recommendedGames = await _context.Game
+                .Where(g => g.GameCategoryId == game.GameCategoryId && g.GameId != game.GameId)
+                .OrderByDescending(g => g.PublishDate)
+                .Take(3)
+                .ToListAsync();
+
+            if (recommendedGames.Count == 0)
+            {
+                // If no games of same genre, get a list of the newest releases
+                sameCategory = false;
+                recommendedGames = await _context.Game
+                    .Where(g => g.GameId != game.GameId)
+                    .OrderByDescending(g => g.PublishDate)
+                    .Take(3)
+                    .Include(g => g.GameCategory)
+                    .ToListAsync();
+            }
+
+            var gameDetailsViewModel = new GameDetailsViewModel
+            {
+                Game = game,
+                RecommendedGames = recommendedGames,
+                SameCategory = sameCategory
+            };
+
+            return View(gameDetailsViewModel);
         }
 
         // GET: Games/Create
