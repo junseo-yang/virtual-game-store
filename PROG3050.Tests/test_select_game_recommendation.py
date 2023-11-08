@@ -47,6 +47,6 @@ Clean up
 """
 # Logout
 driver.find_element(By.ID, "dropdownMenuButton1").click()
-driver.find_element(By.CSS, ".btn-link").click()
+driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[3]/form/button").click()
 
 driver.quit()
