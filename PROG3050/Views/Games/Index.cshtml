@@ -26,13 +26,14 @@
         </div>
         @if (Model != null)
         {
-            if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
             {
                 <div class="alert alert-danger" role="alert">
                     @Model.ErrorMessage
                 </div>
             }
-            if (Model.Games.Any())
+
+            @if (Model.Games != null && Model.Games.Any())
             {
                 <div>
                     <table class="table table-striped table-hover">
@@ -49,6 +50,9 @@
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Games.First().GameCategory)
+                                </th>
+                                <th>
+                                    Wish List
                                 </th>
                                 @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                 {
@@ -72,6 +76,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.GameCategory.GameCategoryName)
                                     </td>
+                                    <td>
+                                        <button class="btn btn-link add-to-wishlist" data-game-id="@item.GameId">Add to Wishlist</button>
+                                    </td>
                                     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                     {
                                         <td>
@@ -87,4 +94,16 @@
             }
         }
     </div>
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".add-to-wishlist").click(function () {
+                var gameId = $(this).data("game-id");
+                $.post("/Wishlist/AddToWishlist", { gameId: gameId }, function () {
+                });
+            });
+        });
+    </script>
 }

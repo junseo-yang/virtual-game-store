@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model PROG3050.ViewModel.WishlistViewModel
+
+@{
+    ViewData["Title"] = "Wishlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Wishlist</h1>
+
+@if (Model != null && Model.Wishlist.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Game Title</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Wishlist)
+            {
+                <tr>
+                    <td>@item.Game.Title</td>
+                    <td>@item.Game.Price</td>
+                    <td>
+                        <form method="post" asp-action="RemoveFromWishlist" asp-route-gameId="@item.GameId">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-success" onclick="copyTitles()">Copy Titles</button>
+    </div>
+
+    <div class="text-center mt-3">
+        <!-- Shareable links for Facebook, Instagram, and Twitter -->
+        <h3>Share on Social Media:</h3>
+        <a class="btn btn-info" href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Index", "Wishlist")&quote=Check out my wishlist!" target="_blank">Facebook</a>
+        <a class="btn btn-danger" href="https://www.instagram.com/?utm_source=ig_web_copy_link&url=@Url.Action("Index", "Wishlist")&caption=Check out my wishlist!" target="_blank">Instagram</a>
+        <a class="btn btn-info" href="https://twitter.com/intent/tweet?url=@Url.Action("Index", "Wishlist")&text=Check out my wishlist!" target="_blank">Twitter</a>
+    </div>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-success" onclick="shareFacebook()">Share Facebook</button>
+        <button class="btn btn-success" onclick="shareInstagram()">Share Instagram</button>
+        <button class="btn btn-success" onclick="shareTwitter()">Share Twitter</button>
+    </div>
+
+
+}
+else
+{
+    <p>Your wishlist is empty.</p>
+}
+
+@section scripts {
+    <script>
+        function copyTitles() {
+            var titles = document.querySelectorAll('.table-striped td:nth-child(1)'); 
+            var titlesArray = Array.from(titles).map(td => td.textContent.trim()).join(', ');
+
+            titlesArray = titlesArray.replace(/,/g, '\n');
+
+            var textarea = document.createElement('textarea');
+            textarea.value = titlesArray;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            return titlesArray;
+        }
+
+        function shareFacebook() {
+            // Share on Facebook
+            var url = "https://www.facebook.com/dialog/feed?app_id=YOUR_APP_ID&display=popup&quote=" + encodeURIComponent("Check out my wishlist! Titles:\n" + copyTitles()) + "&href=" + encodeURIComponent("@Url.Action("Index", "Wishlist")");
+            window.open(url, "_blank");
+
+        }
+
+        function shareInstagram() {
+            // Share on Instagram
+            copyTitles();
+            window.open("https://www.instagram.com/?utm_source=ig_web_copy_link", "_blank");
+        }
+
+        function shareTwitter(){
+            // Share on Twitter
+            // window.open("https://twitter.com/intent/tweet?url=@Url.Action("Index", "Wishlist")&text=Check out my wishlist! Titles:%0A" + encodeURIComponent(titlesArray), "_blank");
+
+            var url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("Check out my wishlist! Titles:\n" + copyTitles()) + "&url=" + encodeURIComponent("@Url.Action("Index", "Wishlist")");
+            window.open(url, "_blank");
+
+        }
+
+    </script>
+}
