@@ -39,24 +39,7 @@
         </tbody>
     </table>
 
-    <div class="text-center mt-3">
-        <button class="btn btn-success" onclick="copyTitles()">Copy Titles</button>
-    </div>
-
-    <div class="text-center mt-3">
-        <!-- Shareable links for Facebook, Instagram, and Twitter -->
-        <h3>Share on Social Media:</h3>
-        <a class="btn btn-info" href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Index", "Wishlist")&quote=Check out my wishlist!" target="_blank">Facebook</a>
-        <a class="btn btn-danger" href="https://www.instagram.com/?utm_source=ig_web_copy_link&url=@Url.Action("Index", "Wishlist")&caption=Check out my wishlist!" target="_blank">Instagram</a>
-        <a class="btn btn-info" href="https://twitter.com/intent/tweet?url=@Url.Action("Index", "Wishlist")&text=Check out my wishlist!" target="_blank">Twitter</a>
-    </div>
-
-    <div class="text-center mt-3">
-        <button class="btn btn-success" onclick="shareFacebook()">Share Facebook</button>
-        <button class="btn btn-success" onclick="shareInstagram()">Share Instagram</button>
-        <button class="btn btn-success" onclick="shareTwitter()">Share Twitter</button>
-    </div>
-
+    <a id="twitterShareLink" href="https://twitter.com/intent/tweet?url=&text=" target="_blank">Share on Twitter</a>
 
 }
 else
@@ -65,12 +48,21 @@ else
 }
 
 @section scripts {
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+
+
     <script>
+        var textQuote = $("#quote").text();
+        $("a").attr(copyTitles(), textQuote);
+
         function copyTitles() {
             var titles = document.querySelectorAll('.table-striped td:nth-child(1)'); 
             var titlesArray = Array.from(titles).map(td => td.textContent.trim()).join(', ');
 
             titlesArray = titlesArray.replace(/,/g, '\n');
+
+            var additionalText = "[This is My Wish List !!]\n\n";
 
             var textarea = document.createElement('textarea');
             textarea.value = titlesArray;
@@ -79,30 +71,12 @@ else
             document.execCommand('copy');
             document.body.removeChild(textarea);
 
-            return titlesArray;
-        }
-
-        function shareFacebook() {
-            // Share on Facebook
-            var url = "https://www.facebook.com/dialog/feed?app_id=YOUR_APP_ID&display=popup&quote=" + encodeURIComponent("Check out my wishlist! Titles:\n" + copyTitles()) + "&href=" + encodeURIComponent("@Url.Action("Index", "Wishlist")");
-            window.open(url, "_blank");
-
-        }
-
-        function shareInstagram() {
-            // Share on Instagram
-            copyTitles();
-            window.open("https://www.instagram.com/?utm_source=ig_web_copy_link", "_blank");
-        }
-
-        function shareTwitter(){
-            // Share on Twitter
-            // window.open("https://twitter.com/intent/tweet?url=@Url.Action("Index", "Wishlist")&text=Check out my wishlist! Titles:%0A" + encodeURIComponent(titlesArray), "_blank");
-
-            var url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("Check out my wishlist! Titles:\n" + copyTitles()) + "&url=" + encodeURIComponent("@Url.Action("Index", "Wishlist")");
-            window.open(url, "_blank");
-
+            var twitterShareLink = document.getElementById('twitterShareLink');
+            twitterShareLink.href = "https://twitter.com/intent/tweet?url=&text=" + encodeURIComponent(additionalText + titlesArray);
         }
 
     </script>
+
+
+
 }
