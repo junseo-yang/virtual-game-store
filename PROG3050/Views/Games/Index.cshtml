@@ -26,13 +26,14 @@
         </div>
         @if (Model != null)
         {
-            if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
             {
                 <div class="alert alert-danger" role="alert">
                     @Model.ErrorMessage
                 </div>
             }
-            if (Model.Games.Any())
+
+            @if (Model.Games != null && Model.Games.Any())
             {
                 <div>
                     <table class="table table-striped table-hover">
@@ -50,6 +51,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Games.First().GameCategory)
                                 </th>
+                                <th>
+                                    Actions
+                                </th>
                                 @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                 {
                                     <th></th>
@@ -59,7 +63,7 @@
                         <tbody>
                             @foreach (var item in Model.Games)
                             {
-                                <tr style="cursor:pointer;" onclick="location.href = '@Url.Action("Details", "Games", new { id = item.GameId })'">
+                                <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Title)
                                     </td>
@@ -71,6 +75,14 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.GameCategory.GameCategoryName)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.GameId">Details</a>
+
+                                        @if (!Model.UserWishlistGameIds.Contains(item.GameId))
+                                        {
+                                             <input id="addToWishList" type="button" class="btn btn-success" value="Add to Wishlist" data-game-id="@item.GameId" />
+                                        }
                                     </td>
                                     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                     {
@@ -87,4 +99,26 @@
             }
         }
     </div>
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#addToWishList").click(function (event) {
+                event.preventDefault(); 
+                event.stopPropagation(); 
+
+                var gameId = $(this).data("game-id");
+                var button = $(this);
+
+                $.post("/Wishlist/AddToWishlist", { gameId: gameId }, function (data) {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+            });
+        });
+    </script>
 }

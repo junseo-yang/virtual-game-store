@@ -1,8 +1,11 @@
-﻿@model IEnumerable<PROG3050.Models.FriendFamily>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<PROG3050.Models.FriendFamily>
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Friend/Family";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentUser = await UserManager.GetUserAsync(User);
 }
 
 <h1>Friend/Family</h1>
@@ -11,10 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RequesterUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReceiverUser)
+                User
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -22,17 +22,26 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
+            <th>
+                Wishlist
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RequesterUser.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReceiverUser.UserName)
+                @if (currentUser.Id == item.RequesterUser.Id)
+                {
+                    @Html.DisplayFor(modelItem => item.ReceiverUser.UserName)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.RequesterUser.UserName)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -44,22 +53,39 @@
                 <form method="post" asp-action="Request">
                     <input type="hidden" name="requesterUserId" value="@item.RequesterUserId" />
                     <input type="hidden" name="receiverUserId" value="@item.ReceiverUserId" />
-                    @if (item.Status == "Pending") 
+                    @if (item.Status == "Pending")
                     {
-                        if (item.RequesterUserId == ViewBag.CurrentUserId) 
+                        if (item.RequesterUserId == ViewBag.CurrentUserId)
                         {
                             <input type="submit" value="Cancel" class="btn btn-warning" name="description" />
                         }
-                        else {
+                        else
+                        {
                             <input type="submit" value="Accept" class="btn btn-primary" name="description" />
                             <input type="submit" value="Reject" class="btn btn-danger" name="description" />
                         }
                     }
                     else
                     {
-                        <input type="submit" value="Delete" class="btn btn-danger" name="description" onclick="return confirm('Are you sure want to delete?')"/>
+                        <input type="submit" value="Delete" class="btn btn-danger" name="description" onclick="return confirm('Are you sure want to delete?')" />
                     }
                 </form>
+            </td>
+            <td>
+                @if (item.Status == "Processed")
+                {
+                    <form method="get" asp-controller="WishList" asp-action="Index">
+                        @if (currentUser.Id == item.RequesterUser.Id)
+                        {
+                            <input type="hidden" name="userId" value="@item.ReceiverUserId" />
+                        }
+                        else
+                        {
+                            <input type="hidden" name="userId" value="@item.RequesterUserId" />
+                        }
+                        <input type="submit" value="Wish List" class="btn btn-success" name="description" />
+                    </form>
+                }
             </td>
         </tr>
 }

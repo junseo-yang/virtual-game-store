@@ -737,7 +737,7 @@ namespace PROG3050.Data
                 GenderId = 3,
                 PreferenceId = 1
             };
-            
+
             superadmin.PasswordHash = ph.HashPassword(superadmin, "Superadmin123!@");
 
             var admin = new User
@@ -1165,7 +1165,7 @@ namespace PROG3050.Data
             builder.Entity<EventUser>()
                 .HasOne(eu => eu.User)
                 .WithMany(u => u.EventUsers)
-                .HasForeignKey(eu=> eu.UserId);
+                .HasForeignKey(eu => eu.UserId);
 
             builder.Entity<EventUser>().HasData(
                 new EventUser
@@ -1239,7 +1239,20 @@ namespace PROG3050.Data
                     Status = "Pending"
                 }
             );
+
+            builder.Entity<Wishlist>()
+            .HasKey(w => new { w.UserId, w.GameId });
+
+            builder.Entity<Wishlist>().HasData(
+                new Wishlist
+                {
+                    UserId = tester1.Id,
+                    GameId = 1, 
+                }
+            );
         }
+
+        public DbSet<Wishlist>? Wishlist { get; set; }
 
         public DbSet<Gender>? Genders { get; set; }
 

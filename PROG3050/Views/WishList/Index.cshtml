@@ -1,0 +1,73 @@
+﻿@model PROG3050.ViewModel.WishlistViewModel
+
+@{
+    ViewData["Title"] = "Wishlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (ViewBag.WishListUserName == null)
+    {
+        <h1>My Wishlist</h1>
+    }
+    else
+    {
+        <h1>@(ViewBag.WishListUserName)'s Wishlist</h1>
+    }
+}
+
+@if (Model != null && Model.Wishlist.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Game Title</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Wishlist)
+            {
+                <tr>
+                    <td>@item.Game.Title</td>
+                    <td>@item.Game.Price</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-primary me-1" asp-controller="Games" asp-action="Details" asp-route-id="@item.GameId">Details</a>
+                            @if (ViewBag.WishListUserName == null)
+                            {
+                                <form method="post" asp-action="RemoveFromWishlist" asp-route-gameId="@item.GameId">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete?')">Delete</button>
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    if (ViewBag.WishListUserName == null)
+    {
+        <button class="btn btn-primary" onclick="shareOnReddit()">
+            Share on Reddit
+        </button>
+    }
+}
+else
+{
+    <p>Wishlist is empty.</p>
+}
+
+@section scripts {
+    <script>
+        function shareOnReddit() {
+            var gameTitles = document.querySelectorAll('.table-striped td:nth-child(1)');
+            var gameTitlesString = Array.from(gameTitles).map(td => td.textContent.trim()).join('\n');
+            var title = "WishList from CVGS!";
+
+            window.open("https://www.reddit.com/r/game/submit?title=" + encodeURIComponent(title) + "&text=" + encodeURIComponent(gameTitlesString), "_blank");
+        }
+    </script>
+}

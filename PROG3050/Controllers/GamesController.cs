@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,13 @@ namespace PROG3050.Controllers
     [Authorize]
     public class GamesController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Games
@@ -31,10 +34,17 @@ namespace PROG3050.Controllers
             {
                 var games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
                 vm.Games = games;
+
+                var user = await _userManager.GetUserAsync(User);
+
+                vm.UserWishlistGameIds = await _context.Wishlist
+                    .Where(w => w.UserId == user.Id)
+                    .Select(w => w.GameId)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
-                vm.ErrorMessage = ex.Message; 
+                vm.ErrorMessage = ex.Message;
             }
 
             return View(vm);
