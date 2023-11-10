@@ -1247,9 +1247,7 @@ namespace PROG3050.Data
                 new Wishlist
                 {
                     UserId = tester1.Id,
-                    GameId = 1, 
-                    Title = "Dummy Game",
-                    Price = 19.99
+                    GameId = 1
                 }
             );
         }

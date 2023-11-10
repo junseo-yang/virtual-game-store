@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,19 +23,33 @@ namespace PROG3050.Controllers
             _context = context;
         }
 
-        // GET: Games
         public async Task<IActionResult> Index()
         {
-            GameViewModel vm = new GameViewModel();
+            var vm = new GameViewModel();
 
             try
             {
                 var games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
                 vm.Games = games;
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        var userWishlistGameIds = await _context.Wishlist
+                            .Where(w => w.UserId == userId)
+                            .Select(w => w.GameId)
+                            .ToListAsync();
+
+                        vm.UserWishlistGameIds = userWishlistGameIds;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                vm.ErrorMessage = ex.Message; 
+                vm.ErrorMessage = ex.Message;
             }
 
             return View(vm);

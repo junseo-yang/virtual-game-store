@@ -11,5 +11,7 @@ namespace PROG3050.ViewModel
         public string? Title { get; set; }
 
         public string ErrorMessage { get; set; } = string.Empty;
+        public List<int> UserWishlistGameIds { get; set; }
+
     }
 }

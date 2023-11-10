@@ -35,9 +35,11 @@ namespace PROG3050.Controllers
 
                 _context.Wishlist.Add(wishlistItem);
                 await _context.SaveChangesAsync();
+
+                return Json(new { success = true });
             }
 
-            return RedirectToAction("Index", "Games");
+            return Json(new { success = false, message = "Game is already in the Wishlist!" });
         }
 
         [HttpPost]
@@ -54,37 +56,6 @@ namespace PROG3050.Controllers
             }
 
             return RedirectToAction("Index");
-        }
-
-        public IActionResult ShareWishlist()
-        {
-            var wishlistLink = "https://example.com/wishlist"; // Replace with the actual link to your wishlist page
-            var wishlistDescription = "Check out my wishlist!"; // Replace with a description or title for the shared content
-
-            // Construct shareable links for Facebook, Instagram, and Twitter
-            var facebookShareLink = $"https://www.facebook.com/sharer/sharer.php?u={wishlistLink}";
-            var instagramShareLink = $"https://www.instagram.com/?url={wishlistLink}&title={wishlistDescription}";
-            var twitterShareLink = $"https://twitter.com/intent/tweet?url={wishlistLink}&text={wishlistDescription}";
-
-            // You can redirect the user to these links or use them as needed in your application.
-
-            // For demonstration purposes, let's redirect to a page showing these links.
-            var viewModel = new ShareLinksViewModel
-            {
-                FacebookShareLink = facebookShareLink,
-                InstagramShareLink = instagramShareLink,
-                TwitterShareLink = twitterShareLink
-            };
-
-            return View("ShareLinks", viewModel);
-        }
-
-        // Add a new ViewModel class for ShareLinks if needed
-        public class ShareLinksViewModel
-        {
-            public string FacebookShareLink { get; set; }
-            public string InstagramShareLink { get; set; }
-            public string TwitterShareLink { get; set; }
         }
 
         public async Task<IActionResult> Index()
