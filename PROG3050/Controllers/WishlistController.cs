@@ -71,8 +71,6 @@ namespace PROG3050.Controllers
                 Wishlist = wishlistItems
             };
 
-            Console.WriteLine("hello");
-
             return View(viewModel);
         }
 

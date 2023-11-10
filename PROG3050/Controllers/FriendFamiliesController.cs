@@ -83,10 +83,8 @@ namespace PROG3050.Controllers
             {
                 if (string.IsNullOrEmpty(receiverUserId))
                 {
-                    Console.WriteLine("NONONO" +  receiverUserId);
+                    return NotFound();
                 }
-
-                Console.WriteLine($"{receiverUserId}");
 
                 var wishlistItems = _context.Wishlist
                     .Include(w => w.Game)

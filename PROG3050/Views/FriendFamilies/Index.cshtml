@@ -44,9 +44,24 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                    <a asp-action="GetWishlist" asp-route-id="@item.ReceiverUserId">Wishlist</a>
-                    <form method="post" asp-action="GetWishlist" asp-route-userId="@item.ReceiverUserId">
-                        <input type="submit" class="btn btn-warning" value="Wishlist"></input>
+                    <form method="post" asp-action="GetWishlist">
+                        <input type="hidden" name="ReceiverUserId" value="@item.ReceiverUserId" />
+                        @if (item.Status == "Pending")
+                        {
+                            if (item.RequesterUserId == ViewBag.CurrentUserId)
+                            {
+                                <input disabled value="Feature for friend" class="btn btn-dark" />
+                            }
+                            else
+                            {
+                                <input disabled value="Feature for friend" class="btn btn-dark" />
+                                <input disabled value="Feature for friend" class="btn btn-dark" />
+                            }
+                        }
+                        else
+                        {
+                            <input type="submit" value="Wish List" class="btn btn-success" name="description" />
+                        }
                     </form>
             </td>
             <td>
