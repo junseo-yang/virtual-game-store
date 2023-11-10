@@ -1248,8 +1248,6 @@ namespace PROG3050.Data
                 {
                     UserId = tester1.Id,
                     GameId = 1, 
-                    Title = "Dummy Game",
-                    Price = 19.99
                 }
             );
         }

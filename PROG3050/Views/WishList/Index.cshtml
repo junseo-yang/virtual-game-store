@@ -62,14 +62,6 @@ else
 
 
     <script>
-        var textQuote = $("#quote").text();
-        $("a").attr(copyTitles(), textQuote);
-
-        document.getElementById('twitterShareButton').addEventListener('click', function () {
-            copyTitles();
-            shareOnTwitter();
-        });
-
         function copyTitles() {
             var titles = document.querySelectorAll('.table-striped td:nth-child(1)');
             var titlesArray = Array.from(titles).map(td => td.textContent.trim()).join(', ');
