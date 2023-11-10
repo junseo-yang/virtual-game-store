@@ -22,6 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            <th>
+                Wishlist
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,6 +42,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                    <a asp-action="GetWishlist" asp-route-id="@item.ReceiverUserId">Wishlist</a>
+                    <form method="post" asp-action="GetWishlist" asp-route-userId="@item.ReceiverUserId">
+                        <input type="submit" class="btn btn-warning" value="Wishlist"></input>
+                    </form>
             </td>
             <td>
                 <form method="post" asp-action="Request">

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Data;
 using PROG3050.Models;
+using PROG3050.ViewModel;
 
 namespace PROG3050.Controllers
 {
@@ -75,5 +76,38 @@ namespace PROG3050.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> GetWishlist(string receiverUserId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(receiverUserId))
+                {
+                    Console.WriteLine("NONONO" +  receiverUserId);
+                }
+
+                Console.WriteLine($"{receiverUserId}");
+
+                var wishlistItems = _context.Wishlist
+                    .Include(w => w.Game)
+                    .Where(w => w.UserId == receiverUserId)
+                    .ToList();
+
+                var viewModel = new WishlistViewModel
+                {
+                    Wishlist = wishlistItems
+                };
+
+                return View("_WishListModal", viewModel);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while fetching the wishlist." });
+            }
+        }
+
+
+
+
     }
 }

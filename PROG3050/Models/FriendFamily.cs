@@ -12,7 +12,7 @@ namespace PROG3050.Models
 
         [Required]
         [Display(Name = "Receiver")]
-        public string ReceiverUserId { get; set; }
+        public string? ReceiverUserId { get; set; }
         public User? ReceiverUser { get; set; }
 
         [Required]
