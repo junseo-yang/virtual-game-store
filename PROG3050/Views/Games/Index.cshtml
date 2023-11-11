@@ -19,7 +19,7 @@
     }
     <div>
         <div>
-            <form asp-controller="Games" asp-action="Search" class="input-group mb-3">
+            <form method="get" asp-controller="Games" asp-action="Search" class="input-group mb-3">
                 <input id="input-search" class="form-control" placeholder="Search Game Title" asp-for="Title">
                 <button id="search-submit" class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
             </form>
@@ -81,7 +81,7 @@
 
                                         @if (!Model.UserWishlistGameIds.Contains(item.GameId))
                                         {
-                                             <input id="addToWishList" type="button" class="btn btn-success" value="Add to Wishlist" data-game-id="@item.GameId" />
+                                            <input type="button" class="btn btn-success add-to-wishlist" value="Add to Wishlist" data-game-id="@item.GameId" />
                                         }
                                     </td>
                                     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
@@ -104,7 +104,7 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            $("#addToWishList").click(function (event) {
+            $(".add-to-wishlist").click(function (event) {
                 event.preventDefault(); 
                 event.stopPropagation(); 
 
@@ -113,7 +113,7 @@
 
                 $.post("/Wishlist/AddToWishlist", { gameId: gameId }, function (data) {
                     if (data.success) {
-                        location.reload();
+                        button.hide();
                     } else {
                         alert(data.message);
                     }

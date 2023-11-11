@@ -58,7 +58,7 @@ namespace PROG3050.Controllers
         /// <param name="vmFromBody"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Search(GameViewModel vmFromBody)
         {
             GameViewModel vm = new GameViewModel();
@@ -77,6 +77,13 @@ namespace PROG3050.Controllers
                 {
                     var searchedGames = games?.Where(x => x.Title.ToLower().Contains(title.ToLower() ?? string.Empty));
                     vm.Games = searchedGames;
+
+                    var user = await _userManager.GetUserAsync(User);
+
+                    vm.UserWishlistGameIds = await _context.Wishlist
+                                                    .Where(w => w.UserId == user.Id)
+                                                    .Select(w => w.GameId)
+                                                    .ToListAsync();
                     if (!searchedGames.Any())
                         vm.ErrorMessage = $"The game you searched for is not in the database. Entered Title: {vmFromBody.Title}";
                 }
