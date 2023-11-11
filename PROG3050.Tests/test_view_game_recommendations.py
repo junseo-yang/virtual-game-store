@@ -27,7 +27,7 @@ Act
 driver.get("https://localhost:7239/Games")
 
 # Tester1 clicks a game
-driver.find_element(By.XPATH, "/html/body/div/main/div/div/table/tbody/tr[1]/td").click()
+driver.find_element(By.XPATH, "/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[5]/a").click()
 
 # Get Recommended Games sub title
 element = driver.find_element(By.XPATH, "/html/body/div/main/div[3]/h4")
@@ -43,6 +43,6 @@ Clean up
 """
 # Logout
 driver.find_element(By.ID, "dropdownMenuButton1").click()
-driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[3]/form/button").click()
+driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[4]/form/button").click()
 
 driver.quit()

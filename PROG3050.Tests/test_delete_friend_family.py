@@ -25,11 +25,12 @@ driver.find_element(By.ID, "login-submit").click()
 driver.get("https://localhost:7239/UserFriendFamilies")
 
 # Tester1 clicks Friend Request to Tester2
-driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr[4]/td[4]/form/input[2]").click()
+tester_2_index = [i for i, e in enumerate(driver.find_elements(By.TAG_NAME, "td")) if e.text == 'Tester2'][0]
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_2_index//4 + 1}]/td[4]/form/input[2]").click()
 
 # Tester1 logout
 driver.find_element(By.ID, "dropdownMenuButton1").click()
-driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[3]/form/button").click()
+driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[4]/form/button").click()
 
 # Tester2 login
 driver.find_element(By.LINK_TEXT, "Login").click()
@@ -41,14 +42,15 @@ driver.find_element(By.ID, "login-submit").click()
 driver.find_element(By.ID, "dropdownMenuButton1").click()
 driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[2]/a").click()
 
-# Tester2 clicks Accept
-driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[5]/form/input[3]").click()
+# Tester2 clicks Accept on Tester1
+tester_1_index = [i for i, e in enumerate(driver.find_elements(By.TAG_NAME, "td")) if e.text == 'Tester1'][0]
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]").click()
 
 """
 Act
 """
-# Tester2 clicks Delete button
-driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[5]/form/input[3]").click()
+# Tester2 clicks Delete button on Tester1
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]").click()
 Alert(driver).accept()
 
 """
@@ -56,7 +58,7 @@ Assert
 """
 # Assert Status does not present
 try:
-    element = driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[4]")
+    element = driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]")
     not_found = False
 except:
     not_found = True
@@ -68,10 +70,10 @@ Clean up
 """
 # Clean up in case there was an error
 try:
-    element = driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[4]")
+    element = driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]")
     not_found = False
 except:
     not_found = True
 
 if not_found is False:
-    driver.find_element(By.XPATH, "/html/body/div/main/table/tbody/tr/td[5]/form/input[3]").click()
+    driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]").click()

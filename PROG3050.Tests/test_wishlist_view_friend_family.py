@@ -21,9 +21,6 @@ driver.find_element(By.ID, "Input_Email").send_keys("Tester1")
 driver.find_element(By.ID, "Input_Password").send_keys("Tester1!@")
 driver.find_element(By.ID, "login-submit").click()
 
-"""
-Act
-"""
 # Tester1 navigates to the users page
 driver.get("https://localhost:7239/UserFriendFamilies")
 
@@ -50,17 +47,24 @@ tester_1_index = [i for i, e in enumerate(driver.find_elements(By.TAG_NAME, "td"
 driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]").click()
 
 """
+Act
+"""
+# Navigates to Tester 1's Wishlist 
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[5]/form/input[2]").click()
+
+"""
 Assert
 """
-# Assert Status is Processed
-tester_1_index = [i for i, e in enumerate(driver.find_elements(By.TAG_NAME, "td")) if e.text == 'Tester1'][0]
-status = driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[3]")
-assert status.text == "Processed"
+assert driver.find_element(By.XPATH, '/html/body/div/main/h1').text == "Tester1's Wishlist"
 
 """
 Clean up
 """
+# Navigates to 
+driver.get("https://localhost:7239/FriendFamilies")
+
 # Tester2 clicks Delete button on Tester1
 driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_1_index//5 + 1}]/td[4]/form/input[3]").click()
 Alert(driver).accept()
 driver.refresh()
+driver.quit()
