@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PROG3050.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace PROG3050.Models
 {
@@ -11,6 +12,7 @@ namespace PROG3050.Models
 
         public byte[]? Content { get; set; }
 
+        [ValidationReportCreatedDate(ErrorMessage = "Created Date Time is out of range.")]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
 }

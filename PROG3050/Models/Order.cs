@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PROG3050.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace PROG3050.Models
 {
@@ -16,6 +17,7 @@ namespace PROG3050.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Order Date")]
+        [ValidationOrderDate(ErrorMessage = "Order Date is out of range.")]
         public DateTime OrderDate { get; set; }
 
         [Display(Name = "Shipping Address")]
