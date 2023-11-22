@@ -120,6 +120,38 @@
 <div>
     <hr />
     <h4>Reviews</h4>
+    @if (Model != null)
+    {
+        if (Model.Reviews != null)
+        {
+            if (Model.Reviews.Count() != 0)
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    if (review.Status != "Pending")
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@review.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Posted by @review.User.UserName</h6>
+                                <span class="text-warning">
+                                    @for (var i = 0; i < review.Rating; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
+                                </span>
+                                <p class="card-text">@review.Description</p>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <p>No Review to display.</p>
+            }
+        }
+    }
 
     <hr />
     <h4>Write your Review</h4>
