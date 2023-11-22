@@ -74,6 +74,22 @@ namespace PROG3050.Controllers
             return View(review);
         }
 
+        // POST: Reviews/WriteReview
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> WriteReview([Bind("ReviewId,Title,Description,Rating,Status,UserId,GameId")] Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Games", new { id = review.GameId });
+            }
+            TempData["GlobalStatusMessage"] = $"Title and Description are required.";
+            TempData["GlobalStatusMessageClass"] = "danger";
+            return RedirectToAction("Details", "Games", new { id = review.GameId });
+        }
+
         // GET: Reviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
