@@ -1,4 +1,6 @@
-﻿@model IEnumerable<PROG3050.Models.Review>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<PROG3050.Models.Review>
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Reviews";
@@ -7,9 +9,12 @@
 
 <h1>Reviews</h1>
 
-<p>
-    <a asp-action="Create">Create New Review</a>
-</p>
+@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{
+    <p>
+        <a asp-action="Create">Create New Review</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -25,9 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
+            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Game)
             </th>
@@ -44,21 +52,29 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rating)
+                <span class="text-warning">
+                @for (var i = 0; i < item.Rating; i++)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                </span>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
+            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{           
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Game.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ReviewId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReviewId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReviewId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ReviewId" class="btn btn-primary btn-sm">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ReviewId" class="btn btn-primary btn-sm">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReviewId" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
 }

@@ -13,9 +13,9 @@
 {
     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
     {
-<p>
-    <a asp-action="Create">Create a Game</a>
-</p>
+    <p>
+        <a asp-action="Create">Create a Game</a>
+    </p>
     }
     <div>
         <div>
