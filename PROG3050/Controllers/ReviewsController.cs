@@ -112,7 +112,7 @@ namespace PROG3050.Controllers
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 
-                TempData["GlobalStatusMessage"] = $"Your review has been requested sucessfully. Admin will take a look and process it shortly.";
+                TempData["GlobalStatusMessage"] = $"Your review has been requested sucessfully. SuperAdmin/Admin/Moderator will take a look and process it shortly.";
                 TempData["GlobalStatusMessageClass"] = "success";
                 
                 return RedirectToAction("Details", "Games", new { id = review.GameId });

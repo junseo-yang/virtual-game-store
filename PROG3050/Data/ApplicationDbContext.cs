@@ -997,7 +997,7 @@ namespace PROG3050.Data
                 {
                     ReviewId = 3,
                     Title = "Bad Game!",
-                    Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                    Description = "Cities: Skylines II is my type of game. I'm more into puzzle and mystery,",
                     Rating = 2,
                     Status = "Pending",
                     UserId = moderator.Id,
@@ -1007,7 +1007,7 @@ namespace PROG3050.Data
                 {
                     ReviewId = 4,
                     Title = "Bad Game!",
-                    Description = "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.",
+                    Description = "I wasn't into this game since I have a 3D motion sickness.",
                     Rating = 2,
                     Status = "Pending",
                     UserId = moderator.Id,
