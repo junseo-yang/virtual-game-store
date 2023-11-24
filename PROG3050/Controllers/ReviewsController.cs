@@ -198,6 +198,28 @@ namespace PROG3050.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
+        [HttpPost]
+        public async Task<IActionResult> Approve(int? reviewId)
+        {
+            if (reviewId == null || _context.Review == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Review.FindAsync(reviewId);
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            review.Status = "Processed";
+            _context.Update(review);
+            _context.SaveChanges();
+            
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Reviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

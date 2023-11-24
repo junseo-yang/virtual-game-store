@@ -72,6 +72,16 @@
                 @Html.DisplayFor(modelItem => item.Game.Title)
             </td>
             <td>
+            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+                if (item.Status == "Pending")
+                {
+                    <form method="post" asp-action="Approve">
+                        <input type="hidden" name="reviewId" value="@item.ReviewId" />
+                        <button type="submit" class="btn btn-success btn-sm">Approve</button> |
+                    </form>
+                }
+            }
                 <a asp-action="Edit" asp-route-id="@item.ReviewId" class="btn btn-primary btn-sm">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ReviewId" class="btn btn-primary btn-sm">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ReviewId" class="btn btn-danger btn-sm">Delete</a>
