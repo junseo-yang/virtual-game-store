@@ -1,4 +1,6 @@
-﻿@model IEnumerable<PROG3050.Models.Event>
+﻿@* @model IEnumerable<PROG3050.Models.Event> *@
+
+@model PROG3050.ViewModel.EventViewModel
 
 @{
     ViewData["Title"] = "Events";
@@ -14,41 +16,58 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDateTime)
+                StartDateTime
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDateTime)
+                EndDateTime
             </th>
-            <th></th>
-        </tr>
+            <th>
+                Action
+            </th>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EventId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.EventId">Details</a>
+                    @if (item.EventUsers.Any(x => x.UserId == Model.CurrentUserId))
+                    {
+                        <a class="btn btn-outline-danger" asp-action="CancelEvent" asp-route-id="@item.EventId">Cancel Event</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success" asp-action="RegisterEvent" asp-route-id="@item.EventId">Register Event</a>
+                    }
+                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                    {
+
+                        <a class="btn btn-outline-primary asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
+                        <a class="btn btn-outline-primary asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+
+                    }
+                </td>
+
+
+            </tr>
+        }
     </tbody>
 </table>

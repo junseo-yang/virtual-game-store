@@ -1,4 +1,4 @@
-﻿@model PROG3050.Models.Event
+﻿@model PROG3050.ViewModel.EventViewModel
 
 @{
     ViewData["Title"] = "Event Details";
@@ -11,33 +11,89 @@
     <h4>Event</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectedEvent.Title)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectedEvent.Title)
+        </dd> 
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectedEvent.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectedEvent.Description)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectedEvent.StartDateTime)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectedEvent.StartDateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDateTime)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectedEvent.EndDateTime)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndDateTime)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectedEvent.EndDateTime)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.EventId">Edit</a> |
+    @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.SelectedEvent?.EventId">Edit</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        <br />
+        <h4>Requested Users</h4>
+        <hr />
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Users)
+                    {
+                        <tr style="cursor:pointer;">
+                            <td>
+                                @item.UserName
+                            </td>
+                            <td>
+                                @($"{item.FirstName} {item.LastName}")
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+}
+
+
+

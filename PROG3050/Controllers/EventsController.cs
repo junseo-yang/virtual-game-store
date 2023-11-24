@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Data;
 using PROG3050.Models;
+using PROG3050.ViewModel;
 
 namespace PROG3050.Controllers
 {
@@ -15,17 +17,28 @@ namespace PROG3050.Controllers
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Events
         public async Task<IActionResult> Index()
         {
-              return _context.Event != null ? 
-                          View(await _context.Event.ToListAsync()) :
+            var currentUser = await _userManager.GetUserAsync(User);
+            var eventList = await _context.Event.Include(x => x.EventUsers).ToListAsync();
+
+            EventViewModel vm = new EventViewModel()
+            {
+                Events = eventList,
+                CurrentUserId = currentUser.Id
+            };
+
+            return _context.Event != null ?
+                          View(vm) :
                           Problem("Entity set 'ApplicationDbContext.Event'  is null.");
         }
 
@@ -37,14 +50,24 @@ namespace PROG3050.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Event
+            var @event = await _context.Event.Include(x=>x.EventUsers)
                 .FirstOrDefaultAsync(m => m.EventId == id);
+
+            var users = await _context.EventUser.Where(x => x.EventId == id).Select(x => x.User).ToListAsync();
+
             if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            //Adds users to show in the detail view.
+            var vm = new EventViewModel()
+            {
+                SelectedEvent = @event,
+                Users = users
+            };
+
+            return View(vm);
         }
 
         // GET: Events/Create
@@ -161,6 +184,76 @@ namespace PROG3050.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Events/RegisterEvent/5
+        public async Task<IActionResult> RegisterEvent(int? id)
+        {
+            if (id == null || _context.Event == null)
+            {
+                return NotFound();
+            }
+
+            //Gets current user and selected event
+            var currentUser = await _userManager.GetUserAsync(User);
+            var selectedEvent = await _context.Event.Include(x => x.EventUsers).FirstOrDefaultAsync(x => x.EventId == id);
+
+            //Creates EventUser. EventId: Selected event, UserId: Current user 
+            var eventUser = new EventUser()
+            {
+                 EventId = selectedEvent.EventId,
+                 UserId = currentUser.Id
+            };
+
+            //Adds eventUser into the db.
+            _context.Add(eventUser);
+            await _context.SaveChangesAsync();
+
+            //Gets updated event list.
+            var eventList = await _context.Event.Include(x => x.EventUsers).ToListAsync();
+
+            //Creates view model
+            EventViewModel vm = new EventViewModel()
+            {
+                Events = eventList,
+                CurrentUserId = currentUser.Id
+            };
+
+            //Redirects to Index
+            return RedirectToAction("Index",vm);
+        }
+
+        public async Task<IActionResult> CancelEvent(int? id)
+        {
+            if (id == null || _context.Event == null)
+            {
+                return NotFound();
+            }
+
+            //Gets current user and selected event
+            var currentUser = await _userManager.GetUserAsync(User);
+            var selectedEvent = await _context.Event.Include(x => x.EventUsers).Where(x=>x.EventUsers.Where(x=>x.EventId ==  id).Where(x=>x.UserId == currentUser.Id).Any()).ToListAsync();
+
+            var userEvent = await _context.EventUser.Where(x => x.EventId == id).FirstOrDefaultAsync(x=>x.UserId == currentUser.Id);
+
+            //Removes from db.
+            if(userEvent != null)
+            {
+                _context.EventUser.Remove(userEvent);
+                await _context.SaveChangesAsync();
+            }
+
+            //Gets updated event list.
+            var eventList = await _context.Event.Include(x => x.EventUsers).ToListAsync();
+
+            //Creates view model
+            EventViewModel vm = new EventViewModel()
+            {
+                Events = eventList,
+                CurrentUserId = currentUser.Id
+            };
+
+            return RedirectToAction("Index");
         }
 
         private bool EventExists(int id)
