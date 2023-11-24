@@ -14,6 +14,14 @@ $(document).ready(function () {
         }
     });
 
+    $(".rating-star").hover(function () {
+        $(".rating-star").addClass("far").removeClass("fas")
+        $(this).addClass("fas").removeClass("far");
+        $(this).prevAll(".rating-star").addClass("fas").removeClass("far");
+
+        var value = $(this).attr("value");
+        $("#Rating").val(value);
+    });
 })
 
 function LoadProvinces(countryId) {

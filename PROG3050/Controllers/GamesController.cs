@@ -32,7 +32,10 @@ namespace PROG3050.Controllers
 
             try
             {
-                var games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
+                var games = await _context.Game
+                                    .Include(g => g.GameCategory)
+                                    .Include(g => g.Reviews)
+                                    .ToListAsync();
                 vm.Games = games;
 
                 var user = await _userManager.GetUserAsync(User);
@@ -65,7 +68,10 @@ namespace PROG3050.Controllers
 
             try
             {
-                List<Game> games = await _context.Game.Include(g => g.GameCategory).ToListAsync();
+                List<Game> games = await _context.Game
+                                            .Include(g => g.GameCategory)
+                                            .Include(g => g.Reviews)
+                                            .ToListAsync();
                 string title = vmFromBody.Title;
 
                 if (vmFromBody != null && string.IsNullOrEmpty(vmFromBody.Title))
@@ -106,6 +112,8 @@ namespace PROG3050.Controllers
 
             var game = await _context.Game
                 .Include(g => g.GameCategory)
+                .Include(g => g.Reviews)
+                .ThenInclude(r => r.User)
                 .FirstOrDefaultAsync(m => m.GameId == id);
             if (game == null)
             {
@@ -136,7 +144,8 @@ namespace PROG3050.Controllers
             {
                 Game = game,
                 RecommendedGames = recommendedGames,
-                SameCategory = sameCategory
+                SameCategory = sameCategory,
+                Reviews = game.Reviews.ToList()
             };
 
             return View(gameDetailsViewModel);
