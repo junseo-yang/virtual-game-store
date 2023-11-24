@@ -1,6 +1,4 @@
-﻿@* @model IEnumerable<PROG3050.Models.Event> *@
-
-@model PROG3050.ViewModel.EventViewModel
+﻿@model PROG3050.ViewModel.EventViewModel
 
 @{
     ViewData["Title"] = "Events";
@@ -51,11 +49,11 @@
                     <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.EventId">Details</a>
                     @if (item.EventUsers.Any(x => x.UserId == Model.CurrentUserId))
                     {
-                        <a class="btn btn-outline-danger" asp-action="CancelEvent" asp-route-id="@item.EventId">Cancel Event</a>
+                        <a id="@($"cancel{item.EventId}")" class="btn btn-outline-danger" asp-action="CancelEvent" asp-route-id="@item.EventId">Cancel Event</a>
                     }
                     else
                     {
-                        <a class="btn btn-outline-success" asp-action="RegisterEvent" asp-route-id="@item.EventId">Register Event</a>
+                        <a id="@($"register{item.EventId}")" class="btn btn-outline-success" asp-action="RegisterEvent" asp-route-id="@item.EventId">Register Event</a>
                     }
                     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
                     {
