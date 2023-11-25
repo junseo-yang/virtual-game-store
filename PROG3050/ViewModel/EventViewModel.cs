@@ -7,7 +7,6 @@ namespace PROG3050.ViewModel
         public List<Event>? Events { get; set; }
         public List<User>? Users { get; set; }
         public string? CurrentUserId { get; set; }
-
         public Event? SelectedEvent { get; set; }
     }
 }

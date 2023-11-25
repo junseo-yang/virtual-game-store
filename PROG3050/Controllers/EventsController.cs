@@ -60,8 +60,8 @@ namespace PROG3050.Controllers
                 return NotFound();
             }
 
-            //Adds users to show in the detail view.
-            var vm = new EventViewModel()
+            //Adds users to show in the detail view model.
+            var vm = new EventDetailViewModel()
             {
                 SelectedEvent = @event,
                 Users = users
@@ -103,12 +103,24 @@ namespace PROG3050.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Event.FindAsync(id);
+            var @event = await _context.Event.Include(x => x.EventUsers)
+                .FirstOrDefaultAsync(m => m.EventId == id);
+
+            var users = await _context.EventUser.Where(x => x.EventId == id).Select(x => x.User).ToListAsync();
+
             if (@event == null)
             {
                 return NotFound();
             }
-            return View(@event);
+
+            //Adds users to show in the detail view.
+            var vm = new EventDetailViewModel()
+            {
+                SelectedEvent = @event,
+                Users = users
+            };
+
+            return View(vm);
         }
 
         // POST: Events/Edit/5
@@ -117,9 +129,9 @@ namespace PROG3050.Controllers
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,Title,Description,StartDateTime,EndDateTime")] Event @event)
+        public async Task<IActionResult> Edit(int id, EventDetailViewModel vm)
         {
-            if (id != @event.EventId)
+            if (id != vm.SelectedEvent?.EventId)
             {
                 return NotFound();
             }
@@ -128,12 +140,12 @@ namespace PROG3050.Controllers
             {
                 try
                 {
-                    _context.Update(@event);
+                    _context.Update(vm.SelectedEvent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.EventId))
+                    if (!EventExists(vm.SelectedEvent.EventId))
                     {
                         return NotFound();
                     }
@@ -144,7 +156,7 @@ namespace PROG3050.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(vm);
         }
 
         // GET: Events/Delete/5
@@ -187,73 +199,74 @@ namespace PROG3050.Controllers
         }
 
         // GET: Events/RegisterEvent/5
-        public async Task<IActionResult> RegisterEvent(int? id)
+        [HttpPost, ActionName("RegisterEvent")]
+        public async Task<IActionResult> RegisterEvent(EventViewModel viewModel)
         {
-            if (id == null || _context.Event == null)
+            if (viewModel.SelectedEvent.EventId == 0 || _context.Event == null)
             {
                 return NotFound();
             }
 
             //Gets current user and selected event
             var currentUser = await _userManager.GetUserAsync(User);
-            var selectedEvent = await _context.Event.Include(x => x.EventUsers).FirstOrDefaultAsync(x => x.EventId == id);
+            var selectedEvent = await _context.Event.Include(x => x.EventUsers).FirstOrDefaultAsync(x => x.EventId == viewModel.SelectedEvent.EventId);
 
             //Creates EventUser. EventId: Selected event, UserId: Current user 
             var eventUser = new EventUser()
             {
-                 EventId = selectedEvent.EventId,
-                 UserId = currentUser.Id
+                EventId = selectedEvent.EventId,
+                UserId = currentUser.Id
             };
 
             //Adds eventUser into the db.
             _context.Add(eventUser);
             await _context.SaveChangesAsync();
 
-            //Gets updated event list.
-            var eventList = await _context.Event.Include(x => x.EventUsers).ToListAsync();
-
-            //Creates view model
-            EventViewModel vm = new EventViewModel()
-            {
-                Events = eventList,
-                CurrentUserId = currentUser.Id
-            };
-
-            //Redirects to Index
-            return RedirectToAction("Index",vm);
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> CancelEvent(int? id)
+        [HttpPost, ActionName("CancelEvent")]
+        public async Task<IActionResult> CancelEvent(EventViewModel viewModel)
         {
-            if (id == null || _context.Event == null)
+            if (viewModel.SelectedEvent.EventId == 0 || _context.Event == null)
             {
                 return NotFound();
             }
 
             //Gets current user and selected event
             var currentUser = await _userManager.GetUserAsync(User);
-            var selectedEvent = await _context.Event.Include(x => x.EventUsers).Where(x=>x.EventUsers.Where(x=>x.EventId ==  id).Where(x=>x.UserId == currentUser.Id).Any()).ToListAsync();
-
-            var userEvent = await _context.EventUser.Where(x => x.EventId == id).FirstOrDefaultAsync(x=>x.UserId == currentUser.Id);
+            var userEvent = await _context.EventUser.Where(x => x.EventId == viewModel.SelectedEvent.EventId).FirstOrDefaultAsync(x => x.UserId == currentUser.Id);
 
             //Removes from db.
-            if(userEvent != null)
+            if (userEvent != null)
             {
                 _context.EventUser.Remove(userEvent);
                 await _context.SaveChangesAsync();
             }
 
-            //Gets updated event list.
-            var eventList = await _context.Event.Include(x => x.EventUsers).ToListAsync();
-
-            //Creates view model
-            EventViewModel vm = new EventViewModel()
-            {
-                Events = eventList,
-                CurrentUserId = currentUser.Id
-            };
-
             return RedirectToAction("Index");
+        }
+
+        [HttpPost, ActionName("CancelEventByUserId")]
+        public async Task<IActionResult> CancelEventByUserId(EventDetailViewModel vm)
+        {
+            if (string.IsNullOrWhiteSpace(vm.User?.Id) || vm == null)
+            {
+                return NotFound();
+            }
+
+            //Gets current user and selected event
+            var userEvent = await _context.EventUser.Where(x => x.EventId == vm.SelectedEvent.EventId).FirstOrDefaultAsync(x => x.UserId == vm.User.Id);
+
+
+            //Removes from db.
+            if (userEvent != null)
+            {
+                _context.EventUser.Remove(userEvent);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction($"Edit", new { id = vm.SelectedEvent?.EventId});
         }
 
         private bool EventExists(int id)

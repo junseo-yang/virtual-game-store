@@ -3,10 +3,6 @@ from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 from selenium.webdriver.common.alert import Alert
 
-chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
-                                      # and if it doesn't exist, download it automatically,
-                                      # then add chromedriver to path
-
 """
 Arrange
 """
@@ -27,15 +23,15 @@ Act
 # Tester1 clicks a event button on the navigation
 driver.find_element(By.ID, "nav-event").click()
 
-driver.find_element(By.ID, "cancel1").click()
+driver.find_element(By.ID, "CancelEvent1").click()
 
-element = driver.find_element(By.ID, "register1")
+element = driver.find_element(By.ID, "RegisterEvent1")
 
 
 """
 Assert
 """
-assert element.text == "Register Event"
+assert element.text == "RegisterEvent"
 
 """
 Clean up

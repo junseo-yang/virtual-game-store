@@ -46,25 +46,29 @@
                     @Html.DisplayFor(modelItem => item.EndDateTime)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.EventId">Details</a>
-                    @if (item.EventUsers.Any(x => x.UserId == Model.CurrentUserId))
-                    {
-                        <a id="@($"cancel{item.EventId}")" class="btn btn-outline-danger" asp-action="CancelEvent" asp-route-id="@item.EventId">Cancel Event</a>
-                    }
-                    else
-                    {
-                        <a id="@($"register{item.EventId}")" class="btn btn-outline-success" asp-action="RegisterEvent" asp-route-id="@item.EventId">Register Event</a>
-                    }
-                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                    {
+                    @{
+                        string action = "RegisterEvent";
+                        string color = "btn btn-success";
 
-                        <a class="btn btn-outline-primary asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
-                        <a class="btn btn-outline-primary asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+                        if (item.EventUsers.Any(x => x.UserId == Model.CurrentUserId))
+                        {
+                            action = "CancelEvent";
+                            color = "btn btn-danger";
+                        }
 
+                        <form asp-action=@action>
+                            <input type="hidden" asp-for="@item.EventId" />
+                            <input type="hidden" asp-for="@Model.SelectedEvent.EventId" value="@item.EventId" />
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.EventId">Details</a>
+                            <input type="submit" id="@($"{action}{item.EventId}")" class="@color" value=@action />
+                            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            {
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+                            }
+                        </form>
                     }
                 </td>
-
-
             </tr>
         }
     </tbody>
