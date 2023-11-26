@@ -1,4 +1,4 @@
-﻿@model PROG3050.Models.Event
+﻿@model PROG3050.ViewModel.EventDetailViewModel
 
 @{
     ViewData["Title"] = "Event Edit";
@@ -13,26 +13,26 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EventId" />
+            <input type="hidden" asp-for="@Model.SelectedEvent.EventId" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="SelectedEvent.Title" class="control-label"></label>
+                <input asp-for="SelectedEvent.Title" class="form-control" />
+                <span asp-validation-for="SelectedEvent.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="SelectedEvent.Description" class="control-label"></label>
+                <input asp-for="SelectedEvent.Description" class="form-control" />
+                <span asp-validation-for="SelectedEvent.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartDateTime" class="control-label"></label>
-                <input asp-for="StartDateTime" class="form-control" />
-                <span asp-validation-for="StartDateTime" class="text-danger"></span>
+                <label asp-for="SelectedEvent.StartDateTime" class="control-label"></label>
+                <input asp-for="SelectedEvent.StartDateTime" class="form-control" />
+                <span asp-validation-for="SelectedEvent.StartDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDateTime" class="control-label"></label>
-                <input asp-for="EndDateTime" class="form-control" />
-                <span asp-validation-for="EndDateTime" class="text-danger"></span>
+                <label asp-for="SelectedEvent.EndDateTime" class="control-label"></label>
+                <input asp-for="SelectedEvent.EndDateTime" class="form-control" />
+                <span asp-validation-for="SelectedEvent.EndDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -44,6 +44,71 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+{
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        <br />
+        <h4>Requested Users</h4>
+        <hr />
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Users)
+                    {
+                        <tr style="cursor:pointer;">
+                            <td>
+                                @item.UserName
+                            </td>
+                            <td>
+                                @($"{item.FirstName} {item.LastName}")
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            <td>
+
+                                <form asp-action="CancelEventByUserId">
+                                    <input type="hidden" asp-for="@Model.SelectedEvent.EventId" />
+                                    <input type="hidden" asp-for="@Model.User.Id" value="@item.Id"/>
+                                    <input type="submit" class="btn btn-danger" value="Cancel Event" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
