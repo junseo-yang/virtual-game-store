@@ -16,22 +16,23 @@ driver.find_element(By.ID, "Input_Email").send_keys("Tester1")
 driver.find_element(By.ID, "Input_Password").send_keys("Tester1!@")
 driver.find_element(By.ID, "login-submit").click()
 
-"""
-Act
-"""
-
 # Tester1 clicks a event button on the navigation
 driver.find_element(By.ID, "nav-event").click()
 
+# Tester1 clicks Register to be able to cancel
+driver.find_element(By.ID, "RegisterEvent1").click()
+
+"""
+Act
+"""
+# Tester1 clicks CancelEvent
 driver.find_element(By.ID, "CancelEvent1").click()
-
-element = driver.find_element(By.ID, "RegisterEvent1")
-
 
 """
 Assert
 """
-assert element.text == "RegisterEvent"
+element = driver.find_element(By.ID, "RegisterEvent1")
+assert element.get_attribute("value") == "RegisterEvent"
 
 """
 Clean up

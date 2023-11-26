@@ -31,9 +31,10 @@ element = driver.find_element(By.ID, "CancelEvent1")
 """
 Assert
 """
-assert element.text == "CancelEvent"
+assert element.get_attribute("value") == "CancelEvent"
 
 """
 Clean up
 """
+driver.find_element(By.ID, "CancelEvent1").click()
 driver.quit()
