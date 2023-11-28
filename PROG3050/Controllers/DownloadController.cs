@@ -7,6 +7,7 @@ using PROG3050.Data;
 using PROG3050.Models;
 using PROG3050.ViewModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace PROG3050.Controllers
 {
@@ -32,7 +33,7 @@ namespace PROG3050.Controllers
                 .ToList();
 
             // Get the free game for download
-            var freeGame = _context.Game.FirstOrDefault(g => g.Title == "Counter-Strike 2");
+            var freeGame = _context.Game.FirstOrDefault(g => g.Price == 0);
 
             // Get the purchased games for download
             var purchasedGames = _context.OrderGame
@@ -51,11 +52,21 @@ namespace PROG3050.Controllers
             return View(viewModel);
         }
 
-
-        public IActionResult DownloadGame(int gameId)
+        public async Task<IActionResult> DownloadGame(int gameId)
         {
-            var content = "This is a placeholder for the game content.";
-            var fileName = "game_download.txt";
+            if (gameId == null)
+            {
+                return NotFound();
+            }
+
+            var selectedGame = await _context.Game.FirstOrDefaultAsync(g => g.GameId == gameId);
+
+            var gameTitle = selectedGame.Title;
+            var gameDescription = selectedGame.Description;
+
+
+            var content = gameDescription;
+            var fileName = gameTitle + ".txt";
 
             return File(System.Text.Encoding.UTF8.GetBytes(content), "text/plain", fileName);
         }
