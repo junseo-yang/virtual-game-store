@@ -26,25 +26,32 @@ namespace PROG3050.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (_context.OrderGame == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.OrderGame' is null.");
+            }
+
             var user = await _userManager.GetUserAsync(User);
 
-            var processedOrders = _context.Order
-                .Where(o => o.UserId == user.Id && o.Status == "Processed")
-                .ToList();
+            if (_context.Game == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Game' is null.");
+            }
 
-            var freeGame = _context.Game.Where(g => g.Price == 0).ToList();
+            var freeGames = await _context.Game.Where(g => g.Price == 0).ToListAsync();
 
-            var purchasedGames = _context.OrderGame
-                .Where(og => processedOrders.Select(po => po.OrderId).Contains(og.OrderId))
-                .Select(og => og.Game)
-                .Distinct()
-                .AsEnumerable()
-                .Where(g => !freeGame.Any(fg => fg.GameId == g.GameId))
-                .ToList();
+            var purchasedGames = await _context.OrderGame
+                        .Include(og => og.Order)
+                        .Include(og => og.Game)
+                        .Where(og => og.Order.Status == "Processed" && og.Order.UserId == user.Id)
+                        .Where(og => og.Game.Price != 0)
+                        .Select(og => og.Game)
+                        .Distinct()
+                        .ToListAsync();
 
             var viewModel = new DownloadViewModel
             {
-                FreeGame = freeGame,
+                FreeGames = freeGames,
                 PurchasedGames = purchasedGames
             };
 
@@ -52,9 +59,9 @@ namespace PROG3050.Controllers
         }
 
 
-        public async Task<IActionResult> DownloadGame(int gameId)
+        public async Task<IActionResult> DownloadGame(int? gameId)
         {
-            if (gameId == null)
+            if (gameId == null || _context.OrderGame == null)
             {
                 return NotFound();
             }
