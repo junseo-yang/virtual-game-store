@@ -32,25 +32,25 @@ namespace PROG3050.Controllers
                 .Where(o => o.UserId == user.Id && o.Status == "Processed")
                 .ToList();
 
-            // Get the free game for download
-            var freeGame = _context.Game.FirstOrDefault(g => g.Price == 0);
+            var freeGame = _context.Game.Where(g => g.Price == 0).ToList();
 
-            // Get the purchased games for download
             var purchasedGames = _context.OrderGame
                 .Where(og => processedOrders.Select(po => po.OrderId).Contains(og.OrderId))
                 .Select(og => og.Game)
                 .Distinct()
-                .Where(g => g.GameId != freeGame.GameId)
+                .AsEnumerable()
+                .Where(g => !freeGame.Any(fg => fg.GameId == g.GameId))
                 .ToList();
 
             var viewModel = new DownloadViewModel
             {
-                FreeGame = new List<Game> { freeGame },
+                FreeGame = freeGame,
                 PurchasedGames = purchasedGames
             };
 
             return View(viewModel);
         }
+
 
         public async Task<IActionResult> DownloadGame(int gameId)
         {
