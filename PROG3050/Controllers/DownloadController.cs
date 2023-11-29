@@ -45,7 +45,7 @@ namespace PROG3050.Controllers
 
             var viewModel = new DownloadViewModel
             {
-                FreeGame = freeGame,
+                FreeGame = new List<Game> { freeGame },
                 PurchasedGames = purchasedGames
             };
 

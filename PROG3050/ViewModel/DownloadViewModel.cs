@@ -4,7 +4,7 @@ namespace PROG3050.ViewModel
 {
     public class DownloadViewModel
     {
-        public Game FreeGame { get; set; }
+        public List<Game> FreeGame { get; set; }
         public List<Game> PurchasedGames { get; set; }
     }
 }
