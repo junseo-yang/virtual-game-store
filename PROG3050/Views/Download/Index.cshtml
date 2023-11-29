@@ -1,0 +1,87 @@
+﻿@model PROG3050.ViewModel.DownloadViewModel
+
+<h1>Download</h1>
+
+<table class="table">
+    <thead>
+        <h2>Free Games</h2>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Download
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.FreeGame.Any())
+        {
+            foreach (var freeGame in Model.FreeGame)
+            {
+                <tr>
+                    <td>
+                        <p>@freeGame.Title</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("DownloadGame", "Download", new { gameId = freeGame.GameId })'">Download</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <p>No free games available for download.</p>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div></div>
+
+<table class="table">
+    <thead>
+        <h2>Purchased Games</h2>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Download
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.PurchasedGames.Any())
+        {
+            foreach (var game in Model.PurchasedGames)
+            {
+                <tr>
+                    <td>
+                        <p>@game.Title</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("DownloadGame", "Download", new { gameId = game.GameId })'">Download</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <p>No purchased games available for download.</p>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
