@@ -17,7 +17,7 @@ namespace PROG3050.Models
         [Required(ErrorMessage = "Please, enter a price")]
         [Display(Name = "Price")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        [Range(1, double.MaxValue, ErrorMessage = "Price must be a double value, also greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a double value.")]
         public double Price { get; set; }
 
         [Required(ErrorMessage = "Please, enter a publish date")]
