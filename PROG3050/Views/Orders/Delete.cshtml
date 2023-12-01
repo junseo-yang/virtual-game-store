@@ -34,7 +34,13 @@
             @Html.DisplayNameFor(model => model.ShippingAddress)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShippingAddress.City)
+            @Html.DisplayFor(model => model.ShippingAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderCost)
         </dd>
     </dl>
     

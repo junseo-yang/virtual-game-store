@@ -47,9 +47,21 @@
     </dl>
 </div>
 <div>
+    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+        <input type="hidden" name="gameId" value="@Model?.Game?.GameId" />
+        <button type="submit" class="btn btn-warning">Add to Cart <i class="fa fa-cart-plus"></i></button>
+    </form>
+
     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin") || User.IsInRole("Moderator"))
     {
         <a asp-action="Edit" asp-route-id="@Model?.Game.GameId">Edit</a> @("|")
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.AddedGameMessage))
+    {
+        <div class="alert alert-success mt-3" role="alert">
+            @ViewBag.AddedGameMessage
+        </div>
     }
 </div>
 <div>

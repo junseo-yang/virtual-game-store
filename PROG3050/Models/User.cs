@@ -38,6 +38,8 @@ namespace PROG3050.Models
         [CreditCard]
         public string? CreditCard { get; set; }
 
+        public DateTime? CreditCardExpiry { get; set; }
+
         [Display(Name = "Preference")]
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; }
@@ -50,5 +52,6 @@ namespace PROG3050.Models
         public IList<FriendFamily> FriendFamilyRequester { get; set; }
 
         public IList<FriendFamily> FriendFamilyReceiver { get; set; }
+        public IList<Cart> Carts {  get; set; }
     }
 }

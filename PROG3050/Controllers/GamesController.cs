@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -50,6 +51,7 @@ namespace PROG3050.Controllers
                 vm.ErrorMessage = ex.Message;
             }
 
+            ViewBag.AddedGameMessage = TempData["AddedGameMessage"] as string;
             return View(vm);
         }
 
@@ -148,6 +150,7 @@ namespace PROG3050.Controllers
                 Reviews = game.Reviews.ToList()
             };
 
+            ViewBag.AddedGameMessage = TempData["AddedGameMessage"] as string;
             return View(gameDetailsViewModel);
         }
 

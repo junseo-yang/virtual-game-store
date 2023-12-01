@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PROG3050.Data;
 using PROG3050.Models;
+using PROG3050.ViewModel;
 
 namespace PROG3050.Controllers
 {
     [Authorize]
     public class OrdersController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.ShippingAddress).Include(o => o.User);
+            var applicationDbContext = _context.Order.Include(o => o.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +41,6 @@ namespace PROG3050.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.ShippingAddress)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
@@ -52,7 +55,6 @@ namespace PROG3050.Controllers
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         public IActionResult Create()
         {
-            ViewData["ShippingAddressId"] = new SelectList(_context.ShippingAddress, "ShippingAddressId", "City");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -63,7 +65,7 @@ namespace PROG3050.Controllers
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,UserId,Status,OrderDate,ShippingAddressId")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderId,UserId,Status,OrderDate,ShippingAddress,OrderCost")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +73,6 @@ namespace PROG3050.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShippingAddressId"] = new SelectList(_context.ShippingAddress, "ShippingAddressId", "City", order.ShippingAddressId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
             return View(order);
         }
@@ -90,7 +91,6 @@ namespace PROG3050.Controllers
             {
                 return NotFound();
             }
-            ViewData["ShippingAddressId"] = new SelectList(_context.ShippingAddress, "ShippingAddressId", "City", order.ShippingAddressId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
             return View(order);
         }
@@ -101,7 +101,7 @@ namespace PROG3050.Controllers
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,UserId,Status,OrderDate,ShippingAddressId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId,UserId,Status,OrderDate,ShippingAddress,OrderCost")] Order order)
         {
             if (id != order.OrderId)
             {
@@ -128,7 +128,6 @@ namespace PROG3050.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShippingAddressId"] = new SelectList(_context.ShippingAddress, "ShippingAddressId", "City", order.ShippingAddressId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
             return View(order);
         }
@@ -143,7 +142,6 @@ namespace PROG3050.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.ShippingAddress)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
@@ -172,6 +170,58 @@ namespace PROG3050.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: UserOrders
+        public async Task<IActionResult> UserOrders()
+        {
+            var userId = _userManager.GetUserAsync(User).Result.Id;
+
+            var orders = await _context.Order
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+
+            return View(orders);
+        }
+
+        // GET: UserOrder
+        public async Task<IActionResult> UserOrder(int id)
+        {
+            var userId = _userManager.GetUserAsync(User).Result.Id;
+
+            var order = await _context.Order
+                .Where(o => o.UserId == userId)
+                .Where(o => o.OrderId == id)
+                .FirstOrDefaultAsync();
+
+            var orderGames = await _context.OrderGame
+                .Where(og => og.OrderId == id)
+                .ToListAsync();
+
+            List<CartGameViewModel> games = new List<CartGameViewModel>();
+
+            foreach (var orderGame in orderGames)
+            {
+                var game = await _context.Game!.Where(g => g.GameId == orderGame.GameId).FirstOrDefaultAsync();
+
+                var gameItem = new CartGameViewModel()
+                {
+                    Title = game!.Title,
+                    Price = game!.Price,
+                    Quantity = orderGame.Quantity,
+                };
+
+                games.Add(gameItem);
+            }
+
+
+            UserOrderViewModel userOrderViewModel = new UserOrderViewModel()
+            {
+                Order = order,
+                Games = games
+            };
+
+            return View(userOrderViewModel);
         }
 
         private bool OrderExists(int id)

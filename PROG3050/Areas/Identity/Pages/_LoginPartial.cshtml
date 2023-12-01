@@ -7,6 +7,7 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    <content class="px-2"><a asp-controller="Cart" asp-action="Index" class="btn btn-warning"><i class="fa fa-cart-shopping"></i> View Cart</a></content>
     <div class="dropdown">
         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             Welcome back, @User.Identity?.Name!

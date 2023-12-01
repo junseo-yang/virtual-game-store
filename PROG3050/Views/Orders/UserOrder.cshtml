@@ -1,0 +1,93 @@
+﻿@model PROG3050.ViewModel.UserOrderViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Order Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.OrderId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.ShippingAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.ShippingAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.OrderCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderCost)
+        </dd>
+    </dl>
+    <hr />
+</div>
+<div>
+    <br /><br />
+    <h4>Games</h4>
+    <hr />
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Games.First().Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Games.First().Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Games.First().Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Games.First().TotalCost)
+                    </th>
+                    <th>
+                </tr>
+            </thead>
+
+            @foreach (var game in Model.Games)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(g => game.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.TotalCost)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="UserOrders">Back to List</a>
+</div>
