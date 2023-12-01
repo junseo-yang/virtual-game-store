@@ -1065,7 +1065,7 @@ namespace PROG3050.Data
                     UserId = member.Id,
                     Status = "Processed",
                     OrderDate = DateTime.Parse("2012-09-21"),
-                    ShippingAddressId = 4
+                    ShippingAddress = "PO BOX 4600 STN B, Courtenay, BC, Canada, V9N 0A7"
                 },
                 new Order
                 {
@@ -1073,7 +1073,7 @@ namespace PROG3050.Data
                     UserId = admin.Id,
                     Status = "Processed",
                     OrderDate = DateTime.Parse("2020-10-21"),
-                    ShippingAddressId = 2
+                    ShippingAddress = "87 Danforth Ave, Toronto, ON, Canada, M4K 1M8"
                 },
                 new Order
                 {
@@ -1081,7 +1081,7 @@ namespace PROG3050.Data
                     UserId = moderator.Id,
                     Status = "Pending",
                     OrderDate = DateTime.Parse("2022-02-19"),
-                    ShippingAddressId = 3
+                    ShippingAddress = "4 First Ave S, Big Valley, AB, Canada, T0L 1K0"
                 }
             );
 
@@ -1250,7 +1250,23 @@ namespace PROG3050.Data
                     GameId = 1, 
                 }
             );
+
+            // Many-to-Many relationship between User and Games via Cart
+            builder.Entity<Cart>()
+                .HasKey(c => new { c.UserId, c.GameId });
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Carts)
+                .HasForeignKey(c => c.UserId);
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.Game)
+                .WithMany(g => g.Carts)
+                .HasForeignKey(c => c.GameId);
         }
+
+        public DbSet<Cart> Cart {  get; set; }
 
         public DbSet<Wishlist>? Wishlist { get; set; }
 

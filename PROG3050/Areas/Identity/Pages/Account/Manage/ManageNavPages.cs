@@ -67,6 +67,9 @@ namespace  PROG3050.Areas.Identity.Pages.Account.Manage
         // Add MailingAddress
         public static string MailingAddress => "MailingAddress";
 
+        // Add CreditCard
+        public static string CreditCard => "CreditCard";
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -118,6 +121,8 @@ namespace  PROG3050.Areas.Identity.Pages.Account.Manage
         public static string PreferenceNavClass(ViewContext viewContext) => PageNavClass(viewContext, Preference);
 
         public static string MailingAddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, MailingAddress);
+
+        public static string CreditCardNavClass(ViewContext viewContext) => PageNavClass(viewContext, CreditCard);
 
 
         /// <summary>
