@@ -1,0 +1,82 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import chromedriver_autoinstaller
+
+
+chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+                                      # and if it doesn't exist, download it automatically,
+                                      # then add chromedriver to path
+
+"""
+Arrange
+"""
+# Tester1 navigates to the homepage
+driver = webdriver.Chrome()
+driver.get("https://localhost:7239/")
+
+"""
+Act
+"""
+# Tester1 login
+driver.find_element(By.LINK_TEXT, "Login").click()
+driver.find_element(By.ID, "Input_Email").send_keys("Moderator")
+driver.find_element(By.ID, "Input_Password").send_keys("Moderator123!@")
+driver.find_element(By.ID, "login-submit").click()
+
+# Tester1 navigates to the games page
+driver.find_element(By.ID, "nav-game").click()
+
+# Tester1 clicks add to cart on a game
+driver.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .d-inline-block .btn").click()
+
+# Tester1 navigates to the cart then checkout pages
+driver.find_element(By.LINK_TEXT, "View Cart").click()
+driver.find_element(By.LINK_TEXT, "Checkout").click()
+
+# Fills out form
+driver.find_element(By.ID, "Checkout_FirstName").send_keys("ModeratorFirstName")
+driver.find_element(By.ID, "Checkout_LastName").send_keys("ModeratorLastName")
+driver.find_element(By.ID, "Checkout_PhoneNumber").send_keys("123-123-1234")
+driver.find_element(By.ID, "Checkout_Street").send_keys("108 University Ave")
+driver.find_element(By.ID, "Checkout_City").send_keys("Waterloo")
+driver.find_element(By.ID, "Checkout_ProvinceId").click()
+dropdown = driver.find_element(By.ID, "Checkout_ProvinceId")
+dropdown.find_element(By.XPATH, "//option[. = 'ON']").click()
+driver.find_element(By.ID, "Checkout_PostalCode").send_keys("N2J 2W2")
+driver.find_element(By.ID, "Checkout_CreditCard").send_keys("4701322211111234")
+element = driver.find_element(By.ID, "Checkout_CreditCardExpiry")
+element.send_keys("June")
+element.send_keys(Keys.TAB)
+element.send_keys("2024")
+driver.find_element(By.ID, "Checkout_CVC").send_keys("837")
+
+# Submit form
+driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(5)").click()
+
+# Naviagte to admin orders
+driver.find_element(By.ID, "dropdownMenuButton1").click()
+driver.find_element(By.LINK_TEXT, "Orders").click()
+
+# Navigate to edit the order (assuming no other orders) + update and save
+last_index = len(driver.find_elements(By.TAG_NAME, "tr")) - 1
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[1]").click()
+
+"""
+Assert
+"""
+# Assert order's element text is "Processed"
+assert driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[2]").text == "Processed"
+
+"""
+Clean up
+"""
+# Delete order
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[3]").click()
+driver.find_element(By.CSS_SELECTOR, ".btn-danger").click()
+
+# Log out
+driver.find_element(By.CSS_SELECTOR, ".dropdown:nth-child(2) > #dropdownMenuButton1").click()
+driver.find_element(By.CSS_SELECTOR, ".btn-link").click()
+
+driver.quit()

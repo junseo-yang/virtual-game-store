@@ -32,6 +32,18 @@
                     @Model.ErrorMessage
                 </div>
             }
+            @if (!string.IsNullOrEmpty(ViewBag.AddedGameMessage))
+            {
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.AddedGameMessage
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.EmptyCartNotice))
+            {
+                <div class="alert alert-info" role="alert">
+                    @ViewBag.EmptyCartNotice
+                </div>
+            }
 
             @if (Model.Games != null && Model.Games.Any())
             {
@@ -99,6 +111,13 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.GameId">Details</a>
+
+                                        <div class="d-inline-block">
+                                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                                <input type="hidden" name="gameId" value="@item.GameId" />
+                                                <button type="submit" class="btn btn-warning">Add to Cart <i class="fa fa-cart-plus"></i></button>
+                                            </form>
+                                        </div>
 
                                         @if (!Model.UserWishlistGameIds.Contains(item.GameId))
                                         {

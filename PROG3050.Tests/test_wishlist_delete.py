@@ -25,11 +25,10 @@ driver.find_element(By.ID, "login-submit").click()
 driver.find_element(By.ID, "nav-game").click()
 
 # Add a Game to wishlist
-driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[5]/input').click()
+driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[6]/input').click()
 
 # Navigate to WishList
-driver.find_element(By.ID, "dropdownMenuButton1").click()
-driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[3]/a").click()
+driver.get("https://localhost:7239/WishList")
 
 """
 Act

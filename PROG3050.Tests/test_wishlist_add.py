@@ -29,7 +29,7 @@ driver.find_element(By.ID, "nav-game").click()
 
 # Add a Game to wishlist
 game_title_on_index = driver.find_element(By.XPATH, "/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[1]").text
-driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[5]/input').click()
+driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[6]/input').click()
 
 # Navigate to WishList
 driver.get('https://localhost:7239/Wishlist')

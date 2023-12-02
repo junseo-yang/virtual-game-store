@@ -14,33 +14,36 @@ Arrange
 driver = webdriver.Chrome()
 driver.get("https://localhost:7239/")
 
+"""
+Act
+"""
 # Tester1 login
 driver.find_element(By.LINK_TEXT, "Login").click()
 driver.find_element(By.ID, "Input_Email").send_keys("Tester1")
 driver.find_element(By.ID, "Input_Password").send_keys("Tester1!@")
 driver.find_element(By.ID, "login-submit").click()
 
-"""
-Act
-"""
 # Tester1 navigates to the games page
-driver.get("https://localhost:7239/Games")
+driver.find_element(By.ID, "nav-game").click()
 
-# Tester1 clicks a game
-driver.find_element(By.XPATH, "/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[6]/a").click()
+# Tester1 clicks add to cart on a game
+driver.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .d-inline-block .btn").click()
 
-# Get Recommended Games sub title
-element = driver.find_element(By.XPATH, "/html/body/div/main/div[3]/h4")
+# Tester1 navigates to the cart page
+driver.find_element(By.LINK_TEXT, "View Cart").click()
 
 """
 Assert
 """
-# Assert element text is Recommended Games
-assert element.text == "Recommended Games"
+# Assert element text is Star Trek: Infinite
+assert driver.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text == "Star Trek: Infinite"
 
 """
 Clean up
 """
+# Remove all games from the cart
+driver.find_element(By.XPATH, "/html/body/div/main/div/table/tbody/tr/td[5]/div[3]/form/button").click()
+
 # Logout
 driver.find_element(By.ID, "dropdownMenuButton1").click()
 driver.find_element(By.CSS_SELECTOR, ".btn-link").click()

@@ -28,7 +28,7 @@ driver.find_element(By.ID, "nav-game").click()
 
 # Select a Game
 game_title_on_index = driver.find_element(By.XPATH, "/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[1]").text
-driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[5]/a').click()
+driver.find_element(By.XPATH, '/html/body/div/main/div/div[2]/table/tbody/tr[1]/td[6]/a').click()
 game_title_on_detail = driver.find_element(By.ID, "text_title").text
 
 """

@@ -1,0 +1,160 @@
+﻿@model PROG3050.ViewModel.CheckoutCartViewModel
+
+@{
+    ViewData["Title"] = "Cart Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cart Checkout</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Cart" asp-action="Checkout" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <fieldset>
+                <legend>Shipping Address</legend>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.FirstName" class="control-label"></label>
+                    <input asp-for="Checkout.FirstName" class="form-control" value="@Model.Checkout.FirstName" />
+                    <span asp-validation-for="Checkout.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.LastName" class="control-label"></label>
+                    <input asp-for="Checkout.LastName" class="form-control" value="@Model.Checkout.LastName" />
+                    <span asp-validation-for="Checkout.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.PhoneNumber" class="control-label"></label>
+                    <input asp-for="Checkout.PhoneNumber" class="form-control" value="@Model.Checkout.PhoneNumber" />
+                    <span asp-validation-for="Checkout.PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.Unit" class="control-label"></label>
+                    <input asp-for="Checkout.Unit" class="form-control" value="@Model.Checkout.Unit" />
+                    <span asp-validation-for="Checkout.Unit" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.Street" class="control-label"></label>
+                    <input asp-for="Checkout.Street" class="form-control" value="@Model.Checkout.Street" />
+                    <span asp-validation-for="Checkout.Street" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.City" class="control-label"></label>
+                    <input asp-for="Checkout.City" class="form-control" value="@Model.Checkout.City" />
+                    <span asp-validation-for="Checkout.City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.CountryId"></label>
+                    <select asp-for="Checkout.CountryId" class="form-control" asp-items="ViewBag.Country"></select>
+                    <span asp-validation-for="Checkout.CountryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.ProvinceId"></label>
+                    <select asp-for="Checkout.ProvinceId" class="form-control" asp-items="ViewBag.Province"></select>
+                    <span asp-validation-for="Checkout.ProvinceId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.PostalCode"></label>
+                    <input asp-for="Checkout.PostalCode" class="form-control" value="@Model.Checkout.PostalCode" />
+                    <span asp-validation-for="Checkout.PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.DeliveryInstruction"></label>
+                    <input asp-for="Checkout.DeliveryInstruction" class="form-control" value="@Model.Checkout.DeliveryInstruction" />
+                    <span asp-validation-for="Checkout.DeliveryInstruction" class="text-danger"></span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Credit Card</legend>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.CreditCard"></label>
+                    <input asp-for="Checkout.CreditCard" class="form-control" value="@Model.Checkout.CreditCard" />
+                    <span asp-validation-for="Checkout.CreditCard" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.CreditCardExpiry"></label>
+                    <input type="month" asp-for="Checkout.CreditCardExpiry" class="form-control" value="@Model.Checkout.CreditCardExpiry?.ToString("yyyy-MM")" />
+                    <span asp-validation-for="Checkout.CreditCardExpiry" class="text-danger"></span>
+                    <span class="text-danger">@TempData["ExpiryDateError"]</span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.CVC"></label>
+                    <input asp-for="Checkout.CVC" class="form-control" />
+                    <span asp-validation-for="Checkout.CVC" class="text-danger"></span>
+                </div>
+
+
+                <input type="submit" value="Submit Order" class="btn btn-primary" />
+
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-danger">Back to Cart</a>
+
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <legend>Cart</legend>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Total Cost
+                    </th>
+                    <th>
+                </tr>
+            </thead>
+            @{ double cartTotal = 0;}
+            @foreach (var game in Model.Cart)
+            {
+                cartTotal += game.TotalCost;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(g => game.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(g => game.TotalCost)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td><span class="fw-bold">Cart Total:</span></td>
+                <td>
+                    <span class="fw-bold">$@cartTotal</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

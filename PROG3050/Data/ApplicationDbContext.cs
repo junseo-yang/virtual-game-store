@@ -1019,40 +1019,48 @@ namespace PROG3050.Data
                 new ShippingAddress
                 {
                     ShippingAddressId = 1,
+                    FirstName = "Tyrone",
+                    LastName = "Mcgee",
+                    PhoneNumber = "111-111-1111",
                     Street = "978 ARGYLE ST N",
                     City = "HALIFAX",
-                    Province = "NU",
-                    Country = "Canada",
+                    ProvinceId = 8,
                     PostalCode = "B3J 2B3",
                     DeliveryInstruction = "At the door"
                 },
                 new ShippingAddress
                 {
                     ShippingAddressId = 2,
+                    FirstName = "William",
+                    LastName = "Potter",
+                    PhoneNumber = "222-222-2222",
                     Unit = "501",
                     Street = "87 DANFORTH AVE",
                     City = "TORONTO",
-                    Province = "ON",
-                    Country = "Canada",
+                    ProvinceId = 9,
                     PostalCode = "M4K 1M8",
                     DeliveryInstruction = "At the Post Box"
                 },
                 new ShippingAddress
                 {
                     ShippingAddressId = 3,
+                    FirstName = "Francis",
+                    LastName = "Ramos",
+                    PhoneNumber = "333-333-3333",
                     Street = "4 FIRST AVE S",
                     City = "BIG VALLEY",
-                    Province = "AB",
-                    Country = "Canada",
+                    ProvinceId = 1,
                     PostalCode = "T0L 1K0"
                 },
                 new ShippingAddress
                 {
                     ShippingAddressId = 4,
+                    FirstName = "Ernest",
+                    LastName = "Mcknight",
+                    PhoneNumber = "444-444-4444",
                     Street = "PO BOX 4600 STN B",
                     City = "COURTENAY",
-                    Province = "BC",
-                    Country = "Canada",
+                    ProvinceId = 2,
                     PostalCode = "V9N 0A7",
                     DeliveryInstruction = "Ask the security Guard to get in."
                 }
@@ -1250,7 +1258,23 @@ namespace PROG3050.Data
                     GameId = 1, 
                 }
             );
+
+            // Many-to-Many relationship between User and Games via Cart
+            builder.Entity<Cart>()
+                .HasKey(c => new { c.UserId, c.GameId });
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Carts)
+                .HasForeignKey(c => c.UserId);
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.Game)
+                .WithMany(g => g.Carts)
+                .HasForeignKey(c => c.GameId);
         }
+
+        public DbSet<Cart> Cart {  get; set; }
 
         public DbSet<Wishlist>? Wishlist { get; set; }
 

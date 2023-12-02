@@ -6,6 +6,17 @@ namespace PROG3050.Models
     {
         public int ShippingAddressId { get; set; }
 
+        [Display(Name = "First Name")]
+        public string? FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string? LastName { get; set; }
+
+        [Display(Name = "Phone Number")]
+        [Phone]
+        [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Phone number should be in the format of '999-999-9999'")]
+        public string? PhoneNumber { get; set; }
+
         [Display(Name = "Unit")]
         public string? Unit { get; set; }
 
@@ -19,11 +30,8 @@ namespace PROG3050.Models
 
         [Required(ErrorMessage = "Please, enter a province")]
         [Display(Name = "Province")]
-        public string Province { get; set; }
-
-        [Required(ErrorMessage = "Please, enter a country")]
-        [Display(Name = "Country")]
-        public string Country { get; set; }
+        public int ProvinceId { get; set; } = 1;
+        public Province? Province { get; set; }
 
         [Required(ErrorMessage = "Please, enter a postal code")]
         [RegularExpression(@"[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] [0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]",

@@ -33,5 +33,6 @@ namespace PROG3050.Models
         // Many to Many Relationship Configuration
         public IList<Review>? Reviews { get; set; }
         public IList<OrderGame>? OrderGames { get; set; }
+        public IList<Cart>? Carts { get; set; }
     }
 }
