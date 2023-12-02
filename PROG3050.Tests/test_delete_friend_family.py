@@ -30,7 +30,7 @@ driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{tester_2_ind
 
 # Tester1 logout
 driver.find_element(By.ID, "dropdownMenuButton1").click()
-driver.find_element(By.XPATH, "/html/body/header/nav/div/div/ul[2]/div/ul/li[4]/form/button").click()
+driver.find_element(By.CSS_SELECTOR, ".btn-link").click()
 
 # Tester2 login
 driver.find_element(By.LINK_TEXT, "Login").click()

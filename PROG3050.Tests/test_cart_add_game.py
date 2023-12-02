@@ -41,8 +41,10 @@ assert driver.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text == "Star Tre
 """
 Clean up
 """
+# Remove all games from the cart
+driver.find_element(By.XPATH, "/html/body/div/main/div/table/tbody/tr/td[5]/div[3]/form/button").click()
+
 # Logout
-driver.find_element(By.CSS_SELECTOR, "btn-danger").click()
 driver.find_element(By.ID, "dropdownMenuButton1").click()
 driver.find_element(By.CSS_SELECTOR, ".btn-link").click()
 

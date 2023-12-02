@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import chromedriver_autoinstaller
 
 
@@ -34,15 +35,20 @@ driver.find_element(By.LINK_TEXT, "View Cart").click()
 driver.find_element(By.LINK_TEXT, "Checkout").click()
 
 # Fills out form
+driver.find_element(By.ID, "Checkout_FirstName").send_keys("Tester1FirstName")
+driver.find_element(By.ID, "Checkout_LastName").send_keys("Tester1LastName")
+driver.find_element(By.ID, "Checkout_PhoneNumber").send_keys("123-123-1234")
 driver.find_element(By.ID, "Checkout_Street").send_keys("108 University Ave")
 driver.find_element(By.ID, "Checkout_City").send_keys("Waterloo")
 driver.find_element(By.ID, "Checkout_ProvinceId").click()
 dropdown = driver.find_element(By.ID, "Checkout_ProvinceId")
 dropdown.find_element(By.XPATH, "//option[. = 'ON']").click()
-driver.find_element(By.ID, "Checkout_CountryId").click()
 driver.find_element(By.ID, "Checkout_PostalCode").send_keys("N2J 2W2")
 driver.find_element(By.ID, "Checkout_CreditCard").send_keys("4701322211111234")
-driver.find_element(By.ID, "Checkout_CreditCardExpiry").send_keys("2026-12")
+element = driver.find_element(By.ID, "Checkout_CreditCardExpiry")
+element.send_keys("June")
+element.send_keys(Keys.TAB)
+element.send_keys("2024")
 driver.find_element(By.ID, "Checkout_CVC").send_keys("837")
 
 # Submit form
