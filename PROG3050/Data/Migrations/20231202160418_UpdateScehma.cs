@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PROG3050.Data.Migrations
 {
-    public partial class UpdateSchema : Migration
+    public partial class UpdateScehma : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -206,25 +206,6 @@ namespace PROG3050.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShippingAddress",
-                columns: table => new
-                {
-                    ShippingAddressId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeliveryInstruction = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShippingAddress", x => x.ShippingAddressId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Province",
                 columns: table => new
                 {
@@ -314,6 +295,33 @@ namespace PROG3050.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShippingAddress",
+                columns: table => new
+                {
+                    ShippingAddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliveryInstruction = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShippingAddress", x => x.ShippingAddressId);
+                    table.ForeignKey(
+                        name: "FK_ShippingAddress_Province_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Province",
+                        principalColumn: "ProvinceId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PreferenceFavouritePlatform",
                 columns: table => new
                 {
@@ -374,6 +382,7 @@ namespace PROG3050.Data.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsPromotionalEmail = table.Column<bool>(type: "bit", nullable: false),
                     CreditCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreditCardExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PreferenceId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -410,6 +419,31 @@ namespace PROG3050.Data.Migrations
                         column: x => x.PreferenceId,
                         principalTable: "Preference",
                         principalColumn: "PreferenceId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => new { x.UserId, x.GameId });
+                    table.ForeignKey(
+                        name: "FK_Cart_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "GameId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -467,10 +501,11 @@ namespace PROG3050.Data.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ShippingAddressId = table.Column<int>(type: "int", nullable: false)
+                    ShippingAddressId = table.Column<int>(type: "int", nullable: false),
+                    OrderCost = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -479,8 +514,7 @@ namespace PROG3050.Data.Migrations
                         name: "FK_Order_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_ShippingAddress_ShippingAddressId",
                         column: x => x.ShippingAddressId,
@@ -637,21 +671,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8a7f75e1-de93-4ffa-96fb-3727f164b6b5", "9f6bb4be-09f5-42cb-9fac-039c13ed82d4", "SuperAdmin", "SUPERADMIN" },
-                    { "a7a98b31-beb8-4f01-ae3c-808d476151c1", "44a56fb5-cb68-4ed6-a5d9-1459dd32a834", "Moderator", "MODERATOR" },
-                    { "dca73993-5a8b-4a3f-b60a-2d2a1d9c0c0b", "65fe3bae-8d79-4833-b4fc-7efe13c47f25", "Admin", "ADMIN" },
-                    { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "1d6ebfcb-ebe8-4617-921d-1ee614032aeb", "Member", "MEMBER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ShippingAddress",
-                columns: new[] { "ShippingAddressId", "City", "Country", "DeliveryInstruction", "PostalCode", "Province", "Street", "Unit" },
-                values: new object[,]
-                {
-                    { 1, "HALIFAX", "Canada", "At the door", "B3J 2B3", "NU", "978 ARGYLE ST N", null },
-                    { 2, "TORONTO", "Canada", "At the Post Box", "M4K 1M8", "ON", "87 DANFORTH AVE", "501" },
-                    { 3, "BIG VALLEY", "Canada", null, "T0L 1K0", "AB", "4 FIRST AVE S", null },
-                    { 4, "COURTENAY", "Canada", "Ask the security Guard to get in.", "V9N 0A7", "BC", "PO BOX 4600 STN B", null }
+                    { "6d800ab6-5dab-4989-b2aa-307a7081c4f7", "18cf55ef-e9e7-4b54-9ee7-ddddbbbec9a9", "Admin", "ADMIN" },
+                    { "bdab053e-ed3a-4548-a07d-b9218905e79f", "cb31dfac-3948-4335-a18c-205871929eb1", "Moderator", "MODERATOR" },
+                    { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "a454f997-3032-41f7-928d-40f122fee56e", "Member", "MEMBER" },
+                    { "e47fa367-065c-4771-949f-01151ab7ed28", "0417dcdb-c6d2-426f-951f-d86c245319d3", "SuperAdmin", "SUPERADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -801,16 +824,27 @@ namespace PROG3050.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreditCard", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "GenderId", "IsAddressSame", "IsPromotionalEmail", "LastName", "LockoutEnabled", "LockoutEnd", "MailingAddressId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PreferenceId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                table: "ShippingAddress",
+                columns: new[] { "ShippingAddressId", "City", "DeliveryInstruction", "FirstName", "LastName", "PhoneNumber", "PostalCode", "ProvinceId", "Street", "Unit" },
                 values: new object[,]
                 {
-                    { "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8", 0, "309f314d-f98f-49d7-8783-82c67f20e3ce", null, null, "admin@gmail.com", true, "William", 3, false, false, "Potter", false, null, 2, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEIZfU1Mct/UAi3EFsbuzj1pOLW/1Upjwrpy+k2LeA0RwVUcWXvb2ThEUz7rYaOkm4g==", null, true, 2, "58ee6ca6-8715-40b0-bc13-e61f3eb50dc7", false, "Admin" },
-                    { "7ea12475-e529-4874-a1fc-c6d73e04c0f5", 0, "4ee82f68-3e09-4880-851b-96ebe0816016", null, null, "superadmin@gmail.com", true, "Tyrone", 3, false, false, "Mcgee", false, null, 1, "SUPERADMIN@GMAIL.COM", "SUPERADMIN", "AQAAAAEAACcQAAAAEDrp076G00GqpG4Pqb0oq+808QsBrNauYQplyhCXYSBZkSINCQvqAgAM5x9OD3gG5A==", null, true, 1, "16ad03cb-501c-48f1-afa3-f14db9abaed4", false, "SuperAdmin" },
-                    { "bf3198fa-3b9c-405a-9a4f-37c62c877b56", 0, "977d798e-6752-4af0-971d-6f123b7c65a2", null, null, "tester2@gmail.com", true, "Test2FirstName", 3, false, false, "Test2LastName", false, null, 6, "TESTER2@GMAIL.COM", "TESTER2", "AQAAAAEAACcQAAAAEMcjJOADZOwbywspC67LC47vVNmJseSQXujVlU3yFW8/g3cet1X09RYH6eUaDzWmVQ==", null, true, 6, "1da3fe35-630a-41f4-b882-4dbefe3246ec", false, "Tester2" },
-                    { "db1c3398-640e-495d-8524-dd643f315296", 0, "ecc956ee-b61f-4535-8747-2dc158dcc668", null, null, "tester1@gmail.com", true, "Test1FirstName", 3, false, false, "Test1LastName", false, null, 5, "TESTER1@GMAIL.COM", "TESTER1", "AQAAAAEAACcQAAAAEEfT5osZiB3hcpZ45JY4oLygQaDBaUwHTttMmB9zHrMJqAggpEhMnTp5a3teqmY7lA==", null, true, 5, "4844e4a4-765a-4de6-b976-392bde82866e", false, "Tester1" },
-                    { "f750397d-3ce4-4b34-a570-10c42503c427", 0, "f95abc4b-3524-405f-892e-9db080ce242a", null, null, "moderator@gmail.com", true, "Francis", 3, false, false, "Ramos", false, null, 3, "MODERATOR@GMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEHB6mh/jOIJ6tXcMVHmXLhINlby2DJafrVIjrsm2Lkf4GLA2YXAf+TZ8kjr1bxlqOA==", null, true, 3, "d972efb8-2b92-46ca-9554-a0ac0d8466b6", false, "Moderator" },
-                    { "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0", 0, "21f2b790-ed6d-4973-9fd9-48c6fbe01e0a", null, null, "member@gmail.com", true, "Ernest", 3, false, false, "Mcknight", false, null, 4, "MEMBER@GMAIL.COM", "MEMBER", "AQAAAAEAACcQAAAAEFnmoW2TSYcbhEp1wef/G3WGRSTyb510W0E1wJQkox4qXQWYg014rNulHDfjVm5Yrg==", null, true, 4, "598b707a-98af-4ed2-87ec-dd35c4e6079f", false, "Member" }
+                    { 1, "HALIFAX", "At the door", "Tyrone", "Mcgee", "111-111-1111", "B3J 2B3", 8, "978 ARGYLE ST N", null },
+                    { 2, "TORONTO", "At the Post Box", "William", "Potter", "222-222-2222", "M4K 1M8", 9, "87 DANFORTH AVE", "501" },
+                    { 3, "BIG VALLEY", null, "Francis", "Ramos", "333-333-3333", "T0L 1K0", 1, "4 FIRST AVE S", null },
+                    { 4, "COURTENAY", "Ask the security Guard to get in.", "Ernest", "Mcknight", "444-444-4444", "V9N 0A7", 2, "PO BOX 4600 STN B", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreditCard", "CreditCardExpiry", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "GenderId", "IsAddressSame", "IsPromotionalEmail", "LastName", "LockoutEnabled", "LockoutEnd", "MailingAddressId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PreferenceId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1c3e9dcb-aa43-41d4-9579-f5e3bb2f4665", 0, "71e217b7-3301-421e-a0e0-65bf85bee4f0", null, null, null, "tester1@gmail.com", true, "Test1FirstName", 3, false, false, "Test1LastName", false, null, 5, "TESTER1@GMAIL.COM", "TESTER1", "AQAAAAEAACcQAAAAEBTSd9uBRsBjfmEAm8yZLXPuJN2nov790UrmbcCP0U0ywQfUh2Q7/hvm9cUX4cv5Cw==", null, true, 5, "734af41e-9c87-4914-8a63-617f9bc7ff4c", false, "Tester1" },
+                    { "38934671-4475-4688-a8b6-ae6319631fbe", 0, "5eba7e61-cd04-4ea4-8bec-c4f8de18aead", null, null, null, "admin@gmail.com", true, "William", 3, false, false, "Potter", false, null, 2, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDGmI8BKUiAtnjAkDEbHsaEJ1qlUE0HrnA+EVJ8Hl8D/Lq2mkdpDZhxFkas/jUYzwQ==", null, true, 2, "a94620f5-be83-42c8-ad36-2c8c0746e116", false, "Admin" },
+                    { "8d924903-29aa-4e4e-8a0a-4f7031efe844", 0, "5a0c5fa1-d4e1-4386-acc4-9a9bbea60278", null, null, null, "tester2@gmail.com", true, "Test2FirstName", 3, false, false, "Test2LastName", false, null, 6, "TESTER2@GMAIL.COM", "TESTER2", "AQAAAAEAACcQAAAAEAdKj6WzeoPK/ODNVVk9y7VPF2FwiKeYVo1Bc6nH4+dxXu47dnrcoLkzwh400ybPBg==", null, true, 6, "3e7c710f-a8ce-4500-9d36-cab8ece30dbd", false, "Tester2" },
+                    { "b49f91bc-134a-4ed6-85da-46623bf6637e", 0, "b56e06bf-28e4-43a9-bd18-9c3956365a09", null, null, null, "superadmin@gmail.com", true, "Tyrone", 3, false, false, "Mcgee", false, null, 1, "SUPERADMIN@GMAIL.COM", "SUPERADMIN", "AQAAAAEAACcQAAAAEK1mzEdjh9PKBToxo9IolB5k/YS4h37ewZoK6Dlrzo+rEhUFoUb3LAhrqr/9tDMOgA==", null, true, 1, "c5fa5039-c91a-48c8-8ad4-45d68da67e89", false, "SuperAdmin" },
+                    { "edf512dc-fbbd-488a-b2f9-a194a1bbe397", 0, "2c5a5a4a-49b6-4712-a8da-43e2ddca3cbc", null, null, null, "moderator@gmail.com", true, "Francis", 3, false, false, "Ramos", false, null, 3, "MODERATOR@GMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEC4dPF1WBid/Y+yYNtgjxnSXnHcQ8/BeA9wW3VNpOWH7muZly/JOBMYsknXST5Re1w==", null, true, 3, "90851793-967c-4638-b381-28a527774c8e", false, "Moderator" },
+                    { "ff2c1223-1e47-40ee-962b-f547e08bf7b8", 0, "8f418019-7bb8-4dc8-bab7-6d679875b838", null, null, null, "member@gmail.com", true, "Ernest", 3, false, false, "Mcknight", false, null, 4, "MEMBER@GMAIL.COM", "MEMBER", "AQAAAAEAACcQAAAAEA1UY+bgeBqi0fQ+3cHv1HepXSgBSp+YkXW+IYEIOOyJuLI5iMbydJ0pJ16g5F0fOA==", null, true, 4, "79d9c4b9-853d-489a-8ddb-bb2064c54d19", false, "Member" }
                 });
 
             migrationBuilder.InsertData(
@@ -818,11 +852,11 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "EventId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" },
-                    { 1, "f750397d-3ce4-4b34-a570-10c42503c427" },
-                    { 1, "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" },
-                    { 2, "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" },
-                    { 2, "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" }
+                    { 1, "38934671-4475-4688-a8b6-ae6319631fbe" },
+                    { 1, "edf512dc-fbbd-488a-b2f9-a194a1bbe397" },
+                    { 1, "ff2c1223-1e47-40ee-962b-f547e08bf7b8" },
+                    { 2, "38934671-4475-4688-a8b6-ae6319631fbe" },
+                    { 2, "ff2c1223-1e47-40ee-962b-f547e08bf7b8" }
                 });
 
             migrationBuilder.InsertData(
@@ -830,20 +864,20 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "ReceiverUserId", "RequesterUserId", "Description", "Status" },
                 values: new object[,]
                 {
-                    { "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0", "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8", "Friend", "Processed" },
-                    { "7ea12475-e529-4874-a1fc-c6d73e04c0f5", "f750397d-3ce4-4b34-a570-10c42503c427", "Family", "Pending" },
-                    { "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0", "f750397d-3ce4-4b34-a570-10c42503c427", "Family", "Processed" },
-                    { "7ea12475-e529-4874-a1fc-c6d73e04c0f5", "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0", "Friend", "Pending" }
+                    { "ff2c1223-1e47-40ee-962b-f547e08bf7b8", "38934671-4475-4688-a8b6-ae6319631fbe", "Friend", "Processed" },
+                    { "b49f91bc-134a-4ed6-85da-46623bf6637e", "edf512dc-fbbd-488a-b2f9-a194a1bbe397", "Family", "Pending" },
+                    { "ff2c1223-1e47-40ee-962b-f547e08bf7b8", "edf512dc-fbbd-488a-b2f9-a194a1bbe397", "Family", "Processed" },
+                    { "b49f91bc-134a-4ed6-85da-46623bf6637e", "ff2c1223-1e47-40ee-962b-f547e08bf7b8", "Friend", "Pending" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Order",
-                columns: new[] { "OrderId", "OrderDate", "ShippingAddressId", "Status", "UserId" },
+                columns: new[] { "OrderId", "OrderCost", "OrderDate", "ShippingAddressId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Processed", "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" },
-                    { 2, new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Processed", "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" },
-                    { 3, new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pending", "f750397d-3ce4-4b34-a570-10c42503c427" }
+                    { 1, null, new DateTime(2012, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Processed", "ff2c1223-1e47-40ee-962b-f547e08bf7b8" },
+                    { 2, null, new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Processed", "38934671-4475-4688-a8b6-ae6319631fbe" },
+                    { 3, null, new DateTime(2022, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pending", "edf512dc-fbbd-488a-b2f9-a194a1bbe397" }
                 });
 
             migrationBuilder.InsertData(
@@ -851,10 +885,10 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "ReviewId", "Description", "GameId", "Rating", "Status", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 1, 5.0, "Pending", "The Best Game!", "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" },
-                    { 2, "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.", 2, 4.0, "Processed", "Good Game", "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" },
-                    { 3, "Cities: Skylines II is my type of game. I'm more into puzzle and mystery,", 3, 2.0, "Pending", "Bad Game!", "f750397d-3ce4-4b34-a570-10c42503c427" },
-                    { 4, "I wasn't into this game since I have a 3D motion sickness.", 2, 2.0, "Pending", "Bad Game!", "f750397d-3ce4-4b34-a570-10c42503c427" }
+                    { 1, "Counter-Strike 2 is the best game that I've ever played. Actions and graphics are amazing.", 1, 5.0, "Pending", "The Best Game!", "ff2c1223-1e47-40ee-962b-f547e08bf7b8" },
+                    { 2, "Star Trek: Infinite is a decent game to play. I'll definitely recommend you to play.", 2, 4.0, "Processed", "Good Game", "38934671-4475-4688-a8b6-ae6319631fbe" },
+                    { 3, "Cities: Skylines II is my type of game. I'm more into puzzle and mystery,", 3, 2.0, "Pending", "Bad Game!", "edf512dc-fbbd-488a-b2f9-a194a1bbe397" },
+                    { 4, "I wasn't into this game since I have a 3D motion sickness.", 2, 2.0, "Pending", "Bad Game!", "edf512dc-fbbd-488a-b2f9-a194a1bbe397" }
                 });
 
             migrationBuilder.InsertData(
@@ -862,18 +896,18 @@ namespace PROG3050.Data.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "dca73993-5a8b-4a3f-b60a-2d2a1d9c0c0b", "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" },
-                    { "8a7f75e1-de93-4ffa-96fb-3727f164b6b5", "7ea12475-e529-4874-a1fc-c6d73e04c0f5" },
-                    { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "bf3198fa-3b9c-405a-9a4f-37c62c877b56" },
-                    { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "db1c3398-640e-495d-8524-dd643f315296" },
-                    { "a7a98b31-beb8-4f01-ae3c-808d476151c1", "f750397d-3ce4-4b34-a570-10c42503c427" },
-                    { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" }
+                    { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "1c3e9dcb-aa43-41d4-9579-f5e3bb2f4665" },
+                    { "6d800ab6-5dab-4989-b2aa-307a7081c4f7", "38934671-4475-4688-a8b6-ae6319631fbe" },
+                    { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "8d924903-29aa-4e4e-8a0a-4f7031efe844" },
+                    { "e47fa367-065c-4771-949f-01151ab7ed28", "b49f91bc-134a-4ed6-85da-46623bf6637e" },
+                    { "bdab053e-ed3a-4548-a07d-b9218905e79f", "edf512dc-fbbd-488a-b2f9-a194a1bbe397" },
+                    { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "ff2c1223-1e47-40ee-962b-f547e08bf7b8" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Wishlist",
                 columns: new[] { "GameId", "UserId" },
-                values: new object[] { 1, "db1c3398-640e-495d-8524-dd643f315296" });
+                values: new object[] { 1, "1c3e9dcb-aa43-41d4-9579-f5e3bb2f4665" });
 
             migrationBuilder.InsertData(
                 table: "OrderGame",
@@ -913,6 +947,11 @@ namespace PROG3050.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_GameId",
+                table: "Cart",
+                column: "GameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventUser_UserId",
@@ -985,6 +1024,11 @@ namespace PROG3050.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShippingAddress_ProvinceId",
+                table: "ShippingAddress",
+                column: "ProvinceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Wishlist_GameId",
                 table: "Wishlist",
                 column: "GameId");
@@ -1039,6 +1083,9 @@ namespace PROG3050.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_UserTokens_AspNetUsers_UserId",
                 table: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Cart");
 
             migrationBuilder.DropTable(
                 name: "EventUser");
@@ -1106,52 +1153,52 @@ namespace PROG3050.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "dca73993-5a8b-4a3f-b60a-2d2a1d9c0c0b", "4cf3a1f6-097c-4395-aa6b-4ee2b6f4bdf8" });
+                keyValues: new object[] { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "1c3e9dcb-aa43-41d4-9579-f5e3bb2f4665" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "8a7f75e1-de93-4ffa-96fb-3727f164b6b5", "7ea12475-e529-4874-a1fc-c6d73e04c0f5" });
+                keyValues: new object[] { "6d800ab6-5dab-4989-b2aa-307a7081c4f7", "38934671-4475-4688-a8b6-ae6319631fbe" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "bf3198fa-3b9c-405a-9a4f-37c62c877b56" });
+                keyValues: new object[] { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "8d924903-29aa-4e4e-8a0a-4f7031efe844" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "db1c3398-640e-495d-8524-dd643f315296" });
+                keyValues: new object[] { "e47fa367-065c-4771-949f-01151ab7ed28", "b49f91bc-134a-4ed6-85da-46623bf6637e" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "a7a98b31-beb8-4f01-ae3c-808d476151c1", "f750397d-3ce4-4b34-a570-10c42503c427" });
+                keyValues: new object[] { "bdab053e-ed3a-4548-a07d-b9218905e79f", "edf512dc-fbbd-488a-b2f9-a194a1bbe397" });
 
             migrationBuilder.DeleteData(
                 table: "UserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda", "ff6db973-cd1f-4c26-8597-7f5cfd47a1c0" });
+                keyValues: new object[] { "e0fac82b-7bf4-462c-b782-4cfa4cf68acb", "ff2c1223-1e47-40ee-962b-f547e08bf7b8" });
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "8a7f75e1-de93-4ffa-96fb-3727f164b6b5");
+                keyValue: "6d800ab6-5dab-4989-b2aa-307a7081c4f7");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "a7a98b31-beb8-4f01-ae3c-808d476151c1");
+                keyValue: "bdab053e-ed3a-4548-a07d-b9218905e79f");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "dca73993-5a8b-4a3f-b60a-2d2a1d9c0c0b");
+                keyValue: "e0fac82b-7bf4-462c-b782-4cfa4cf68acb");
 
             migrationBuilder.DeleteData(
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: "fb687fbb-9f3f-4e46-a40d-5abb4fa1abda");
+                keyValue: "e47fa367-065c-4771-949f-01151ab7ed28");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",

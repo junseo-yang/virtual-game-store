@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShippingAddress)
+                Shipping Address
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderCost)
@@ -42,7 +42,17 @@
                     @Html.DisplayFor(modelItem => item.OrderDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShippingAddress)
+                    @{
+                        var shippingAddress = "";
+                        shippingAddress += $"{item.ShippingAddress.FirstName} {item.ShippingAddress.LastName}";
+                        if (item.ShippingAddress.Unit != null)
+                        {
+                            shippingAddress += $", {item.ShippingAddress.Unit}";
+                        }
+                        shippingAddress += $", {item.ShippingAddress.Street}, {item.ShippingAddress.City}, {item.ShippingAddress.Province.ProvinceName}" +
+                                            $", {item.ShippingAddress.Province.Country.CountryName}, {item.ShippingAddress.PostalCode}, {item.ShippingAddress.PhoneNumber}";
+                    }
+                    @shippingAddress
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderCost)

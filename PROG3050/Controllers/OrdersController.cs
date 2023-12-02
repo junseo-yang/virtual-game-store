@@ -28,7 +28,11 @@ namespace PROG3050.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.User);
+            var applicationDbContext = _context.Order
+                                                .Include(o => o.User)
+                                                .Include(o => o.ShippingAddress)
+                                                .ThenInclude(sa => sa.Province)
+                                                .ThenInclude(p => p.Country);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -42,6 +46,9 @@ namespace PROG3050.Controllers
 
             var order = await _context.Order
                 .Include(o => o.User)
+                .Include(o => o.ShippingAddress)
+                .ThenInclude(sa => sa.Province)
+                .ThenInclude(sa => sa.Country)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
@@ -86,7 +93,13 @@ namespace PROG3050.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order.FindAsync(id);
+            var order = await _context.Order
+                                        .Include(o => o.User)
+                                        .Include(o => o.ShippingAddress)
+                                        .ThenInclude(sa => sa.Province)
+                                        .ThenInclude(p => p.Country)
+                                        .Where(o => o.OrderId == id)
+                                        .FirstOrDefaultAsync();
             if (order == null)
             {
                 return NotFound();
@@ -132,6 +145,28 @@ namespace PROG3050.Controllers
             return View(order);
         }
 
+        // GET: Orders/Approve/5
+        [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
+        public async Task<IActionResult> Approve(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            
+            order.Status = "Processed";
+            _context.Update(order);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Orders/Delete/5
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         public async Task<IActionResult> Delete(int? id)
@@ -143,6 +178,9 @@ namespace PROG3050.Controllers
 
             var order = await _context.Order
                 .Include(o => o.User)
+                .Include(o => o.ShippingAddress)
+                .ThenInclude(sa => sa.Province)
+                .ThenInclude(p => p.Country)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
@@ -178,6 +216,9 @@ namespace PROG3050.Controllers
             var userId = _userManager.GetUserAsync(User).Result.Id;
 
             var orders = await _context.Order
+                .Include(o => o.ShippingAddress)
+                .ThenInclude(sa => sa.Province)
+                .ThenInclude(p => p.Country)
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
 
@@ -190,6 +231,9 @@ namespace PROG3050.Controllers
             var userId = _userManager.GetUserAsync(User).Result.Id;
 
             var order = await _context.Order
+                .Include(o => o.ShippingAddress)
+                .ThenInclude(sa => sa.Province)
+                .ThenInclude(p => p.Country)
                 .Where(o => o.UserId == userId)
                 .Where(o => o.OrderId == id)
                 .FirstOrDefaultAsync();

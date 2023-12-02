@@ -21,7 +21,8 @@ namespace PROG3050.Models
         public DateTime OrderDate { get; set; }
 
         [Display(Name = "Shipping Address")]
-        public string? ShippingAddress { get; set; }
+        public int ShippingAddressId { get; set; }
+        public ShippingAddress? ShippingAddress { get; set; }
 
         [Display(Name = "Order Cost")]
         [DisplayFormat(DataFormatString = "{0:C}")]
