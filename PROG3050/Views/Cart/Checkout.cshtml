@@ -27,15 +27,15 @@
                 </div>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.ProvinceId"></label>
-                    <select asp-for="Checkout.ProvinceId" class="form-control" asp-items="ViewBag.Province"></select>
-                    <span asp-validation-for="Checkout.ProvinceId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-2">
                     <label asp-for="Checkout.CountryId"></label>
                     <select asp-for="Checkout.CountryId" class="form-control" asp-items="ViewBag.Country"></select>
                     <span asp-validation-for="Checkout.CountryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.ProvinceId"></label>
+                    <select asp-for="Checkout.ProvinceId" class="form-control" asp-items="ViewBag.Province"></select>
+                    <span asp-validation-for="Checkout.ProvinceId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-2">

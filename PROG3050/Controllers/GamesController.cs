@@ -52,6 +52,7 @@ namespace PROG3050.Controllers
             }
 
             ViewBag.AddedGameMessage = TempData["AddedGameMessage"] as string;
+            ViewBag.EmptyCartNotice = TempData["EmptyCartNotice"] as string;
             return View(vm);
         }
 

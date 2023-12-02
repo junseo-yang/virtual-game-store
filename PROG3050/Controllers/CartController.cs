@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,11 @@ namespace PROG3050.Controllers
                 })
                 .ToListAsync();
 
+            if (cartGames.Count == 0)
+            {
+                TempData["EmptyCartNotice"] = "Your cart is empty, add some games first!";
+                return RedirectToAction("Index", "Games");
+            }
 
             var cartViewModel = new CartViewModel
             {

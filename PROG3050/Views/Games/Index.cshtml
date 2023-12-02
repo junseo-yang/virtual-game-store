@@ -38,7 +38,12 @@
                     @ViewBag.AddedGameMessage
                 </div>
             }
-
+            @if (!string.IsNullOrEmpty(ViewBag.EmptyCartNotice))
+            {
+                <div class="alert alert-info" role="alert">
+                    @ViewBag.EmptyCartNotice
+                </div>
+            }
 
             @if (Model.Games != null && Model.Games.Any())
             {
