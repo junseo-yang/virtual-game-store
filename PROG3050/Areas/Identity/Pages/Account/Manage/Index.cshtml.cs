@@ -92,7 +92,7 @@ namespace PROG3050.Areas.Identity.Pages.Account.Manage
             public bool IsPromotionalEmail { get; set; }
 
 
-            [Display(Name = "Shipping Address same as Mailing Address?")]
+            [Display(Name = "Shipping and Mailing Addresses the same?")]
             public bool IsAddressSame { get; set; }
         }
 

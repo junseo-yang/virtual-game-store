@@ -67,6 +67,9 @@ namespace  PROG3050.Areas.Identity.Pages.Account.Manage
         // Add MailingAddress
         public static string MailingAddress => "MailingAddress";
 
+        // Add ShippingAddress
+        public static string ShippingAddress => "ShippingAddress";
+
         // Add CreditCard
         public static string CreditCard => "CreditCard";
 
@@ -121,6 +124,8 @@ namespace  PROG3050.Areas.Identity.Pages.Account.Manage
         public static string PreferenceNavClass(ViewContext viewContext) => PageNavClass(viewContext, Preference);
 
         public static string MailingAddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, MailingAddress);
+
+        public static string ShippingAddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, ShippingAddress);
 
         public static string CreditCardNavClass(ViewContext viewContext) => PageNavClass(viewContext, CreditCard);
 

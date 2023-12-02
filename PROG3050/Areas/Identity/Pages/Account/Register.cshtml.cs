@@ -189,16 +189,19 @@ namespace PROG3050.Areas.Identity.Pages.Account
             // Create Preference and MailingAddress to resolve foreign key constraint
             var preference = new Preference();
             var mailingAddress = new MailingAddress();
+            var shippingAddress = new ShippingAddress();
 
             try
             {
                 _context.Add(preference);
                 _context.Add(mailingAddress);
+                _context.Add(shippingAddress);
                 _context.SaveChanges();
 
                 var user = Activator.CreateInstance<User>();
                 user.PreferenceId = preference.PreferenceId;
                 user.MailingAddressId = mailingAddress.MailingAddressId;
+                user.ShippingAddressId = shippingAddress.ShippingAddressId;
                 return user;
             }
             catch

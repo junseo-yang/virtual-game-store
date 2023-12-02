@@ -18,6 +18,10 @@ namespace PROG3050.Models
         public int MailingAddressId { get; set; }
         public MailingAddress? MailingAddress { get; set; }
 
+        [Display(Name = "Shipping Address")]
+        public int ShippingAddressId { get; set; }
+        public ShippingAddress? ShippingAddress { get; set; }
+
         [Display(Name = "Addresses are same")]
         public bool IsAddressSame { get; set; }
 

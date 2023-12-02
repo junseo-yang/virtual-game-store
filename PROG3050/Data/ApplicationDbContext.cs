@@ -690,6 +690,55 @@ namespace PROG3050.Data
                 }
             );
 
+            builder.Entity<ShippingAddress>().HasData(
+                new ShippingAddress
+                {
+                    ShippingAddressId = 1,
+                    Street = "978 ARGYLE ST N",
+                    City = "HALIFAX",
+                    ProvinceId = 7,
+                    PostalCode = "B3J 2B3",
+                    DeliveryInstruction = "At the door"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 2,
+                    Unit = "501",
+                    Street = "87 DANFORTH AVE",
+                    City = "TORONTO",
+                    ProvinceId = 9,
+                    PostalCode = "M4K 1M8",
+                    DeliveryInstruction = "At the Post Box"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 3,
+                    Street = "4 FIRST AVE S",
+                    City = "BIG VALLEY",
+                    ProvinceId = 1,
+                    PostalCode = "T0L 1K0"
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 4,
+                    Street = "PO BOX 4600 STN B",
+                    City = "COURTENAY",
+                    ProvinceId = 2,
+                    PostalCode = "V9N 0A7",
+                    DeliveryInstruction = "Ask the security Guard to get in."
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 5,
+                    ProvinceId = 1
+                },
+                new ShippingAddress
+                {
+                    ShippingAddressId = 6,
+                    ProvinceId = 2,
+                }
+            );
+
             var superadminRole = new IdentityRole
             {
                 Name = "SuperAdmin",
@@ -734,6 +783,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 1,
+                ShippingAddressId = 1,
                 GenderId = 3,
                 PreferenceId = 1
             };
@@ -751,6 +801,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 2,
+                ShippingAddressId = 2,
                 GenderId = 3,
                 PreferenceId = 2
             };
@@ -768,6 +819,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 3,
+                ShippingAddressId = 3,
                 GenderId = 3,
                 PreferenceId = 3
             };
@@ -785,6 +837,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 4,
+                ShippingAddressId = 4,
                 GenderId = 3,
                 PreferenceId = 4
             };
@@ -802,6 +855,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 5,
+                ShippingAddressId = 5,
                 GenderId = 3,
                 PreferenceId = 5
             };
@@ -819,6 +873,7 @@ namespace PROG3050.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
                 MailingAddressId = 6,
+                ShippingAddressId = 6,
                 GenderId = 3,
                 PreferenceId = 6
             };
@@ -1015,49 +1070,6 @@ namespace PROG3050.Data
                 }
             );
 
-            builder.Entity<ShippingAddress>().HasData(
-                new ShippingAddress
-                {
-                    ShippingAddressId = 1,
-                    Street = "978 ARGYLE ST N",
-                    City = "HALIFAX",
-                    Province = "NU",
-                    Country = "Canada",
-                    PostalCode = "B3J 2B3",
-                    DeliveryInstruction = "At the door"
-                },
-                new ShippingAddress
-                {
-                    ShippingAddressId = 2,
-                    Unit = "501",
-                    Street = "87 DANFORTH AVE",
-                    City = "TORONTO",
-                    Province = "ON",
-                    Country = "Canada",
-                    PostalCode = "M4K 1M8",
-                    DeliveryInstruction = "At the Post Box"
-                },
-                new ShippingAddress
-                {
-                    ShippingAddressId = 3,
-                    Street = "4 FIRST AVE S",
-                    City = "BIG VALLEY",
-                    Province = "AB",
-                    Country = "Canada",
-                    PostalCode = "T0L 1K0"
-                },
-                new ShippingAddress
-                {
-                    ShippingAddressId = 4,
-                    Street = "PO BOX 4600 STN B",
-                    City = "COURTENAY",
-                    Province = "BC",
-                    Country = "Canada",
-                    PostalCode = "V9N 0A7",
-                    DeliveryInstruction = "Ask the security Guard to get in."
-                }
-            );
-
             builder.Entity<Order>().HasData(
                 new Order
                 {
@@ -1065,7 +1077,12 @@ namespace PROG3050.Data
                     UserId = member.Id,
                     Status = "Processed",
                     OrderDate = DateTime.Parse("2012-09-21"),
-                    ShippingAddress = "PO BOX 4600 STN B, Courtenay, BC, Canada, V9N 0A7"
+                    OrderCost = 79.98,
+                    Street = "PO BOX 4600 STN B",
+                    City = "COURTENAY",
+                    ProvinceId = 2,
+                    PostalCode = "V9N 0A7",
+                    DeliveryInstruction = "Ask the security Guard to get in."
                 },
                 new Order
                 {
@@ -1073,7 +1090,13 @@ namespace PROG3050.Data
                     UserId = admin.Id,
                     Status = "Processed",
                     OrderDate = DateTime.Parse("2020-10-21"),
-                    ShippingAddress = "87 Danforth Ave, Toronto, ON, Canada, M4K 1M8"
+                    OrderCost = 219.96,
+                    Unit = "501",
+                    Street = "87 DANFORTH AVE",
+                    City = "TORONTO",
+                    ProvinceId = 9,
+                    PostalCode = "M4K 1M8",
+                    DeliveryInstruction = "At the Post Box"
                 },
                 new Order
                 {
@@ -1081,7 +1104,11 @@ namespace PROG3050.Data
                     UserId = moderator.Id,
                     Status = "Pending",
                     OrderDate = DateTime.Parse("2022-02-19"),
-                    ShippingAddress = "4 First Ave S, Big Valley, AB, Canada, T0L 1K0"
+                    OrderCost = 59.99,
+                    Street = "4 FIRST AVE S",
+                    City = "BIG VALLEY",
+                    ProvinceId = 1,
+                    PostalCode = "T0L 1K0"
                 }
             );
 

@@ -146,17 +146,10 @@ namespace PROG3050.Controllers
         [HttpGet]
         public async Task<IActionResult> Checkout()
         {
+            // For the form
             var user = _userManager.GetUserAsync(User).Result;
 
-            MailingAddress? shipAddr = null;
-
-            if (user.IsAddressSame)
-            {
-                 shipAddr = await _context.MailingAddress!
-                    .Include(ma => ma.Province)
-                        .ThenInclude(p => p!.Country)
-                    .FirstOrDefaultAsync(ma => ma.MailingAddressId == user.MailingAddressId);
-            }
+            var shippingAddress = _context.ShippingAddress.Include(sa => sa.Province.Country).Where(m => m.ShippingAddressId == user.ShippingAddressId).FirstOrDefault();
 
             var creditCard = "";
             if (user.CreditCard != null)
@@ -171,21 +164,21 @@ namespace PROG3050.Controllers
 
             var checkoutViewModel = new CheckoutViewModel()
             { 
-                Street = shipAddr?.Street,
-                City = shipAddr?.City,
-                ProvinceId = shipAddr?.ProvinceId,
-                CountryId = shipAddr?.Province?.CountryId,
-                PostalCode = shipAddr?.PostalCode,
+                ShippingAddress = shippingAddress,
                 CreditCard = creditCard,
                 CreditCardExpiry = creditCardExpiry,
             };
 
-            var provinces = await _context.Province!.ToListAsync();
-            var countries = await _context.Country!.ToListAsync();
+            //var provinces = await _context.Province!.ToListAsync();
+            //var countries = await _context.Country!.ToListAsync();
 
-            ViewBag.Province = new SelectList(provinces, "ProvinceId", "ProvinceName", checkoutViewModel.ProvinceId);
-            ViewBag.Country = new SelectList(countries, "CountryId", "CountryName", checkoutViewModel.CountryId);
+            //ViewBag.country = new selectlist(countries, "countryid", "countryname", checkoutViewModel.countryid);
+            //ViewBag.province = new selectlist(provinces, "provinceid", "provincename", checkoutViewModel.provinceid);
 
+            ViewBag.CountryId = new SelectList(_context.Country, "CountryId", "CountryName");
+            ViewBag.ProvinceId = new SelectList(_context.Province.Where(p => p.CountryId == user.ShippingAddress.Province.CountryId), "ProvinceId", "ProvinceName");
+
+            // For the cart view on side
             List<CartGameViewModel> cartItems = new List<CartGameViewModel>();
             var cart = await _context.Cart
                 .Where(c => c.UserId == user.Id)
@@ -205,6 +198,7 @@ namespace PROG3050.Controllers
                 cartItems.Add(gameItem);
             }
 
+            // Both sides put together
             CheckoutCartViewModel checkoutCartViewModel = new CheckoutCartViewModel()
             {
                 Checkout = checkoutViewModel,
@@ -217,22 +211,15 @@ namespace PROG3050.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutCartViewModel model)
         {
-            var userId = _userManager.GetUserAsync(User).Result.Id;
+            var user = _userManager.GetUserAsync(User).Result;
+            var creditCardExpiry = model.Checkout.CreditCardExpiry.Value;
 
-            if (ModelState.IsValid && model.Checkout.CreditCardExpiry >= DateTime.Now)
+            if (ModelState.IsValid && 
+                (creditCardExpiry.Year > DateTime.Now.Year || 
+                (creditCardExpiry.Year == DateTime.Now.Year && creditCardExpiry.Month >= DateTime.Now.Month)))
             {
-                var province = await _context.Province!
-                    .Where(p => p.ProvinceId == model.Checkout.ProvinceId)
-                    .Select(p => p.ProvinceName)
-                    .FirstOrDefaultAsync();
-
-                var country = await _context.Country!
-                    .Where(c => c.CountryId == model.Checkout.CountryId)
-                    .Select(c => c.CountryName)
-                    .FirstOrDefaultAsync();
-
                 var cartGames = await _context.Cart
-                    .Where(c => c.UserId == userId)
+                    .Where(c => c.UserId == user.Id)
                     .Include(c => c.Game)
                     .ToListAsync();
 
@@ -243,14 +230,29 @@ namespace PROG3050.Controllers
                     totalCost += cartGame.Quantity * cartGame.Game!.Price;
                 }
 
-                // Add to Orders
+                //// Add to Orders
+                //Order order = new Order()
+                //{
+                //    UserId = userId,
+                //    Status = "Pending",
+                //    OrderDate = DateTime.Now,
+                //    ShippingAddress = $"{model.Checkout.Street}, {model.Checkout.City}, {province}, {country}, {model.Checkout.PostalCode}",
+                //    OrderCost = totalCost
+                //};
+
+                var shippingAddress = model.Checkout.ShippingAddress!;
+
                 Order order = new Order()
                 {
-                    UserId = userId,
-                    Status = "Pending",
+                    UserId = user.Id,
                     OrderDate = DateTime.Now,
-                    ShippingAddress = $"{model.Checkout.Street}, {model.Checkout.City}, {province}, {country}, {model.Checkout.PostalCode}",
-                    OrderCost = totalCost
+                    OrderCost = totalCost,
+                    Unit = shippingAddress.Unit,
+                    Street = shippingAddress.Street,
+                    City = shippingAddress.City,
+                    ProvinceId = shippingAddress.ProvinceId,
+                    PostalCode = shippingAddress.PostalCode,
+                    DeliveryInstruction = shippingAddress.DeliveryInstruction
                 };
 
                 _context.Order!.Add(order);
@@ -271,7 +273,7 @@ namespace PROG3050.Controllers
                 _context.SaveChanges();
 
                 // Remove from cart table
-                var cart = await _context.Cart.Where(c => c.UserId == userId).ToListAsync();
+                var cart = await _context.Cart.Where(c => c.UserId == user.Id).ToListAsync();
                 _context.Cart.RemoveRange(cart);
                 _context.SaveChanges();
 
@@ -283,15 +285,15 @@ namespace PROG3050.Controllers
                     TempData["ExpiryDateError"] = "Cannot be expired credit card.";
                 }
 
-                var provinces = await _context.Province!.ToListAsync();
-                var countries = await _context.Country!.ToListAsync();
+                //ViewBag.Province = new SelectList(provinces, "ProvinceId", "ProvinceName", model.Checkout.ProvinceId);
+                //ViewBag.Country = new SelectList(countries, "CountryId", "CountryName", model.Checkout.CountryId);
 
-                ViewBag.Province = new SelectList(provinces, "ProvinceId", "ProvinceName", model.Checkout.ProvinceId);
-                ViewBag.Country = new SelectList(countries, "CountryId", "CountryName", model.Checkout.CountryId);
+                ViewBag.CountryId = new SelectList(_context.Country, "CountryId", "CountryName");
+                ViewBag.ProvinceId = new SelectList(_context.Province.Where(p => p.CountryId == user.ShippingAddress.Province.CountryId), "ProvinceId", "ProvinceName");
 
                 List<CartGameViewModel> cartItems = new List<CartGameViewModel>();
                 var cart = await _context.Cart
-                    .Where(c => c.UserId == userId)
+                    .Where(c => c.UserId == user.Id)
                     .ToListAsync();
 
                 foreach (var cartGame in cart)

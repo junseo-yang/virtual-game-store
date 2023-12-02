@@ -284,7 +284,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Cart", (string)null);
                 });
 
             modelBuilder.Entity("PROG3050.Models.Country", b =>
@@ -301,7 +301,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", (string)null);
 
                     b.HasData(
                         new
@@ -340,7 +340,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("EventId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", (string)null);
 
                     b.HasData(
                         new
@@ -373,7 +373,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUser", (string)null);
 
                     b.HasData(
                         new
@@ -417,7 +417,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("FavouritePlatformId");
 
-                    b.ToTable("FavouritePlatform");
+                    b.ToTable("FavouritePlatform", (string)null);
 
                     b.HasData(
                         new
@@ -462,7 +462,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("ReceiverUserId");
 
-                    b.ToTable("FriendFamily");
+                    b.ToTable("FriendFamily", (string)null);
 
                     b.HasData(
                         new
@@ -524,7 +524,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("GameCategoryId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Game", (string)null);
 
                     b.HasData(
                         new
@@ -570,7 +570,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("GameCategoryId");
 
-                    b.ToTable("GameCategory");
+                    b.ToTable("GameCategory", (string)null);
 
                     b.HasData(
                         new
@@ -614,7 +614,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("GenderId");
 
-                    b.ToTable("Genders");
+                    b.ToTable("Genders", (string)null);
 
                     b.HasData(
                         new
@@ -648,7 +648,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("LanguageId");
 
-                    b.ToTable("Language");
+                    b.ToTable("Language", (string)null);
 
                     b.HasData(
                         new
@@ -712,7 +712,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("ProvinceId");
 
-                    b.ToTable("MailingAddress");
+                    b.ToTable("MailingAddress", (string)null);
 
                     b.HasData(
                         new
@@ -793,7 +793,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
 
                     b.HasData(
                         new
@@ -845,7 +845,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderGame");
+                    b.ToTable("OrderGame", (string)null);
 
                     b.HasData(
                         new
@@ -900,7 +900,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("Preference");
+                    b.ToTable("Preference", (string)null);
 
                     b.HasData(
                         new
@@ -947,7 +947,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("FavouritePlatformId");
 
-                    b.ToTable("PreferenceFavouritePlatform");
+                    b.ToTable("PreferenceFavouritePlatform", (string)null);
 
                     b.HasData(
                         new
@@ -1004,7 +1004,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("GameCategoryId");
 
-                    b.ToTable("PreferenceGameCategory");
+                    b.ToTable("PreferenceGameCategory", (string)null);
 
                     b.HasData(
                         new
@@ -1068,7 +1068,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Province");
+                    b.ToTable("Province", (string)null);
 
                     b.HasData(
                         new
@@ -1489,7 +1489,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("ReportId");
 
-                    b.ToTable("Report");
+                    b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("PROG3050.Models.Review", b =>
@@ -1528,7 +1528,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
 
                     b.HasData(
                         new
@@ -1609,7 +1609,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasKey("ShippingAddressId");
 
-                    b.ToTable("ShippingAddress");
+                    b.ToTable("ShippingAddress", (string)null);
 
                     b.HasData(
                         new
@@ -1907,7 +1907,7 @@ namespace PROG3050.Data.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("Wishlist");
+                    b.ToTable("Wishlist", (string)null);
 
                     b.HasData(
                         new

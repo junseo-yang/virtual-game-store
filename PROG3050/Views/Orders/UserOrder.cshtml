@@ -30,10 +30,18 @@
             @Html.DisplayFor(model => model.Order.OrderDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.ShippingAddress)
+            Shipping Address
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.ShippingAddress)
+            @{
+                string shippingAddress = "";
+                if (Model.Order.Unit.Length != 0)
+                {
+                    shippingAddress = $"{Model.Order.Unit}, ";
+                }
+                shippingAddress += $"{Model.Order.Street}, {Model.Order.City}, {Model.Order.Province.ProvinceName}, {Model.Order.PostalCode}, {Model.Order.Province.Country.CountryName}";
+            }
+            @Html.DisplayFor(modelItem => shippingAddress)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Order.OrderCost)

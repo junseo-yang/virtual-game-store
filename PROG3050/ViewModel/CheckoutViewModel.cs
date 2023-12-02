@@ -1,30 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PROG3050.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PROG3050.ViewModel
 {
     public class CheckoutViewModel
     {
-        [Display(Name = "Street")]
-        [Required(ErrorMessage = "Please enter your street address.")]
-        public string? Street { get; set; }
+        //public string Unit { get; set; }
 
-        [Display(Name = "City")]
-        [Required(ErrorMessage = "Please enter your city.")]
-        public string? City { get; set; }
+        //[Display(Name = "Street")]
+        //[Required(ErrorMessage = "Please enter your street address.")]
+        //public string? Street { get; set; }
 
-        [Display(Name = "Province")]
-        [Required(ErrorMessage = "Please select your province.")]
-        public int? ProvinceId { get; set; }
+        //[Display(Name = "City")]
+        //[Required(ErrorMessage = "Please enter your city.")]
+        //public string? City { get; set; }
 
-        [Display(Name = "Country")]
-        [Required(ErrorMessage = "Please select your country.")]
-        public int? CountryId { get; set; }
+        //[Display(Name = "Province")]
+        //[Required(ErrorMessage = "Please select your province.")]
+        //public int? ProvinceId { get; set; }
 
-        [Display(Name = "Postal Code")]
-        [RegularExpression(@"[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$",
-            ErrorMessage = "Postal Code should be in the format of 'A1A 1A1'")]
-        [Required(ErrorMessage = "Please enter your postal code.")]
-        public string? PostalCode { get; set; }
+        //[Display(Name = "Country")]
+        //[Required(ErrorMessage = "Please select your country.")]
+        //public int? CountryId { get; set; }
+
+        //[Display(Name = "Postal Code")]
+        //[RegularExpression(@"[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$",
+        //    ErrorMessage = "Postal Code should be in the format of 'A1A 1A1'")]
+        //[Required(ErrorMessage = "Please enter your postal code.")]
+        //public string? PostalCode { get; set; }
+
+        public ShippingAddress? ShippingAddress { get; set; }
 
         [Display(Name = "Credit Card Number")]
         [RegularExpression(@"^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5|2)[1-5][0-9]{14})$", ErrorMessage = "Invalid Credit Card number.")]

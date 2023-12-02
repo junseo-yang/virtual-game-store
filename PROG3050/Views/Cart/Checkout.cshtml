@@ -15,33 +15,45 @@
                 <legend>Address</legend>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.Street" class="control-label"></label>
-                    <input asp-for="Checkout.Street" class="form-control" value="@Model.Checkout.Street" />
-                    <span asp-validation-for="Checkout.Street" class="text-danger"></span>
+                    <label asp-for="Checkout.ShippingAddress.Unit" class="control-label"></label>
+                    <input asp-for="Checkout.ShippingAddress.Unit" class="form-control" value="@Model.Checkout.ShippingAddress.Unit" />
+                    <span asp-validation-for="Checkout.ShippingAddress.Unit" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.City" class="control-label"></label>
-                    <input asp-for="Checkout.City" class="form-control" value="@Model.Checkout.City" />
-                    <span asp-validation-for="Checkout.City" class="text-danger"></span>
+                    <label asp-for="Checkout.ShippingAddress.Street" class="control-label"></label>
+                    <input asp-for="Checkout.ShippingAddress.Street" class="form-control" value="@Model.Checkout.ShippingAddress.Street" />
+                    <span asp-validation-for="Checkout.ShippingAddress.Street" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.CountryId"></label>
-                    <select asp-for="Checkout.CountryId" class="form-control" asp-items="ViewBag.Country"></select>
-                    <span asp-validation-for="Checkout.CountryId" class="text-danger"></span>
+                    <label asp-for="Checkout.ShippingAddress.City" class="control-label"></label>
+                    <input asp-for="Checkout.ShippingAddress.City" class="form-control" value="@Model.Checkout.ShippingAddress.City" />
+                    <span asp-validation-for="Checkout.ShippingAddress.City" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.ProvinceId"></label>
-                    <select asp-for="Checkout.ProvinceId" class="form-control" asp-items="ViewBag.Province"></select>
-                    <span asp-validation-for="Checkout.ProvinceId" class="text-danger"></span>
+                    <label asp-for="Checkout.ShippingAddress.Province.CountryId"></label>
+                    <select asp-for="Checkout.ShippingAddress.Province.CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
+                    <span asp-validation-for="Checkout.ShippingAddress.Province.CountryId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-2">
-                    <label asp-for="Checkout.PostalCode"></label>
-                    <input asp-for="Checkout.PostalCode" class="form-control" value="@Model.Checkout.PostalCode" />
-                    <span asp-validation-for="Checkout.PostalCode" class="text-danger"></span>
+                    <label asp-for="Checkout.ShippingAddress.ProvinceId"></label>
+                    <select asp-for="Checkout.ShippingAddress.ProvinceId" class="form-control" asp-items="ViewBag.ProvinceId"></select>
+                    <span asp-validation-for="Checkout.ShippingAddress.ProvinceId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="Checkout.ShippingAddress.PostalCode"></label>
+                    <input asp-for="Checkout.ShippingAddress.PostalCode" class="form-control" value="@Model.Checkout.ShippingAddress.PostalCode" />
+                    <span asp-validation-for="Checkout.ShippingAddress.PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-2">
+                    <input asp-for="Checkout.ShippingAddress.DeliveryInstruction" class="form-control" />
+                    <label asp-for="Checkout.ShippingAddress.DeliveryInstruction" class="form-label"></label>
+                    <span asp-validation-for="Checkout.ShippingAddress.DeliveryInstruction" class="text-danger"></span>
                 </div>
             </fieldset>
 
