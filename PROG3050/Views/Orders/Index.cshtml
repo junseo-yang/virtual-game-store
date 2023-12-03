@@ -53,23 +53,30 @@
                         $", {item.ShippingAddress.Province.Country.CountryName}, {item.ShippingAddress.PostalCode}, {item.ShippingAddress.PhoneNumber}";
                     }
                     @shippingAddress
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderCost)
-                </td>
-                <td>
-                    @if (item.Status == "Pending")
-                    {
-                        <a asp-action="Shipping" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Shipping</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderCost)
+            </td>
+            <td>
+                    @{
+                        if (item.Status == "Processed")
+                        {
+                            <a asp-action="Disapporve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Disapprove</a> | 
+                            <a asp-action="Shipping" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Shipping</a>
+                        }
+                        else if (item.Status == "Pending")
+                        {
+                            <a asp-action="Approve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Approve</a> | 
+                            <a asp-action="Shipping" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Shipping</a>
+                        }
+                        else{
+                            <a asp-action="Approve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Approve</a> | 
+                            <a asp-action="Disapporve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Disapprove</a>
+                        }
                     }
-                    else if (item.Status == "Shipping")
-                    {
-                        <a asp-action="Approve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Approve</a>
-                    }
-                    <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary btn-sm">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger btn-sm">Delete</a>
-                </td>
-            </tr>
-        }
+                 | <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary btn-sm">Details</a>
+                 | <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
     </tbody>
 </table>

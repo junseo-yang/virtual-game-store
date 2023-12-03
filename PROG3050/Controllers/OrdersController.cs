@@ -167,7 +167,31 @@ namespace PROG3050.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Orders/Approve/5
+        // GET: Orders/Disapprove/5
+        [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
+        public async Task<IActionResult> Disapporve(int? id)
+
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.Status = "Pending";
+
+            _context.Update(order);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        // GET: Orders/Shipping/5
         [Authorize(Roles = "SuperAdmin,Admin,Moderator")]
         public async Task<IActionResult> Shipping(int? id)
         {
@@ -183,6 +207,7 @@ namespace PROG3050.Controllers
             }
 
             order.Status = "Shipping";
+
             _context.Update(order);
             _context.SaveChanges();
 
