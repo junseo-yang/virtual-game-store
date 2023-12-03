@@ -60,6 +60,9 @@ driver.find_element(By.LINK_TEXT, "Orders").click()
 
 # Navigate to edit the order (assuming no other orders) + update and save
 last_index = len(driver.find_elements(By.TAG_NAME, "tr")) - 1
+# Click Shipping
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[1]").click()
+# Click Process
 driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[1]").click()
 
 """
@@ -72,7 +75,8 @@ assert driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_
 Clean up
 """
 # Delete order
-driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[3]").click()
+
+driver.find_element(By.XPATH, f"/html/body/div/main/table/tbody/tr[{last_index}]/td[6]/a[2]").click()
 driver.find_element(By.CSS_SELECTOR, ".btn-danger").click()
 
 # Log out

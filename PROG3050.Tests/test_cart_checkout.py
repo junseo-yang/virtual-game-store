@@ -61,7 +61,8 @@ driver.find_element(By.LINK_TEXT, "Click here to view your order.").click()
 Assert
 """
 # Assert order's element text is "Pending"
-assert driver.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text == "Pending"
+elements = driver.find_elements(By.CSS_SELECTOR, "td:nth-child(2)")
+assert elements[-1].text == "Pending"
 
 """
 Clean up
