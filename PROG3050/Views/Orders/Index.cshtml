@@ -57,8 +57,15 @@
                 @Html.DisplayFor(modelItem => item.OrderCost)
             </td>
             <td>
-                <a asp-action="Approve" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Approve</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary btn-sm">Details</a> |
+                @if (item.Status == "Pending")
+                {
+                    <a asp-action="Shipping" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Shipping</a>
+                }
+                else if (item.Status == "Shipping")
+                {
+                    <a asp-action="Process" asp-route-id="@item.OrderId" class="btn btn-success btn-sm">Process</a>
+                }
+                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary btn-sm">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
